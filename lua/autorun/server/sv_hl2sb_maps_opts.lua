@@ -521,4 +521,3 @@ net.Receive("request_HL2SB_SANDTRAP_COAST_09_ClearCars", function(len, ply)
         v:Fire("Trigger",0)
     end
 end )
-
