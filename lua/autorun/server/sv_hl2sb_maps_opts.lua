@@ -442,11 +442,11 @@ net.Receive("request_HL2SB_CAN01_TrainR", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("looping_traincar2")) do
-        v:Fire("teleporttopathtrack", "train_2_start",0)
+        v:Fire("teleporttopathtrack", "train_2_start", 0)
     end
 
 	for k, v in ipairs(ents.FindByName("call_train_razor")) do
-        v:Fire("Trigger",0)
+        v:Fire("Trigger", 0)
     end
 end )
 
@@ -454,12 +454,12 @@ net.Receive("request_HL2SB_CAN01_TrainN", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("looping_traincar1")) do
-        v:Fire("teleporttopathtrack", "train_1_start",0)
-		v:Fire("startforward",0)
+        v:Fire("teleporttopathtrack", "train_1_start", 0)
+		v:Fire("startforward", 0)
     end
 
 	for k, v in ipairs(ents.FindByName("trainstopped_wav")) do
-		v:Fire("StopSound",0)
+		v:Fire("StopSound", 0)
 	end
 end )
 
@@ -467,7 +467,7 @@ net.Receive("request_HL2SB_CAN01_TrainNGO", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("depart_train1")) do
-        v:Fire("Trigger",0)
+        v:Fire("Trigger", 0)
     end
 end )
 
@@ -482,11 +482,11 @@ net.Receive("request_HL2SB_HW17_Bridge_Train", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("razortrain")) do
-        v:Fire("teleporttopathtrack", "train_2_start",0)
+        v:Fire("teleporttopathtrack", "train_2_start", 0)
     end
 
 	for k, v in ipairs(ents.FindByName("call_train")) do
-        v:Fire("Trigger",0)
+        v:Fire("Trigger", 0)
     end
 end )
 
@@ -494,7 +494,7 @@ net.Receive("request_HL2SB_HW17_Bridge_ClearCars", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("clear_railways")) do
-        v:Fire("Trigger",0)
+        v:Fire("Trigger", 0)
     end
 end )
 
@@ -502,7 +502,7 @@ net.Receive("request_HL2SB_TRAINSTATION_02_ClearProps", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("prop_stairblockers")) do
-        v:Fire("Kill",0)
+        v:Fire("Kill", 0)
     end
 end )
 
@@ -510,7 +510,7 @@ net.Receive("request_HL2SB_RAVEN_KillClouds", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("smokeclouds")) do
-        v:Fire("Kill",0)
+        v:Fire("Kill", 0)
     end
 end )
 
@@ -518,6 +518,6 @@ net.Receive("request_HL2SB_SANDTRAP_COAST_09_ClearCars", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("clear_road")) do
-        v:Fire("Trigger",0)
+        v:Fire("Trigger", 0)
     end
 end )
