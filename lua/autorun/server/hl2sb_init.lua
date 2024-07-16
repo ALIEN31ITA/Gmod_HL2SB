@@ -2,6 +2,7 @@
 if ( IsMounted( "episodic" ) ) then
 	game.AddParticles( "particles/ep1_fx.pcf" )
 end
+
 if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/advisor.pcf" )
 	game.AddParticles( "particles/aurora.pcf" )
@@ -16,4 +17,3 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/choreo_launch.pcf" )
 	game.AddParticles( "particles/magnusson_burner.pcf" )
 end
-
