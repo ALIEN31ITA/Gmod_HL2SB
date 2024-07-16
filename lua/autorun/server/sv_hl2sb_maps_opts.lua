@@ -2,7 +2,7 @@ local hl2sb_getmap = game.GetMap()
 
 
 // HL2SB NPC SWITCH - Zaurzo code
-hook.Add("PlayerSpawnedNPC","HL2SB_NPC_SUBMATERIALS", function(ply, ent)
+hook.Add("PlayerSpawnedNPC", "HL2SB_NPC_SUBMATERIALS", function(ply, ent)
 	if ent:GetClass() == "npc_eli" && ent.NPCTable.ListClass == "npc_eli_episodic" then
 		ent.NPCTable.Name = "Eli Vance"
 		ent:SetSubMaterial( 4, "models/hl2sb/characters/eli_sheet_ep2" )
@@ -42,7 +42,7 @@ end)
 // Fisherman MDL code fix - Phoenixf
 hook.Add( "OnEntityCreated", "MDL_HL2SB_Fisherman", function( ent )
 	if ( ent:GetClass() == "npc_fisherman" ) then
-		timer.Simple(0, function()
+		timer.Simple(0.1, function()
 			if IsValid(ent) then
 				ent:SetModel( "models/hl2sb/lostcoast/fisherman/fisherman.mdl" )
 				ent:SetPos(ent:GetPos() + Vector(0, 0, 5))
@@ -54,7 +54,7 @@ end )
 // Mossman Artic (EP1)
 // REPLACE ALSO IN EP2
 hook.Add( "OnEntityCreated", "MDL_HL2SB_SnowyMossman", function( ent )
-	timer.Simple(0, function()
+	timer.Simple(0.1, function()
 		if ( !IsValid(ent) ) then return end
 
 		if hl2sb_getmap == ( "gmhl2e1_citadel_03" or "ep2_outland_11b" or "ep1_citadel_03" ) then
@@ -199,9 +199,10 @@ hook.Add( "GetDeathNoticeEntityName", "HL2SB_KillFeedNames", function( ent )
 			return "Fake Barney"
 		end
 	end
+
 	if hl2sb_getmap == "gmhl2e1_c17_01" then
 		if ( ent:GetClass() == "npc_sniper" and ent:GetName() == "sniper_alyx" ) then
-			return "Alyx" end
+			return "Alyx"
 		end
 	end
 end)
@@ -215,6 +216,7 @@ local HL2SB_mapsettings = {
 			for k, v in ipairs(ents.FindByName("waterdeath")) do
 				v:Fire("Disable")
 			end
+
 			for k, v in ipairs(ents.FindByName("pitdeath")) do
 				v:Fire("Disable")
 			end
@@ -223,6 +225,7 @@ local HL2SB_mapsettings = {
 			for k, v in ipairs(ents.FindByName("waterdeath")) do
 				v:Fire("Enable")
 			end
+
 			for k, v in ipairs(ents.FindByName("pitdeath")) do
 				v:Fire("Enable")
 			end
