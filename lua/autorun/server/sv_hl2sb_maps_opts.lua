@@ -310,6 +310,7 @@ cvars.AddChangeCallback( "hl2sb_deathpit_triggers", function( _, _, newValue )
         HL2SB_mapsettings.HL2SB_Deathpits.off()
     end
 end )
+
 cvars.AddChangeCallback( "hl2sb_levelswitch_triggers", function( _, _, newValue )
     if newValue == "1" then
         HL2SB_mapsettings.HL2SB_LevelSwitchTriggers.on()
@@ -317,6 +318,7 @@ cvars.AddChangeCallback( "hl2sb_levelswitch_triggers", function( _, _, newValue 
         HL2SB_mapsettings.HL2SB_LevelSwitchTriggers.off()
     end
 end )
+
 cvars.AddChangeCallback( "hl2sb_antlionspawn_triggers", function( _, _, newValue )
     if newValue == "1" then
         HL2SB_mapsettings.HL2SB_Antlions_Spawns.on()
