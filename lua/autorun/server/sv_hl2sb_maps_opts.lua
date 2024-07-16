@@ -3,36 +3,36 @@ local hl2sb_getmap = game.GetMap()
 
 // HL2SB NPC SWITCH - Zaurzo code
 hook.Add("PlayerSpawnedNPC","HL2SB_NPC_SUBMATERIALS", function(ply, ent)
-	if ( ent:GetClass() == "npc_eli" ) && ent.NPCTable.ListClass == "npc_eli_episodic" then
+	if ent:GetClass() == "npc_eli" && ent.NPCTable.ListClass == "npc_eli_episodic" then
 		ent.NPCTable.Name = "Eli Vance"
 		ent:SetSubMaterial( 4, "models/hl2sb/characters/eli_sheet_ep2" )
 	end
 
-	if ( ent:GetClass() == "npc_kleiner" ) && ent.NPCTable.ListClass == "npc_kleiner_episodic" then
+	if ent:GetClass() == "npc_kleiner" && ent.NPCTable.ListClass == "npc_kleiner_episodic" then
 		ent.NPCTable.Name = "Dr. Isaac Kleiner"
 		ent:SetSubMaterial( 5, "models/hl2sb/characters/kleiner_sheet_ep2" )
 	end
 
-	if ( ent:GetClass() == "npc_mossman" ) && ent.NPCTable.ListClass == "npc_mossman_episodic" then
+	if ent:GetClass() == "npc_mossman" && ent.NPCTable.ListClass == "npc_mossman_episodic" then
 		ent.NPCTable.Name = "Dr. Judith Mossman"
 	end
 
-	if ( ent:GetClass() == "npc_barney" ) && ent.NPCTable.ListClass == "npc_barney_episodic" then
+	if ent:GetClass() == "npc_barney" && ent.NPCTable.ListClass == "npc_barney_episodic" then
 		ent.NPCTable.Name = "Barney Calhoun"
 		ent:SetSubMaterial( 2, "models/hl2sb/characters/barneyface_ep1" )
 	end
 
-	if ( ent:GetClass() == "npc_helicopter" ) && ent.NPCTable.ListClass == "npc_helicopter_nightlights" or ( ent:GetClass() == "npc_combinegunship" ) && ent.NPCTable.ListClass == "npc_gunship_chopper" then
+	if ( ent:GetClass() == "npc_helicopter" && ent.NPCTable.ListClass == "npc_helicopter_nightlights" ) or ( ent:GetClass() == "npc_combinegunship" && ent.NPCTable.ListClass == "npc_gunship_chopper" ) then
 		ent.NPCTable.Name = "Hunter-Chopper"
 	end
 
-	if ( ent:GetClass() == "npc_rollermine" ) && ent.NPCTable.ListClass == "npc_rollermine_alyxhack" then
+	if ent:GetClass() == "npc_rollermine" && ent.NPCTable.ListClass == "npc_rollermine_alyxhack" then
 		ent.NPCTable.Name = "Rollermine"
 		ent:SetSaveValue( "m_bHackedByAlyx", true )
 		ent:SetSkin(1)
 	end
 
-	if ( ent:GetClass() == "npc_vortigaunt" ) && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
+	if ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
 		ent:SetSubMaterial(0, "models/hl2sb/characters/vortigaunt_blueeye_patch")
 		ent:SetSubMaterial(1, "models/hl2sb/characters/vortigaunt_blue_patch")
 		ent.NPCTable.Name = "Vortigaunt"
@@ -45,7 +45,7 @@ hook.Add( "OnEntityCreated", "MDL_HL2SB_Fisherman", function( ent )
 		timer.Simple(0, function()
 			if IsValid(ent) then
 				ent:SetModel( "models/hl2sb/lostcoast/fisherman/fisherman.mdl" )
-				ent:SetPos(ent:GetPos() + Vector(0,0,5))
+				ent:SetPos(ent:GetPos() + Vector(0, 0, 5))
 			end
 		end)
 	end
@@ -54,16 +54,16 @@ end )
 // Mossman Artic (EP1)
 // REPLACE ALSO IN EP2
 hook.Add( "OnEntityCreated", "MDL_HL2SB_SnowyMossman", function( ent )
-	if hl2sb_getmap == "gmhl2e1_citadel_03" or hl2sb_getmap == "ep2_outland_11b" or hl2sb_getmap == "ep1_citadel_03" then
-		if ( ent:GetClass() == "npc_mossman" ) then
-			timer.Simple(0, function()
-				if IsValid(ent) && ent:GetName() == "mossman2" then
-					ent:SetModel( "models/hl2sb/characters/Mossman_ep1.mdl" )
-					ent:SetPos(ent:GetPos() + Vector(0,0,5))
-				end
-			end)
+	timer.Simple(0, function()
+		if ( !IsValid(ent) ) then return end
+
+		if hl2sb_getmap == ( "gmhl2e1_citadel_03" or "ep2_outland_11b" or "ep1_citadel_03" ) then
+			if ( ent:GetClass() == "npc_mossman" and ent:GetName() == "mossman2" ) then
+				ent:SetModel( "models/hl2sb/characters/Mossman_ep1.mdl" )
+				ent:SetPos(ent:GetPos() + Vector(0, 0, 5))
+			end
 		end
-	end
+	end)
 end )
 
 // Eli Sweater, Kleiner Darker, Bloodface Barney (Episodic Retextures)
