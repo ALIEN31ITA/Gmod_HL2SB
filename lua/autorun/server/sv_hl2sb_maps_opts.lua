@@ -177,13 +177,13 @@ local function HL2SB_LostCoast_Easteregg()
 end
 
 local MAP_HELINPC = {
-	npc_combinegunship = true,
-	npc_helicopter = true,
-	npc_combinedropship = true
+	["npc_combinegunship"] = true,
+	["npc_helicopter"] = true,
+	["npc_combinedropship"] = true
 }
 
 if hl2sb_getmap == "gmhl2_coast_03" then
-	hook.Add("PlayerSpawnedNPC","map_sethelinpcnode", function(ply, ent)
+	hook.Add("PlayerSpawnedNPC", "map_sethelinpcnode", function(ply, ent)
 		if MAP_HELINPC[ent:GetClass()] then
 			ent:Fire("SetTrack", "helipathstart", 0)
 		end
