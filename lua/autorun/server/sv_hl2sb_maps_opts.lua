@@ -360,7 +360,7 @@ hook.Add( "PostCleanupMap", "HL2SB_mapsettings", function()
 	HL2SB_LostCoast_Easteregg()
 
 	if hl2sb_getmap == "gmhl2_lostcoast" then
-		timer.Simple(0, function()
+		timer.Simple(0.1, function()
 			for k, v in ipairs(ents.FindByName("tele_restart")) do
 				v:Fire("Teleport")
 			end
