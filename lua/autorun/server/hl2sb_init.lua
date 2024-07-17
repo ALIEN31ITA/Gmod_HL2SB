@@ -17,3 +17,14 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/choreo_launch.pcf" )
 	game.AddParticles( "particles/magnusson_burner.pcf" )
 end
+
+CreateConVar("hl2sb_npcgodmode", 0, {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Enable/Disable NPC Godmode")
+
+hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
+	if ( !IsValid( ent ) ) then return end
+
+	local bGodmode = GetConVar("hl2sb_npcgodmode"):GetBool()
+	if ( ent:IsNPC() and bGodmode ) then
+		return true
+	end
+end)
