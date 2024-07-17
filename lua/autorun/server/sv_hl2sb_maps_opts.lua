@@ -1,5 +1,5 @@
 local hl2sb_getmap = game.GetMap()
-
+local hl2sb_initiated = false
 
 // HL2SB NPC SWITCH - Zaurzo code
 hook.Add("PlayerSpawnedNPC", "HL2SB_NPC_SUBMATERIALS", function(ply, ent)
@@ -41,6 +41,8 @@ end)
 
 // Fisherman MDL code fix - Phoenixf
 hook.Add( "OnEntityCreated", "MDL_HL2SB_Fisherman", function(ent)
+	if ( !hl2sb_initiated ) then return end
+
 	if ( ent:GetClass() == "npc_fisherman" ) then
 		timer.Simple(0.1, function()
 			if IsValid(ent) then
@@ -54,6 +56,8 @@ end)
 // Mossman Artic (EP1)
 // REPLACE ALSO IN EP2
 hook.Add( "OnEntityCreated", "MDL_HL2SB_SnowyMossman", function(ent)
+	if ( !hl2sb_initiated ) then return end
+
 	timer.Simple(0.1, function()
 		if ( !IsValid(ent) ) then return end
 
@@ -68,6 +72,8 @@ end)
 
 // Eli Sweater, Kleiner Darker, Bloodface Barney (Episodic Retextures)
 hook.Add( "OnEntityCreated", "TEX_HL2SB_SweaterEli", function(ent)
+	if ( !hl2sb_initiated ) then return end
+
 	if hl2sb_getmap == "gmhl2e2_outland_12" then
 		if ( ent:GetClass() == "npc_eli" ) then
 			timer.Simple(0, function()
@@ -99,6 +105,8 @@ end)
 
 // Physical headcrab canisters (EP1)
 hook.Add( "OnEntityCreated", "MDL_HL2SB_HeadCanister", function(ent)
+	if ( !hl2sb_initiated ) then return end
+
 	if hl2sb_getmap == "gmhl2e1_c17_03" then
 		if ent:GetClass() ~= "env_headcrabcanister" then return end
 
@@ -131,6 +139,7 @@ local modelTranslation = {
 }
 
 hook.Add( "OnEntityCreated", "MDL_HL2SB_Ammocrate", function(ent)
+	if ( !hl2sb_initiated ) then return end
 	if ( !IsValid(ent) ) then return end
 
 	timer.Simple(0.1, function()
@@ -351,6 +360,69 @@ hook.Add( "InitPostEntity", "HL2SB_mapsettings", function()
     if HL2SB_mapsettings.HL2SB_Antlions_Spawns.value:GetBool() then
         ProtectedCall( HL2SB_mapsettings.HL2SB_Antlions_Spawns.on )
     end
+
+	for k, v in ents.Iterator() do
+		if not ( IsValid(v) ) then continue end
+
+		if ( v:GetClass() == "npc_fisherman" ) then
+			v:SetModel( "models/hl2sb/lostcoast/fisherman/fisherman.mdl" )
+			v:SetPos(v:GetPos() + Vector(0, 0, 5))
+		end
+
+		if hl2sb_getmap == ( "gmhl2e1_citadel_03" or "ep2_outland_11b" or "ep1_citadel_03" ) then
+			if ( v:GetClass() == "npc_mossman" and v:GetName() == "mossman2" ) then
+				v:SetModel( "models/hl2sb/characters/Mossman_ep1.mdl" )
+				v:SetPos(v:GetPos() + Vector(0, 0, 5))
+			end
+		end
+
+		if ( hl2sb_getmap == "gmhl2e2_outland_12" ) then
+			if ( v:GetClass() == "npc_eli" and ent:GetName() == "eli" ) then
+				v:SetSubMaterial( 4, "models/hl2sb/characters/eli_sheet_ep2" )
+			end
+
+			if ( v:GetClass() == "npc_kleiner" and v:GetName() == "kleiner" ) then
+				v:SetSubMaterial( 5, "models/hl2sb/characters/kleiner_sheet_ep2" )
+			end
+		end
+
+		if ( hl2sb_getmap == "gmhl2e1_c17_02" or hl2sb_getmap == "gmhl2e1_c17_03" ) then
+			if ( v:GetClass() == "npc_barney" and v:GetName() == "barney" ) then
+				v:SetSubMaterial( 2, "models/hl2sb/characters/barneyface_ep1" )
+			end
+		end
+
+		if ( hl2sb_getmap == "gmhl2e1_c17_03" ) then
+			if ( v:GetClass() == "env_headcrabcanister" ) then
+				v:PhysicsInit( SOLID_VPHYSICS )
+				v:SetMoveType( MOVETYPE_VPHYSICS )
+
+				local phys = v:GetPhysicsObject()
+				if ( IsValid( phys ) ) then
+					phys:EnableMotion( false )
+				end
+			end
+		end
+
+		if ( v:GetClass() == "item_ammo_crate" ) then
+			local key = v:GetInternalVariable( "AmmoType" )
+			local translation = modelTranslation[key]
+
+			if ( translation ) then
+				v:SetModel(translation)
+			end
+
+			v:PhysicsInit( SOLID_VPHYSICS )
+			v:SetMoveType( MOVETYPE_VPHYSICS )
+			local phys = v:GetPhysicsObject()
+
+			if IsValid( phys ) then
+				phys:EnableMotion( false )
+			end
+		end
+	end
+
+	hl2sb_initiated = true
 end)
 
 // ADMIN CLEANUP
