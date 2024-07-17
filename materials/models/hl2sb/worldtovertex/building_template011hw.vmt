@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "hl2sbox/building_template/building_template011hw"
+	"$surfaceprop"  "concrete"
+	"$detail" "detail\plaster_detail_01"
+	"$detailscale" "8.283"
+	"$detailblendfactor" 1.2
+	"$detailblendmode" "0"
+
+}
+

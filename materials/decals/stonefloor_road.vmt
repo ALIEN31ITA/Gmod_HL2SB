@@ -1,0 +1,10 @@
+"LightmappedGeneric"
+{
+	"$basetexture" "concrete/stonefloor_road"
+	"$bumpmap" "concrete/stonefloor_road_n"
+	"$translucent" 1
+	"$decal" 1
+	"$surfaceprop" "sand"
+	"%keywords" "coastline wasteland"
+	$vertexalpha 1
+}

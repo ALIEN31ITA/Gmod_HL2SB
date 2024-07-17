@@ -113,12 +113,13 @@ hook.Add( "OnEntityCreated", "MDL_HL2SB_HeadCanister", function(ent)
 		timer.Simple( 0, function()
 			if not IsValid( ent ) then return end
 
-			ent:PhysicsInit( SOLID_VPHYSICS )
 			ent:SetMoveType( MOVETYPE_VPHYSICS )
+			ent:PhysicsInit( SOLID_VPHYSICS )
 
 			local phys = ent:GetPhysicsObject()
 			if IsValid( phys ) then
 				phys:EnableMotion( false )
+				print(ent, "Set to physics")
 			end
 		end)
 	end
@@ -153,8 +154,9 @@ hook.Add( "OnEntityCreated", "MDL_HL2SB_Ammocrate", function(ent)
 			ent:SetModel(translation)
 		end
 
-		ent:PhysicsInit( SOLID_VPHYSICS )
 		ent:SetMoveType( MOVETYPE_VPHYSICS )
+		ent:PhysicsInit( SOLID_VPHYSICS )
+
 		local phys = ent:GetPhysicsObject()
 
 		if IsValid( phys ) then
@@ -394,8 +396,8 @@ hook.Add( "InitPostEntity", "HL2SB_mapsettings", function()
 
 		if ( hl2sb_getmap == "gmhl2e1_c17_03" ) then
 			if ( v:GetClass() == "env_headcrabcanister" ) then
-				v:PhysicsInit( SOLID_VPHYSICS )
 				v:SetMoveType( MOVETYPE_VPHYSICS )
+				v:PhysicsInit( SOLID_VPHYSICS )
 
 				local phys = v:GetPhysicsObject()
 				if ( IsValid( phys ) ) then
@@ -412,8 +414,8 @@ hook.Add( "InitPostEntity", "HL2SB_mapsettings", function()
 				v:SetModel(translation)
 			end
 
-			v:PhysicsInit( SOLID_VPHYSICS )
 			v:SetMoveType( MOVETYPE_VPHYSICS )
+			v:PhysicsInit( SOLID_VPHYSICS )
 			local phys = v:GetPhysicsObject()
 
 			if IsValid( phys ) then

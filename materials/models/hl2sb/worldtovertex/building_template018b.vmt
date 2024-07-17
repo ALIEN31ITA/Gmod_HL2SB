@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "hl2beta/Building_Template/Building_Template018b"
+	"$surfaceprop" "concrete"
+}

@@ -1,0 +1,7 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "hl2beta/Stone/stonewall021j"
+	"$surfaceprop" "concrete"
+	"$bumpmap" "hl2beta/stone/stonewall021j_normal"
+	"%keywords" "c17downtown"
+}
