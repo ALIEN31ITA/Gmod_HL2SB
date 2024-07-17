@@ -110,7 +110,7 @@ hook.Add( "OnEntityCreated", "MDL_HL2SB_HeadCanister", function(ent)
 	if hl2sb_getmap == "gmhl2e1_c17_03" then
 		if ent:GetClass() ~= "env_headcrabcanister" then return end
 
-		timer.Simple( 0, function()
+		timer.Simple( 0.1, function()
 			if not IsValid( ent ) then return end
 
 			ent:SetMoveType( MOVETYPE_VPHYSICS )
@@ -119,7 +119,6 @@ hook.Add( "OnEntityCreated", "MDL_HL2SB_HeadCanister", function(ent)
 			local phys = ent:GetPhysicsObject()
 			if IsValid( phys ) then
 				phys:EnableMotion( false )
-				print(ent, "Set to physics")
 			end
 		end)
 	end
@@ -145,7 +144,7 @@ hook.Add( "OnEntityCreated", "MDL_HL2SB_Ammocrate", function(ent)
 
 	timer.Simple(0.1, function()
 		if ( !IsValid(ent) ) then return end
-		if ( !ent:GetClass() == "item_ammo_crate" ) then return end
+		if ( ent:GetClass() != "item_ammo_crate" ) then return end
 
 		local key = ent:GetInternalVariable( "AmmoType" )
 		local translation = modelTranslation[key]
