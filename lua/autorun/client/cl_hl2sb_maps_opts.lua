@@ -98,7 +98,7 @@ local hl2sb_getchapter = {
 	["gmhl2e1_c17_03"] = "Exit 17: "
 }
 
-hl2sb_map_chapter = hl2sb_getchapter[hl2sb_getmap]
+hl2sb_map_chapter = hl2sb_getchapter[hl2sb_getmap] or "Not an HL2:SB Map" // Default to "Not an HL2:SB Map"
 
 // CHAPTER TITLES
 
