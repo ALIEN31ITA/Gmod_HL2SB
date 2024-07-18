@@ -42,12 +42,12 @@ if ( GlowLib ) then
 		Position = function(self, ent)
 			if ( !IsValid(ent) ) then return end
 
-			local attachmentData = ent:GetAttachment(ent:LookupAttachment("attach_mask_end_l"))
+			local attachmentData = ent:GetAttachment(ent:LookupAttachment("glowlib_camera"))
 			return attachmentData.Pos
 		end,
-		Attachment = "attach_mask_end_l",
+		Attachment = "glowlib_camera",
 		Color = {
-			[0] = Color(0, 255, 255)
+			[0] = Color(0, 205, 255)
 		},
 		Size = 0.35
 	})
