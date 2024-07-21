@@ -19,7 +19,7 @@ hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
 		for k, v in pairs(godModeNPCNames) do
 			if ( ent_class == k ) then
 				print("Correct class")
-				for index, entName do
+				for index, entName in ipairs(v) do
 					if ( ent_name == entName ) then
 						print("Correct name")
 						return true
