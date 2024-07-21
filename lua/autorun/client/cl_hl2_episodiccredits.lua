@@ -36,6 +36,8 @@ hook.Add("HUDPaint", "HL2EP1SandboxCredits", function()
     local curTime = CurTime()
     local alpha = 255
 
+    if ( fadeStart == 0 ) then return end
+
     if curTime < fadeEnd then
         alpha = Lerp((curTime - fadeStart) / fadeTime, 0, 255)
     elseif curTime > fadeEnd + fadeHold then
