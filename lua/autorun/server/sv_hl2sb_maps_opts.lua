@@ -344,7 +344,7 @@ hook.Add( "InitPostEntity", "HL2SB_mapsettings", function()
 	HL2SB_BallspawnerOFF()
 	HL2SB_LostCoast_Easteregg()
 
-	if HL2SB_mapsettings.HL2SB_GmanIntro.value:GetBool(true) then
+	if HL2SB_mapsettings.HL2SB_GmanIntro.value:GetBool() then
 		ProtectedCall( HL2SB_mapsettings.HL2SB_GmanIntro.on )
 	else
 		ProtectedCall( HL2SB_mapsettings.HL2SB_GmanIntro.off )
