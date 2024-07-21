@@ -1,13 +1,7 @@
 CreateConVar("hl2sb_npcgodmode", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Enable/Disable NPC Godmode for Story NPCs")
 
 local godModeNPCNames = {
-	["alyx_name"] = true,
-	["barney_name"] = true,
-}
-
-local godModeNPCs = {
-	["npc_alyx"] = true,
-	["npc_barney"] = true,
+	["npc_alyx"] = {"alyx"},
 }
 
 hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
@@ -20,7 +14,15 @@ hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
 	local map = game.GetMap()
 	if ( !map:find("gmhl2") ) then print("wrong map") return end
 
-	if ( ent:IsNPC() and ( godModeNPCs[ent_class] and godModeNPCNames[ent_name] ) and bGodmode ) then
-		return true
+	if ( ent:IsNPC() and bGodmode ) then
+		for k, v in pairs(godModeNPCNames) do
+			if ( ent_class == k ) then
+				for index, entName do
+					if ( ent_name == entName ) then
+						return true
+					end
+				end
+			end
+		end
 	end
 end)
