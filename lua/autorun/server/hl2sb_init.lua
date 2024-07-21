@@ -14,7 +14,7 @@ hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
 	local map = game.GetMap()
 	if ( !map:find("gmhl2") ) then return end
 
-	if ( ent:IsNPC() and godModeNPCs[eName] and bGodmode ) then
+	if ( ent:IsNPC() and godModeNPCs[eName:lower()] and bGodmode ) then
 		return true
 	end
 end)
