@@ -15,10 +15,13 @@ hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
 	if ( !map:find("gmhl2") ) then print("wrong map") return end
 
 	if ( ent:IsNPC() and bGodmode ) then
+		print("is npc and has godmode")
 		for k, v in pairs(godModeNPCNames) do
 			if ( ent_class == k ) then
+				print("Correct class")
 				for index, entName do
 					if ( ent_name == entName ) then
+						print("Correct name")
 						return true
 					end
 				end
