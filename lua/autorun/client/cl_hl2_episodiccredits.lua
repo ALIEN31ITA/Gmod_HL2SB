@@ -1,9 +1,4 @@
-local toggle = toggle or false
 local hl2credits_getmap = game.GetMap()
-
-concommand.Add("credits", function()
-    toggle = !toggle
-end)
 
 surface.CreateFont("HL2SBEP1CreditsFont", {
     font = "HL2EP1",
@@ -24,6 +19,19 @@ concommand.Add("HL2SB_StartIntro", function()
     fadeTime = fadeEnd - fadeStart
 end)
 
+concommand.Add("HL2SB_StopIntro", function()
+    fadeStart = 0
+    fadeEnd = 5
+    fadeTime = fadeEnd - fadeStart
+end)
+
+local creditsMap = {
+    ["gmhl2e1_citadel_00"] = "HALF-LIFE'\n== episode one==",
+    ["ep1_citadel_00"] = "HALF-LIFE'\n== episode one==",
+    ["gmhl2e2_outland_01"] = "HALF-LIFE'\n== episode two==",
+    ["ep2_outland_01"] = "HALF-LIFE'\n== episode two=="
+}
+
 hook.Add("HUDPaint", "HL2EP1SandboxCredits", function()
     local curTime = CurTime()
     local alpha = 255
@@ -34,8 +42,6 @@ hook.Add("HUDPaint", "HL2EP1SandboxCredits", function()
         alpha = Lerp((curTime - fadeEnd - fadeHold) / fadeTime, 255, 0)
     end
 
-	if hl2credits_getmap == "gmhl2e1_citadel_00" or hl2credits_getmap == "ep1_citadel_00"
-    draw.DrawText("HALF-LIFE'\n== episode one==", "HL2SBEP1CreditsFont", ScrW() / 2, ScrH() / 2, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER)
-	if hl2credits_getmap == "gmhl2e2_outland_01" or hl2credits_getmap == "ep2_outland_01"
-    draw.DrawText("HALF-LIFE'\n== episode two==", "HL2SBEP1CreditsFont", ScrW() / 2, ScrH() / 2, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER)
+	local mapName = creditsMap[hl2credits_getmap] or "HALF-LIFE'\n== sandbox=="
+    draw.DrawText(mapName, "HL2SBEP1CreditsFont", ScrW() / 2, ScrH() / 2, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER)
 end)
