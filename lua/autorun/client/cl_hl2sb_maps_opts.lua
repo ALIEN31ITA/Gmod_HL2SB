@@ -98,7 +98,7 @@ local hl2sb_getchapter = {
 	["gmhl2e1_c17_03"] = "Exit 17: "
 }
 
-hl2sb_map_chapter = hl2sb_getchapter[hl2sb_getmap]
+hl2sb_map_chapter = hl2sb_getchapter[hl2sb_getmap] or "Not an HL2:SB Map" // Default to "Not an HL2:SB Map"
 
 // CHAPTER TITLES
 
@@ -169,7 +169,7 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
 		panel:AddItem(logo)
 		panel:Help("Generic settings for the maps")
 		panel:CheckBox("[TRAINSTATION-EP1] Disable intros", "hl2sb_trainstation_intro")
-		panel:ControlHelp("You don't need to hear all of this, you are a professional")
+		panel:ControlHelp("You don't need to hear all of this, you are a highly trained professional")
 		panel:CheckBox("Death barriers", "hl2sb_deathpit_triggers")
 		panel:ControlHelp("Disable/Enable death barriers, pits, leeches")
 		panel:CheckBox("Loading Zones", "hl2sb_levelswitch_triggers")

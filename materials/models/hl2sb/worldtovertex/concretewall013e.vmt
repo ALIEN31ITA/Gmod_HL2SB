@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "hl2beta/concrete/concretewall013e"
+	"$surfaceprop" "concrete"
+	"%keywords" "c17downtown"
+}

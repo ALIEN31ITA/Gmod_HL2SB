@@ -1,19 +1,39 @@
-// EPISODIC Particle Mounting Fix
-if ( IsMounted( "episodic" ) ) then
-	game.AddParticles( "particles/ep1_fx.pcf" )
-end
-if ( IsMounted( "ep2" ) ) then
-	game.AddParticles( "particles/advisor.pcf" )
-	game.AddParticles( "particles/aurora.pcf" )
-	game.AddParticles( "particles/aurora_sphere2.pcf" )
-	game.AddParticles( "particles/blob.pcf" )
-	game.AddParticles( "particles/skybox_smoke.pcf" )
-	game.AddParticles( "particles/choreo_dog_v_strider.pcf" )
-	game.AddParticles( "particles/dust_rumble.pcf" )
-	game.AddParticles( "particles/stalactite.pcf" )
-	game.AddParticles( "particles/hunter_intro.pcf" )
-	game.AddParticles( "particles/door_explosion.pcf" )
-	game.AddParticles( "particles/choreo_launch.pcf" )
-	game.AddParticles( "particles/magnusson_burner.pcf" )
-end
+surface.CreateFont("HL2SBEP1CreditsFont", {
+    font = "HL2EP1",
+    size = 50,
+    weight = 500,
+    antialias = true,
+    shadow = false
+})
 
+local fadeStart = 0
+local fadeEnd = 5
+local fadeHold = 3
+local fadeTime = fadeEnd - fadeStart
+
+concommand.Add("hl2sb_ep1_startintro", function()
+    fadeStart = CurTime()
+    fadeEnd = CurTime() + fadeTime
+    fadeTime = fadeEnd - fadeStart
+end)
+
+concommand.Add("hl2sb_ep1_stopintro", function()
+    fadeStart = 0
+    fadeEnd = 5
+    fadeTime = fadeEnd - fadeStart
+end)
+
+hook.Add("HUDPaint", "Credits", function()
+    local curTime = CurTime()
+    local alpha = 255
+
+    if curTime < fadeEnd then
+        alpha = Lerp((curTime - fadeStart) / fadeTime, 0, 255)
+    elseif curTime > fadeEnd + fadeHold then
+        alpha = Lerp((curTime - fadeEnd - fadeHold) / fadeTime, 255, 0)
+    end
+
+    if ( alpha > 0 ) then
+        draw.DrawText("HALF-LIFE2\n== episode one==", "HL2SBEP1CreditsFont", ScrW() / 2, ScrH() / 2, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER)
+    end
+end)

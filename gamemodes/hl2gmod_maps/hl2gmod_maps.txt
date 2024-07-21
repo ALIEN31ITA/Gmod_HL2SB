@@ -1,0 +1,12 @@
+"hl2sbgmod_maps"
+{
+	"base"		"base"
+	"title"		"Half-Life 2: Sandbox"
+	"maps"		"^gmhl2_"
+	"menusystem"	"0"
+
+	"settings"
+	{
+		// Original maps by VALVe, i just edited them lol. 
+	}
+}

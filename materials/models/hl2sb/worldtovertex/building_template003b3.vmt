@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2sb/worldtovertex/Building_Template003b3"
+	"$surfaceprop" "concrete"
+}
