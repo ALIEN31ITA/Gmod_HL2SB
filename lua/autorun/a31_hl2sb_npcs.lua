@@ -15,7 +15,7 @@ if ( IsMounted( "episodic" ) ) then
 	{
 		Name = "Vortigaunt (Blue)",
 		Class = "npc_vortigaunt",
-		Model = "models/hl2sb/characters/vortigaunt_blue.mdl",
+		Model = "models/vortigaunt_blue.mdl",
 		Category = Category,
 		KeyValues = { SquadName = "resistance", ArmorRechargeEnabled = 1 },
 		ListClass = "npc_bluevorti_episodic",
@@ -133,7 +133,7 @@ local Category = "Half-Life 2"
 
 local HL2SB_VEH_COMBINE_APC = 
 {
-	Name = "Combine APC",
+	Name = "Combine APC (HL2SB)",
 	Model = "models/hl2sb/vehicles/combine_apc.mdl",
 	Class = "prop_vehicle_apc",
 	Category = Category,

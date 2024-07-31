@@ -1,7 +1,15 @@
-CreateConVar("hl2sb_npcgodmode", "1", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Enable/Disable NPC Godmode for Story NPCs")
+CreateConVar("hl2sb_npcgodmode", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Enable/Disable NPC Godmode for Story NPCs")
 
 local godModeNPCNames = {
 	["npc_alyx"] = {"alyx"},
+	["npc_barney"] = {"barney"},
+	["npc_breen"] = {"breen"},
+	["npc_dog"] = {"dog"},
+	["npc_kleiner"] = {"kleiner"},
+	["npc_eli"] = {"eli"},
+	["npc_citizen"] = {"odessa"},
+	["npc_monk"] = {"monk"},
+	["npc_mossman"] = {"mossman", "mossman2"},
 }
 
 hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
@@ -9,7 +17,7 @@ hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
 
 	local bGodmode = GetConVar("hl2sb_npcgodmode"):GetBool()
 	local ent_class = ent:GetClass():lower()
-	local ent_name = ent:GetName():lower()
+	local ent_name = ent:GetName()
 
 	local map = game.GetMap()
 	if ( !map:find("gmhl2") ) then return end
@@ -25,12 +33,4 @@ hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
 			end
 		end
 	end
-end)
-
-gameevent.Listen("player_connect")
-hook.Add("player_connect", "HL2SB_NPCGodmode", function(data)
-	local ply = Player(data.userid)
-	if ( !IsValid(ply) ) then return end
-
-	// code for intro here
 end)
