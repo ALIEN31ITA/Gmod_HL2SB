@@ -26,3 +26,11 @@ hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
 		end
 	end
 end)
+
+gameevent.Listen("player_connect")
+hook.Add("player_connect", "HL2SB_NPCGodmode", function(data)
+	local ply = Player(data.userid)
+	if ( !IsValid(ply) ) then return end
+
+	// code for intro here
+end)
