@@ -41,7 +41,6 @@ local creditsMap = {
     ["ep2_outland_01"] = "HALF-LIFE'\n== episode two=="
 }
 
-local convar = GetConVar("hl2_episodic")
 hook.Add("HUDPaint", "HL2EP1SandboxCredits", function()
     local curTime = CurTime()
     local alpha = 255
@@ -53,11 +52,11 @@ hook.Add("HUDPaint", "HL2EP1SandboxCredits", function()
     elseif curTime > fadeEnd + fadeHold then
         alpha = Lerp((curTime - fadeEnd - fadeHold) / fadeTime, 255, 0)
     end
+	
+	// hl2introtext - used with intro doesn't have full letters
+	// hl2generic - has all letters, DO NOT USE IT FOR THE HALF-LIFE text!!
 
-    local font = "HL2SBEP1CreditsFont"
-    if ( convar:GetInt() == 2 ) then
-        font = "HL2SBEP2CreditsFont"
-    end
+    local font = "hl2introtext"
 
 	local mapName = creditsMap[hl2credits_getmap] or "HALF-LIFE'\n== sandbox=="
     draw.DrawText(mapName, font, ScrW() / 2, ScrH() / 2.08, ColorAlpha(color_white, alpha), TEXT_ALIGN_CENTER)
