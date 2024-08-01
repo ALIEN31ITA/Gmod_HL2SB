@@ -32,11 +32,14 @@ hook.Add("PlayerSpawnedNPC", "HL2SB_NPC_SUBMATERIALS", function(ply, ent)
 	end
 
 	if ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
+		ent:SetNW2Entity("HL2SBSpawnedBy", ply)
+
 		ent:SetSubMaterial( 0, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
 		ent:SetSubMaterial( 1, "models/hl2sb/characters/vortigaunt_blue_patch" )
 		ent:SetSubMaterial( 2, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
 		ent:SetSubMaterial( 3, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
 		ent:SetSubMaterial( 4, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
+		ent:SetSubMaterial( 5, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
 		ent.NPCTable.Name = "Vortigaunt"
 	end
 end)
@@ -57,17 +60,19 @@ end)
 
 hook.Add( "OnEntityCreated", "MDL_HL2SB_GmodBlueVorti", function(ent)
 	if hl2sb_getmap == "gmhl2e1_citadel_00" then
-		if ( ent:GetClass() == "npc_vortigaunt" or ent:GetClass() == "prop_dynamic"  ) then
-			timer.Simple(0.1, function()
-				if IsValid(ent) && ent:GetModel() == "models/vortigaunt_blue.mdl" && ent.NPCTable.ListClass != "npc_bluevorti_episodic" then
-					ent:SetSubMaterial( 0, "models/vortigaunt/eyeball_blue" )
-					ent:SetSubMaterial( 1, "models/vortigaunt/vortigaunt_blue_ep1" )
-					ent:SetSubMaterial( 2, "models/vortigaunt/eyeball_blue" )
-					ent:SetSubMaterial( 3, "models/vortigaunt/eyeball_blue" )
-					ent:SetSubMaterial( 4, "models/vortigaunt/eyeball_blue" )
-				end
-			end)
-		end
+		timer.Simple(0.1, function()
+			if ( !IsValid(ent) ) then return end
+			if ( ent:GetClass() != ( "npc_vortigaunt" or "prop_dynamic" ) ) then return end
+			if ( ent:GetModel() != "models/vortigaunt_blue.mdl" ) then return end
+			if ( ent.NPCTable.ListClass == "npc_bluevorti_episodic" ) then return end
+			if ( IsValid(ent:GetNW2Entity("HL2SBSpawnedBy", nil)) ) then return end
+
+			ent:SetSubMaterial( 0, "models/vortigaunt/eyeball_blue" )
+			ent:SetSubMaterial( 1, "models/vortigaunt/vortigaunt_blue_ep1" )
+			ent:SetSubMaterial( 2, "models/vortigaunt/eyeball_blue" )
+			ent:SetSubMaterial( 3, "models/vortigaunt/eyeball_blue" )
+			ent:SetSubMaterial( 4, "models/vortigaunt/eyeball_blue" )
+		end)
 	end
 end)
 
