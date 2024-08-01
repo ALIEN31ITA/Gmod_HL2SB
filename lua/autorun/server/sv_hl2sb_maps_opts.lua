@@ -111,18 +111,6 @@ local function PhysicalCanisters(ent)
 	end
 end
 
-hook.Add( "OnEntityCreated", "HL2SBInitPostEntity", function(ent)
-	timer.Simple(0.1, function()
-		if ( !IsValid(ent) ) then return end
-
-		PhysicalCanisters(ent)
-		EpisodicRetextures(ent)
-		SnowyMossman(ent)
-		EpisodeOneBlueVortigaunts(ent)
-		FisherManFix()
-	end)
-end)
-
 // AMMO CRATE Pickable
 local modelTranslation = {
 	[0] = "models/hl2sb/items/ammocrate_pistol.mdl",
@@ -157,6 +145,19 @@ local function AmmoCrateModelSwitch(ent)
 		phys:EnableMotion(false)
 	end
 end
+
+hook.Add( "OnEntityCreated", "HL2SBInitPostEntity", function(ent)
+	timer.Simple(0.1, function()
+		if ( !IsValid(ent) ) then return end
+
+		PhysicalCanisters(ent)
+		EpisodicRetextures(ent)
+		SnowyMossman(ent)
+		EpisodeOneBlueVortigaunts(ent)
+		FisherManFix(ent)
+		AmmoCrateModelSwitch(ent)
+	end)
+end)
 
 // Ballspawner OFF ON START HACK - Thanks a lot VALVe... cheap ass solution
 local function HL2SB_BallspawnerOFF()
