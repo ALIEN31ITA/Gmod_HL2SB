@@ -140,7 +140,6 @@ local modelTranslation = {
 
 local function AmmoCrateModelSwitch(ent)
 	if ( !IsValid(ent) ) then return end
-
 	if ( ent:GetClass() != "item_ammo_crate" ) then return end
 
 	local key = ent:GetInternalVariable("AmmoType")
