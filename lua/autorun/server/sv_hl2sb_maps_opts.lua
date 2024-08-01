@@ -56,7 +56,6 @@ end
 // Vortiguant Blue - July Update
 local function EpisodeOneBlueVortigaunts(ent)
 	if ( !IsValid(ent) ) then return end
-	if ( ent.NPCTable.ListClass == "npc_bluevorti_episodic" ) then return end
 	if ( IsValid(ent:GetNW2Entity("HL2SBSpawnedBy", nil)) ) then return end
 	if ( ent:GetClass() != ( "npc_vortigaunt" or "prop_dynamic" ) ) then return end
 	if ( ent:GetModel() != "models/vortigaunt_blue.mdl" ) then return end
