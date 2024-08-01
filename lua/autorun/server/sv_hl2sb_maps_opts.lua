@@ -45,103 +45,83 @@ hook.Add("PlayerSpawnedNPC", "HL2SB_NPC_SUBMATERIALS", function(ply, ent)
 end)
 
 // Fisherman MDL code fix - Phoenixf
-hook.Add( "OnEntityCreated", "MDL_HL2SB_Fisherman", function(ent)
-	if ( ent:GetClass() == "npc_fisherman" ) then
-		timer.Simple(0.1, function()
-			if IsValid(ent) then
-				ent:SetModel( "models/hl2sb/lostcoast/fisherman/fisherman.mdl" )
-				ent:SetPos(ent:GetPos() + Vector(0, 0, 5))
-			end
-		end)
-	end
-end)
+local function FisherManFix(ent)
+	if ( !IsValid(ent) ) then return end
+	if ( ent:GetClass() != "npc_fisherman" ) then return end
+
+	ent:SetModel("models/hl2sb/lostcoast/fisherman/fisherman.mdl")
+	ent:SetPos(ent:GetPos() + Vector(0, 0, 5))
+end
 
 // Vortiguant Blue - July Update
+local function EpisodeOneBlueVortigaunts(ent)
+	if ( !IsValid(ent) ) then return end
+	if ( ent.NPCTable.ListClass == "npc_bluevorti_episodic" ) then return end
+	if ( IsValid(ent:GetNW2Entity("HL2SBSpawnedBy", nil)) ) then return end
+	if ( ent:GetClass() != ( "npc_vortigaunt" or "prop_dynamic" ) ) then return end
+	if ( ent:GetModel() != "models/vortigaunt_blue.mdl" ) then return end
+	if ( hl2sb_getmap != "gmhl2e1_citadel_00" ) then return end
 
-hook.Add( "OnEntityCreated", "MDL_HL2SB_GmodBlueVorti", function(ent)
-	if hl2sb_getmap == "gmhl2e1_citadel_00" then
-		timer.Simple(0.1, function()
-			if ( !IsValid(ent) ) then return end
-			if ( ent:GetClass() != ( "npc_vortigaunt" or "prop_dynamic" ) ) then return end
-			if ( ent:GetModel() != "models/vortigaunt_blue.mdl" ) then return end
-			if ( ent.NPCTable.ListClass == "npc_bluevorti_episodic" ) then return end
-			if ( IsValid(ent:GetNW2Entity("HL2SBSpawnedBy", nil)) ) then return end
+	ent:SetSubMaterial(0, "models/vortigaunt/eyeball_blue")
+	ent:SetSubMaterial(1, "models/vortigaunt/vortigaunt_blue_ep1")
+	ent:SetSubMaterial(2, "models/vortigaunt/eyeball_blue")
+	ent:SetSubMaterial(3, "models/vortigaunt/eyeball_blue")
+	ent:SetSubMaterial(4, "models/vortigaunt/eyeball_blue")
+end
 
-			ent:SetSubMaterial( 0, "models/vortigaunt/eyeball_blue" )
-			ent:SetSubMaterial( 1, "models/vortigaunt/vortigaunt_blue_ep1" )
-			ent:SetSubMaterial( 2, "models/vortigaunt/eyeball_blue" )
-			ent:SetSubMaterial( 3, "models/vortigaunt/eyeball_blue" )
-			ent:SetSubMaterial( 4, "models/vortigaunt/eyeball_blue" )
-		end)
+local function SnowyMossman(ent)
+	if ( !IsValid(ent) ) then return end
+	if ( hl2sb_getmap != ( "gmhl2e1_citadel_03" or "ep2_outland_11b" or "ep1_citadel_03" ) ) then return end
+	if ( ent:GetClass() != "npc_mossman" and ent:GetName() != "mossman2" ) then return end
+
+	ent:SetModel("models/hl2sb/characters/mossman_ep1.mdl")
+	ent:SetPos(ent:GetPos() + Vector(0, 0, 5))
+end
+
+
+local function EpisodicRetextures(ent)
+	if ( !IsValid(ent) ) then return end
+
+	if ( hl2sb_getmap == "gmhl2e2_outland_12" ) then
+		if ( ent:GetClass() == "npc_eli" && ent:GetName() == "eli" ) then
+			ent:SetSubMaterial(4, "models/hl2sb/characters/eli_sheet_ep2")
+		end
+
+		if ( ent:GetClass() == "npc_kleiner" && ent:GetName() == "kleiner" ) then
+			ent:SetSubMaterial(1, "models/hl2sb/characters/kleiner_sheet_ep2")
+		end
+	elseif ( hl2sb_getmap == ( "gmhl2e1_c17_02" or "gmhl2e1_c17_03" ) ) then
+		if ( ent:GetClass() == "npc_barney" && ent:GetName() == "barney" ) then
+			ent:SetSubMaterial(2, "models/hl2sb/characters/barneyface_ep1")
+		end
 	end
-end)
+end
 
-// Mossman Artic (EP1)
-// REPLACE ALSO IN EP2
-hook.Add( "OnEntityCreated", "MDL_HL2SB_SnowyMossman", function(ent)
+local function PhysicalCanisters(ent)
+	if ( !IsValid(ent) ) then return end
+	if ( hl2sb_getmap != "gmhl2e1_c17_03" ) then return end
 
+	if ( ent:GetClass() == "env_headcrabcanister" ) then
+		ent:SetMoveType(MOVETYPE_VPHYSICS)
+		ent:PhysicsInit(SOLID_VPHYSICS)
+
+		local phys = ent:GetPhysicsObject()
+		if ( IsValid(phys) ) then
+			phys:EnableMotion(false)
+		end
+	end
+end
+
+hook.Add( "OnEntityCreated", "HL2SBInitPostEntity", function(ent)
 	timer.Simple(0.1, function()
 		if ( !IsValid(ent) ) then return end
 
-		if hl2sb_getmap == ( "gmhl2e1_citadel_03" or "ep2_outland_11b" or "ep1_citadel_03" ) then
-			if ( ent:GetClass() == "npc_mossman" and ent:GetName() == "mossman2" ) then
-				ent:SetModel( "models/hl2sb/characters/Mossman_ep1.mdl" )
-				ent:SetPos(ent:GetPos() + Vector(0, 0, 5))
-			end
-		end
+		PhysicalCanisters(ent)
+		EpisodicRetextures(ent)
+		SnowyMossman(ent)
+		EpisodeOneBlueVortigaunts(ent)
+		FisherManFix()
 	end)
-end)
-
-// Eli Sweater, Kleiner Darker, Bloodface Barney (Episodic Retextures)
-hook.Add( "OnEntityCreated", "TEX_HL2SB_SweaterEli", function(ent)
-
-	if hl2sb_getmap == "gmhl2e2_outland_12" then
-		if ( ent:GetClass() == "npc_eli" ) then
-			timer.Simple(0, function()
-				if IsValid(ent) && ent:GetName() == "eli" then
-					ent:SetSubMaterial( 4, "models/hl2sb/characters/eli_sheet_ep2" )
-				end
-			end)
-		end
-
-		if ( ent:GetClass() == "npc_kleiner" ) then
-			timer.Simple(0, function()
-				if IsValid(ent) && ent:GetName() == "kleiner" then
-					ent:SetSubMaterial( 1, "models/hl2sb/characters/kleiner_sheet_ep2" )
-				end
-			end)
-		end
-	end
-
-	if hl2sb_getmap == "gmhl2e1_c17_02" or hl2sb_getmap == "gmhl2e1_c17_03" then
-		if ( ent:GetClass() == "npc_barney" ) then
-			timer.Simple(0, function()
-				if IsValid(ent) && ent:GetName() == "barney" then
-					ent:SetSubMaterial( 2, "models/hl2sb/characters/barneyface_ep1" )
-				end
-			end)
-		end
-	end
-end)
-
-// Physical headcrab canisters (EP1)
-hook.Add( "OnEntityCreated", "MDL_HL2SB_HeadCanister", function(ent)
-
-	if hl2sb_getmap == "gmhl2e1_c17_03" then
-		if ent:GetClass() ~= "env_headcrabcanister" then return end
-
-		timer.Simple( 0.1, function()
-			if not IsValid( ent ) then return end
-
-			ent:SetMoveType( MOVETYPE_VPHYSICS )
-			ent:PhysicsInit( SOLID_VPHYSICS )
-
-			local phys = ent:GetPhysicsObject()
-			if IsValid( phys ) then
-				phys:EnableMotion( false )
-			end
-		end)
-	end
 end)
 
 // AMMO CRATE Pickable
@@ -158,30 +138,27 @@ local modelTranslation = {
 	[9] = "models/hl2sb/items/ammocrate_smg1.mdl"
 }
 
-hook.Add( "OnEntityCreated", "MDL_HL2SB_Ammocrate", function(ent)
+local function AmmoCrateModelSwitch(ent)
 	if ( !IsValid(ent) ) then return end
 
-	timer.Simple(0.1, function()
-		if ( !IsValid(ent) ) then return end
-		if ( ent:GetClass() != "item_ammo_crate" ) then return end
+	if ( ent:GetClass() != "item_ammo_crate" ) then return end
 
-		local key = ent:GetInternalVariable( "AmmoType" )
-		local translation = modelTranslation[key]
+	local key = ent:GetInternalVariable("AmmoType")
+	local translation = modelTranslation[key]
 
-		if ( translation ) then
-			ent:SetModel(translation)
-		end
+	if ( translation ) then
+		ent:SetModel(translation)
+	end
 
-		ent:SetMoveType( MOVETYPE_VPHYSICS )
-		ent:PhysicsInit( SOLID_VPHYSICS )
+	ent:SetMoveType(MOVETYPE_VPHYSICS)
+	ent:PhysicsInit(SOLID_VPHYSICS)
 
-		local phys = ent:GetPhysicsObject()
+	local phys = ent:GetPhysicsObject()
 
-		if IsValid( phys ) then
-			phys:EnableMotion( false )
-		end
-    end)
-end)
+	if ( IsValid(phys) ) then
+		phys:EnableMotion(false)
+	end
+end
 
 // Ballspawner OFF ON START HACK - Thanks a lot VALVe... cheap ass solution
 local function HL2SB_BallspawnerOFF()
