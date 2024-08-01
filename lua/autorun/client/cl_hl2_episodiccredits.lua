@@ -2,11 +2,13 @@ local hl2credits_getmap = game.GetMap()
 
 surface.CreateFont("HL2SBEP1CreditsFont", {
     font = "HL2EP1",
+    size = 50,
     size = 35,
     weight = 500,
     antialias = true,
     shadow = false
 })
+
 surface.CreateFont("HL2SBEP2CreditsFont", {
     font = "HL2EP2",
     size = 35,
@@ -39,10 +41,11 @@ local creditsMap = {
     ["ep2_outland_01"] = "HALF-LIFE'\n== episode two=="
 }
 
+local convar = GetConVar("hl2_episodic")
 hook.Add("HUDPaint", "HL2EP1SandboxCredits", function()
     local curTime = CurTime()
     local alpha = 255
-	
+
     if ( fadeStart == 0 ) then return end
 
     if curTime < fadeEnd then
@@ -51,6 +54,11 @@ hook.Add("HUDPaint", "HL2EP1SandboxCredits", function()
         alpha = Lerp((curTime - fadeEnd - fadeHold) / fadeTime, 255, 0)
     end
 
+    local font = "HL2SBEP1CreditsFont"
+    if ( convar:GetInt() == 2 ) then
+        font = "HL2SBEP2CreditsFont"
+    end
+
 	local mapName = creditsMap[hl2credits_getmap] or "HALF-LIFE'\n== sandbox=="
-    draw.DrawText(mapName, "HL2SBEP1CreditsFont", ScrW() / 2, ScrH() / 2.08, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER)
+    draw.DrawText(mapName, font, ScrW() / 2, ScrH() / 2.08, ColorAlpha(color_white, alpha), TEXT_ALIGN_CENTER)
 end)
