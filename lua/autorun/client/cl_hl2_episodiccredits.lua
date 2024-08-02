@@ -1,4 +1,10 @@
 local hl2credits_getmap = game.GetMap()
+local hl2credits_panel
+
+if ( IsValid(hl2credits_panel) ) then
+    hl2credits_panel:Remove()
+    hl2credits_panel = nil
+end
 
 surface.CreateFont("HL2SBCreditsFont", {
     font = "HL2Credits",
@@ -28,15 +34,25 @@ concommand.Add("HL2SB_StartIntro", function()
 end)
 
 concommand.Add("HL2SB_DisplayCredits", function()
-		local Panel = vgui.Create( "DPanel" )
-		Panel:SetPos( 200, 200 )
-		Panel:SetSize( 500, 500 )
-		Panel:MakePopup()
+    if ( IsValid(hl2credits_panel) ) then
+        hl2credits_panel:Remove()
+        hl2credits_panel = nil
+    end
 
-		local Avatar = vgui.Create( "AvatarImage", Panel )
-		Avatar:SetSize( 64, 64 )
-		Avatar:SetPos( 4, 30 )
-		Avatar:SetPlayer( LocalPlayer(), 64 )
+    hl2credits_panel = vgui.Create( "DPanel" )
+    hl2credits_panel:SetPos( 0, 0 )
+    hl2credits_panel:SetSize( ScrW(), ScrH() )
+    hl2credits_panel:SetBackgroundColor(ColorAlpha(color_white, 0))
+
+    local Avatar_Bloodycop = vgui.Create("AvatarImage", Panel)
+    Avatar_Bloodycop:SetSize(128, 128)
+    Avatar_Bloodycop:SetPos(ScrW() / 2 - 300, ScrH() / 2 - 128)
+    Avatar_Bloodycop:SetSteamID("76561198373309941") // eon ( bloodycop )
+
+    local Avatar_Alien31 = vgui.Create("AvatarImage", Panel)
+    Avatar_Alien31:SetSize(128, 128)
+    Avatar_Alien31:SetPos(ScrW() / 2 + 200, ScrH() / 2 - 128)
+    Avatar_Alien31:SetSteamID("76561198130175522") // Alien31
 end)
 
 concommand.Add("HL2SB_StopIntro", function()
@@ -63,7 +79,7 @@ hook.Add("HUDPaint", "HL2EP1SandboxCredits", function()
     elseif curTime > fadeEnd + fadeHold then
         alpha = Lerp((curTime - fadeEnd - fadeHold) / fadeTime, 255, 0)
     end
-		
+
 	local hl2sb_markupfonts = markup.Parse("<font=HL2SBCreditsFont>HALF-LIFE'</font>\n<font=HL2SBGenericFont>== sandbox==</font>")
 
 	local mapName = creditsMap[hl2credits_getmap] or "==NOT==\nHALF-LIFE'\nMAP"
