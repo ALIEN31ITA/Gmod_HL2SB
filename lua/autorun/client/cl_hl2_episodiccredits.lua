@@ -27,6 +27,18 @@ concommand.Add("HL2SB_StartIntro", function()
     fadeTime = fadeEnd - fadeStart
 end)
 
+concommand.Add("HL2SB_DisplayCredits", function()
+		local Panel = vgui.Create( "DPanel" )
+		Panel:SetPos( 200, 200 )
+		Panel:SetSize( 500, 500 )
+		Panel:MakePopup()
+
+		local Avatar = vgui.Create( "AvatarImage", Panel )
+		Avatar:SetSize( 64, 64 )
+		Avatar:SetPos( 4, 30 )
+		Avatar:SetPlayer( LocalPlayer(), 64 )
+end)
+
 concommand.Add("HL2SB_StopIntro", function()
     fadeStart = 0
     fadeEnd = 5
@@ -51,10 +63,13 @@ hook.Add("HUDPaint", "HL2EP1SandboxCredits", function()
     elseif curTime > fadeEnd + fadeHold then
         alpha = Lerp((curTime - fadeEnd - fadeHold) / fadeTime, 255, 0)
     end
-	
-	// hl2introtext - used with intro doesn't have full letters
-	// hl2generic - has all letters, DO NOT USE IT FOR THE HALF-LIFE text!!
+		
+	local hl2sb_markupfonts = markup.Parse("<font=HL2SBCreditsFont>HALF-LIFE'</font>\n<font=HL2SBGenericFont>== sandbox==</font>")
 
-	local mapName = creditsMap[hl2credits_getmap] or "HALF-LIFE'\n== sandbox=="
+	local mapName = creditsMap[hl2credits_getmap] or "==NOT==\nHALF-LIFE'\nMAP"
 	draw.DrawText(mapName, "HL2SBCreditsFont", ScrW() / 2, ScrH() / 2.08, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER)
+end)
+
+hook.Add("HUDPaint", "HL2SBAddonCredits", function()
+	//todo lol
 end)
