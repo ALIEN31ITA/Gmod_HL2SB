@@ -16,6 +16,7 @@ hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
 	if ( !IsValid( ent ) ) then return end
 
 	local bGodmode = GetConVar("hl2sb_npcgodmode"):GetBool()
+	local ent_class = ent:GetClass()
 	local ent_name = ent:GetName()
 
 	local map = game.GetMap()
