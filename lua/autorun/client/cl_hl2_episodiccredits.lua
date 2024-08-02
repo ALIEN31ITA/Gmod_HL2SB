@@ -1,16 +1,15 @@
 local hl2credits_getmap = game.GetMap()
 
-surface.CreateFont("HL2SBEP1CreditsFont", {
-    font = "HL2EP1",
-    size = 50,
+surface.CreateFont("HL2SBCreditsFont", {
+    font = "HL2Credits",
     size = 35,
     weight = 500,
     antialias = true,
     shadow = false
 })
 
-surface.CreateFont("HL2SBEP2CreditsFont", {
-    font = "HL2EP2",
+surface.CreateFont("HL2SBGenericFont", {
+    font = "HL2Generic",
     size = 35,
     weight = 500,
     antialias = true,
@@ -56,8 +55,6 @@ hook.Add("HUDPaint", "HL2EP1SandboxCredits", function()
 	// hl2introtext - used with intro doesn't have full letters
 	// hl2generic - has all letters, DO NOT USE IT FOR THE HALF-LIFE text!!
 
-    local font = "hl2introtext"
-
 	local mapName = creditsMap[hl2credits_getmap] or "HALF-LIFE'\n== sandbox=="
-    draw.DrawText(mapName, font, ScrW() / 2, ScrH() / 2.08, ColorAlpha(color_white, alpha), TEXT_ALIGN_CENTER)
+	draw.DrawText(mapName, "HL2SBCreditsFont", ScrW() / 2, ScrH() / 2.08, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER)
 end)
