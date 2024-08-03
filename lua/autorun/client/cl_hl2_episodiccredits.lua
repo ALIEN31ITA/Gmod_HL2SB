@@ -86,6 +86,7 @@ local function DrawIntro()
 end
 
 local OutroIcon_Bloodycop = Material("hl2sbox/credits/bloodycop.jpg")
+local OutroIcon_Alien31 = Material("hl2sbox/credits/alien31.jpg")
 local function DrawOutro()
     local curTime = CurTime()
     local alpha = 255
@@ -109,6 +110,13 @@ local function DrawOutro()
 
     // Alien31 Credits
     // todo: below
+
+    surface.SetDrawColor(ColorAlpha(color_white, alpha))
+    surface.SetMaterial(OutroIcon_Alien31)
+    surface.DrawTexturedRect(ScrW() / 2 + 128, ScrH() / 2 - 64, 128, 128)
+
+    local markupBloodycop = markup.Parse("<font=HL2SBGenericFont>Alien31</font>")
+    markupBloodycop:Draw(ScrW() / 2 + 190, ScrH() / 1.83, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
 end
 
 hook.Add("HUDPaint", "HL2EP1Sandbox", function()
