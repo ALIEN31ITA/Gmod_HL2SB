@@ -115,7 +115,7 @@ local function DrawOutro()
     surface.SetMaterial(OutroIcon_Alien31)
     surface.DrawTexturedRect(ScrW() / 2 + 128, ScrH() / 2 - 64, 128, 128)
 
-    local markupBloodycop = markup.Parse("<font=HL2SBGenericFont>Alien31</font>")
+    local markupBloodycop = markup.Parse("<font=HL2SBGenericFont>ALIEN31</font>")
     markupBloodycop:Draw(ScrW() / 2 + 190, ScrH() / 1.83, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
 end
 
