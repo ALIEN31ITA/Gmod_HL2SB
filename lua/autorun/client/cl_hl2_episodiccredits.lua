@@ -13,10 +13,34 @@ surface.CreateFont("HL2SBCreditsFont", {
     antialias = true,
     shadow = false
 })
+surface.CreateFont("HL2SBCreditsFontBig", {
+    font = "HL2Credits",
+    size = 95,
+    weight = 500,
+    antialias = true,
+    shadow = false
+})
 
 surface.CreateFont("HL2SBGenericFont", {
     font = "HL2Generic",
     size = 35,
+    weight = 500,
+    antialias = true,
+    shadow = false
+})
+
+surface.CreateFont("HL2SBGenericFontMed", {
+    font = "HL2Generic",
+    size = 50,
+    scanlines = 2,
+    weight = 500,
+    antialias = true,
+    shadow = false
+})
+
+surface.CreateFont("HL2SBGenericFontBig", {
+    font = "HL2Generic",
+    size = 95,
     weight = 500,
     antialias = true,
     shadow = false
@@ -45,6 +69,7 @@ local HL2SB_OutroFadeHold = 3
 local HL2SB_OutroFadeTime = HL2SB_OutroFadeEnd - HL2SB_OutroFadeStart
 
 concommand.Add("HL2SB_DisplayCredits", function()
+	LocalPlayer():EmitSound(Sound("hl2sb/ui/checkpoint_reached.wav"))
     HL2SB_OutroFadeStart = CurTime()
     HL2SB_OutroFadeEnd = CurTime() + HL2SB_OutroFadeTime
     HL2SB_OutroFadeTime = HL2SB_OutroFadeEnd - HL2SB_OutroFadeStart
@@ -59,8 +84,17 @@ end)
 local creditsMap = {
     ["gmhl2e1_citadel_00"] = "HALF-LIFE'\n== episode one==",
     ["ep1_citadel_00"] = "HALF-LIFE'\n== episode one==",
+    ["gmhl2e1_c17_03"] = "HALF-LIFE'\n== episode one==",
+    ["ep1_c17_06"] = "HALF-LIFE'\n== episode one==",
     ["gmhl2e2_outland_01"] = "HALF-LIFE'\n== episode two==",
     ["ep2_outland_01"] = "HALF-LIFE'\n== episode two=="
+}
+
+local CreditsEpisodes = {
+    ["gmhl2e1_c17_03"] = "==episode one==",
+    ["ep1_c17_06"] = "==episode one==",
+    ["gmhl2e2_outland_12"] = "==episode two==",
+    ["ep2_outland_12"] = "==episode two=="
 }
 
 local function DrawIntro()
@@ -76,7 +110,7 @@ local function DrawIntro()
         alpha = Lerp((curTime - HL2SB_IntroFadeEnd - HL2SB_IntroFadeHold) / HL2SB_IntroFadeTime, 255, 0)
     end
 
-	local hl2sb_markupfonts = markup.Parse("<font=HL2SBCreditsFont>HALF-LIFE'</font>\n<font=HL2SBGenericFont>   == sandbox==</font>")
+	local hl2sb_markupfonts = markup.Parse("<font=HL2SBCreditsFont>HALF-LIFE'</font>\n<font=HL2SBGenericFont>   ==sandbox==</font>")
 	local mapName = creditsMap[hl2credits_getmap]
     if ( mapName ) then
 	    draw.DrawText(mapName, "HL2SBCreditsFont", ScrW() / 2, ScrH() / 2.08, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER)
@@ -99,24 +133,38 @@ local function DrawOutro()
     elseif curTime > HL2SB_OutroFadeEnd + HL2SB_OutroFadeHold then
         alpha = Lerp((curTime - HL2SB_OutroFadeEnd - HL2SB_OutroFadeHold) / HL2SB_OutroFadeTime, 255, 0)
     end
-
-    // Bloodycop Credits
-    surface.SetDrawColor(ColorAlpha(color_white, alpha))
-    surface.SetMaterial(OutroIcon_Bloodycop)
-    surface.DrawTexturedRect(ScrW() / 2 - 256, ScrH() / 2 - 64, 128, 128)
-
-    local markupBloodycop = markup.Parse("<font=HL2SBGenericFont>eon\n<color=255,0,0>bloodycop</color></font>")
-    markupBloodycop:Draw(ScrW() / 2 - 190, ScrH() / 1.83, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
-
-    // Alien31 Credits
-    // todo: below
-
+	
+    // Alien pfp
     surface.SetDrawColor(ColorAlpha(color_white, alpha))
     surface.SetMaterial(OutroIcon_Alien31)
+    surface.DrawTexturedRect(ScrW() / 2 - 256, ScrH() / 2 - 64, 128, 128)
+
+	// EON Text
+    local markupBloodycop = markup.Parse("<font=HL2SBGenericFont>CODER\neon\n<color=255,0,0>bloodycop</color></font>")
+    markupBloodycop:Draw(ScrW() / 2 + 190, ScrH() / 1.75, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
+
+	// GAME TITLE
+	local hl2sb_markupfonts = markup.Parse("<font=HL2SBCreditsFontBig>HALF-LIFE'</font>\n<font=HL2SBGenericFontBig>   ==sandbox==</font>")
+		if hl2credits_getmap == "gmhl2e1_c17_03" or "ep1_c17_06" then
+			hl2sb_markupfonts = markup.Parse("<color=211, 92, 2><font=HL2SBCreditsFontBig>	 HALF-LIFE'</font></color>\n<font=HL2SBGenericFontBig>   ==episode one==</font>")
+		elseif hl2credits_getmap == "gmhl2e2_outland_12" or "ep2_outland_12a" then
+			hl2sb_markupfonts = markup.Parse("<color=211, 92, 2><font=HL2SBCreditsFontBig>	 HALF-LIFE'</font></color>\n<font=HL2SBGenericFontBig>   ==episode two==</font>")
+		end
+    hl2sb_markupfonts:Draw(ScrW() / 2, ScrH() / 5, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, alpha)
+		
+		
+	// Thanks for playing and Description
+	local hl2sb_creditdescription = markup.Parse("<color=211, 92, 2><font=HL2SBGenericFontMed>           THANK YOU FOR PLAYING</color>\n   hopefully you had fun playing it.\n         see you next time... for now...</font>")
+    hl2sb_creditdescription:Draw(ScrW() / 2, ScrH() / 1.35, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, alpha)
+
+	// Eon pfp
+    surface.SetDrawColor(ColorAlpha(color_white, alpha))
+    surface.SetMaterial(OutroIcon_Bloodycop)
     surface.DrawTexturedRect(ScrW() / 2 + 128, ScrH() / 2 - 64, 128, 128)
 
-    local markupBloodycop = markup.Parse("<font=HL2SBGenericFont>ALIEN31</font>")
-    markupBloodycop:Draw(ScrW() / 2 + 190, ScrH() / 1.83, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
+	// Alien Text
+    local markupBloodycop = markup.Parse("<font=HL2SBGenericFont>CREATOR\nALIEN31</font>")
+    markupBloodycop:Draw(ScrW() / 2 - 190, ScrH() / 1.75, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
 end
 
 hook.Add("HUDPaint", "HL2EP1Sandbox", function()
