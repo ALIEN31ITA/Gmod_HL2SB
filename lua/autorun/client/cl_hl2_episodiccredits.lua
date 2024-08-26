@@ -68,8 +68,9 @@ local HL2SB_OutroFadeEnd = 5
 local HL2SB_OutroFadeHold = 3
 local HL2SB_OutroFadeTime = HL2SB_OutroFadeEnd - HL2SB_OutroFadeStart
 
+local HL2SB_CreditSound = Sound("hl2sb/ui/checkpoint_reached.wav")
 concommand.Add("HL2SB_DisplayCredits", function()
-	LocalPlayer():EmitSound(Sound("hl2sb/ui/checkpoint_reached.wav"))
+	LocalPlayer():EmitSound(HL2SB_CreditSound)
     HL2SB_OutroFadeStart = CurTime()
     HL2SB_OutroFadeEnd = CurTime() + HL2SB_OutroFadeTime
     HL2SB_OutroFadeTime = HL2SB_OutroFadeEnd - HL2SB_OutroFadeStart
