@@ -101,7 +101,7 @@ local function DrawIntro()
     local curTime = CurTime()
     local alpha = 255
 
-    if ( HL2SB_OutroFadeStart == 0 ) then return end
+    if ( HL2SB_IntroFadeStart == 0 ) then return end
     if ( alpha == 0 ) then return end
 
     if curTime < HL2SB_IntroFadeEnd then
@@ -133,7 +133,7 @@ local function DrawOutro()
     elseif curTime > HL2SB_OutroFadeEnd + HL2SB_OutroFadeHold then
         alpha = Lerp((curTime - HL2SB_OutroFadeEnd - HL2SB_OutroFadeHold) / HL2SB_OutroFadeTime, 255, 0)
     end
-	
+
     // Alien pfp
     surface.SetDrawColor(ColorAlpha(color_white, alpha))
     surface.SetMaterial(OutroIcon_Alien31)
@@ -151,8 +151,8 @@ local function DrawOutro()
 			hl2sb_markupfonts = markup.Parse("<color=211, 92, 2><font=HL2SBCreditsFontBig>	 HALF-LIFE'</font></color>\n<font=HL2SBGenericFontBig>   ==episode two==</font>")
 		end
     hl2sb_markupfonts:Draw(ScrW() / 2, ScrH() / 5, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, alpha)
-		
-		
+
+
 	// Thanks for playing and Description
 	local hl2sb_creditdescription = markup.Parse("<color=211, 92, 2><font=HL2SBGenericFontMed>           THANK YOU FOR PLAYING</color>\n   hopefully you had fun playing it.\n         see you next time... for now...</font>")
     hl2sb_creditdescription:Draw(ScrW() / 2, ScrH() / 1.35, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, alpha)
