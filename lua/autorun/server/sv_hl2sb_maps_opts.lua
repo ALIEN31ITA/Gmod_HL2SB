@@ -57,7 +57,6 @@ end
 local function EpisodeOneBlueVortigaunts(ent)
 	if ( !IsValid(ent) ) then return end
 	if ( IsValid(ent:GetNW2Entity("HL2SBSpawnedBy", nil)) ) then return end
-	if ( ent:GetClass() != "npc_vortigaunt" or ent:GetClass() != "prop_dynamic" ) then return end
 	if ( ent:GetModel() != "models/vortigaunt_blue.mdl" ) then return end
 	if ( hl2sb_getmap != "gmhl2e1_citadel_00" ) then return end
 
