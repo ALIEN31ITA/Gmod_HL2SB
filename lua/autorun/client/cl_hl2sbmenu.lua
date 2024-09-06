@@ -84,7 +84,7 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
             ckbx:SetSize( 0, 52 )
             ckbx:Dock( TOP )
             ckbx:DockMargin( 16, 16, 16, 16 )
-            function ckbx:Paint( w, h ) end
+            ckbx.Paint = nil
 
             local cnt = vgui.Create( "DCheckBoxLabel", ckbx )
             cnt:SetText( v[ 1 ] )
@@ -133,7 +133,7 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
 
         local empty = vgui.Create( "DPanel", base )
         empty:SetSize( 0, 32 )
-        function empty:Paint( w, h ) end
+        empty.Paint = nil
         base:AddItem( empty )
 	end )
 end )

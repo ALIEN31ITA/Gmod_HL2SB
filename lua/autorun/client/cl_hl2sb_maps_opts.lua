@@ -42,7 +42,7 @@ killicon.Add( "weapon_striderbuster", "HUD/hl2sb/killicons/weapon_striderbuster"
 
 local hl2sb_getmap = game.GetMap()
 local hl2sb_map_title = "."
-local hl2sb_map_chapter = "Not an HL2:SB Map"
+local hl2sb_map_chapter = "Not a HL2:SB Map"
 
 // CHAPTER NAMES
 
@@ -72,32 +72,34 @@ local hl2sb_getchapter = {
 ["gmhl2_coast_09"] = "SANDTRAPS: ",
 ["gmhl2_coast_10"] = "SANDTRAPS: ",
 ["gmhl2_coast_11"] = "SANDTRAPS: ",
-["gmhl2_coast_12"] = "SANDTRAPS: ", 
+["gmhl2_coast_12"] = "SANDTRAPS: ",
 ["gmhl2_prison_part1"] = "NOVA PROSPEKT: ",
-["gmhl2_prison_part2"] = "ENTANGLEMENT: ", 
+["gmhl2_prison_part2"] = "ENTANGLEMENT: ",
 ["gmhl2_c17_01"] = "ENTANGLEMENT: ",
 ["gmhl2_c17_part1"] = "ANTICITIZEN ONE: ",
-["gmhl2_c17_part2"] = "ANTICITIZEN ONE: ", 
+["gmhl2_c17_part2"] = "ANTICITIZEN ONE: ",
 ["gmhl2_c17_part3"] = "FOLLOW FREEMAN!: ",
-["gmhl2_c17_part4"] = "FOLLOW FREEMAN!: ",  
-["gmhl2_c17_part5"] = "FOLLOW FREEMAN!: ", 
-["gmhl2_c17_part6"] = "FOLLOW FREEMAN!: ", 
-["gmhl2_citadel_p1"] = "OUR BENEFACTORS: ", 
-["gmhl2_citadel_04"] = "OUR BENEFACTORS: ", 
-["gmhl2_citadel_05"] = "OUR BENEFACTORS: ", 
+["gmhl2_c17_part4"] = "FOLLOW FREEMAN!: ",
+["gmhl2_c17_part5"] = "FOLLOW FREEMAN!: ",
+["gmhl2_c17_part6"] = "FOLLOW FREEMAN!: ",
+["gmhl2_citadel_p1"] = "OUR BENEFACTORS: ",
+["gmhl2_citadel_04"] = "OUR BENEFACTORS: ",
+["gmhl2_citadel_05"] = "OUR BENEFACTORS: ",
 ["gmhl2_breen_01"] = "DARK ENERGY: ",
 ["gmhl2e1_citadel_00"] = "Undue Alarm: ",
 ["gmhl2e1_citadel_01"] = "Undue Alarm: ",
 ["gmhl2e1_citadel_02"] = "Undue Alarm: ",
-["gmhl2e1_citadel_02b"] = "Undue Alarm: ",  
+["gmhl2e1_citadel_02b"] = "Undue Alarm: ",
 ["gmhl2e1_citadel_03"] = "[UNEDITED] Direct Intervention: ",
 ["gmhl2e1_citadel_04"] = "Direct Intervention: ",
 ["gmhl2e1_c17_00"] = "Lowlife: ",
 ["gmhl2e1_c17_01"] = "Urban Flight: ",
-["gmhl2e1_c17_02"] = "Urban Flight: ", 
+["gmhl2e1_c17_02"] = "Urban Flight: ",
 ["gmhl2e1_c17_03"] = "Exit 17: " }
 
-hl2sb_map_chapter = hl2sb_getchapter[hl2sb_getmap]
+if ( hl2sb_getchapter[hl2sb_getmap] ) then
+	hl2sb_map_chapter = hl2sb_getchapter[hl2sb_getmap]
+end
 
 // CHAPTER TITLES
 
@@ -126,30 +128,30 @@ local hl2sb_gettitle = {
 ["gmhl2_coast_09"] = "Battery Puzzle",
 ["gmhl2_coast_10"] = "Lighthouse defense",
 ["gmhl2_coast_11"] = "Poor Lazlo :(",
-["gmhl2_coast_12"] = "Antlion D-Day & Prison", 
+["gmhl2_coast_12"] = "Antlion D-Day & Prison",
 ["gmhl2_lostcoast"] = "You like leeches yes?",
 ["gmhl2_prison_part1"] = "Gordon, you are in prison!",
 ["gmhl2_prison_part2"] = "Gordon, you are ALMOST OUT of prison!",
 ["gmhl2_c17_01"] = "Your kinda late pal...",
-["gmhl2_c17_part1"] = "Uprising in the streets", 
-["gmhl2_c17_part2"] = "Tunnels & Condos", 
+["gmhl2_c17_part1"] = "Uprising in the streets",
+["gmhl2_c17_part2"] = "Tunnels & Condos",
 ["gmhl2_c17_part3"] = "Defend, Sewers & Snipers!",
 ["gmhl2_c17_part4"] = "Overwatch Nexus P.1",
-["gmhl2_c17_part5"] = "Overwatch Nexus P.2", 
-["gmhl2_c17_part6"] = "Striders Faceoff", 
-["gmhl2_citadel_p1"] = "Taking a ride, and an upgrade", 
-["gmhl2_citadel_04"] = "Despite my rage", 
-["gmhl2_citadel_05"] = "I guess i have no choice...", 
+["gmhl2_c17_part5"] = "Overwatch Nexus P.2",
+["gmhl2_c17_part6"] = "Striders Faceoff",
+["gmhl2_citadel_p1"] = "Taking a ride, and an upgrade",
+["gmhl2_citadel_04"] = "Despite my rage",
+["gmhl2_citadel_05"] = "I guess i have no choice...",
 ["gmhl2_breen_01"] = "Final Showdown",
 ["gmhl2e1_citadel_00"] = "Left the core on, brb",
 ["gmhl2e1_citadel_01"] = "This place is collapsing on itself!",
 ["gmhl2e1_citadel_02"] = "Left the core on, brb",
-["gmhl2e1_citadel_02b"] = "Left the core on, brb",  
+["gmhl2e1_citadel_02b"] = "Left the core on, brb",
 ["gmhl2e1_citadel_03"] = "The power source to everything",
 ["gmhl2e1_citadel_04"] = "Scary train ride",
 ["gmhl2e1_c17_00"] = "Tunnels, Parking lots, Zombies and a lot of hungry Antlions!",
 ["gmhl2e1_c17_01"] = "Streetwars between snipers and antlions",
-["gmhl2e1_c17_02"] = "Kleiner wants you to get busy, and also Barney has something to give you.", 
+["gmhl2e1_c17_02"] = "Kleiner wants you to get busy, and also Barney has something to give you.",
 ["gmhl2e1_c17_03"] = "Final push towards the outlands..."   }
 
 hl2sb_map_title = hl2sb_gettitle[hl2sb_getmap]
