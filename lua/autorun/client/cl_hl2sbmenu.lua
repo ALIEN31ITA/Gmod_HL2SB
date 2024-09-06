@@ -56,9 +56,18 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
         help:Dock( TOP )
         help:SetSize( 0, 32 )
         function help:Paint( w, h )
-            draw.SimpleText( string.upper( "Generic settings for the maps" ), "HL2SBMenuFont1", w/2, h/2 -4, Color( 211, 92, 2 ), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
             draw.RoundedBox( 0, 0, h-2, w, 2, Color( 211, 92, 2 ) )
         end
+
+        local genericSettings = vgui.Create( "DLabel", help )
+        genericSettings:SetText( "Generic settings for the maps" )
+        genericSettings:SetTextColor( Color( 211, 92, 2  ) )
+        genericSettings:Dock( TOP )
+        genericSettings:SetFont( "HL2SBMenuFont1" )
+        genericSettings:SetWrap(true)
+        genericSettings:SetAutoStretchVertical(true)
+
+
         base:AddItem( help )
 
         local permit = vgui.Create( "DPanel", base )
