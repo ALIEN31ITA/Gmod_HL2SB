@@ -154,9 +154,9 @@ local hl2sb_gettitle = {
 ["gmhl2e1_c17_02"] = "Kleiner wants you to get busy, and also Barney has something to give you.",
 ["gmhl2e1_c17_03"] = "Final push towards the outlands..."   }
 
-hl2sb_map_title = hl2sb_gettitle[hl2sb_getmap]
-
-
+if ( hl2sb_gettitle[hl2sb_getmap] ) then
+	hl2sb_map_title = hl2sb_gettitle[hl2sb_getmap]
+end
 
 hook.Add( "AddToolMenuCategories", "HL2SBCategory", function()
 	spawnmenu.AddToolCategory( "Utilities", "HL2 Sandbox", "#HL2: Sandbox" )
