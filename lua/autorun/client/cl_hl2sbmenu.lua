@@ -94,6 +94,12 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
             cnt:SetValue( cnt.OldValue )
             cnt:SetTextColor( cnt.OldValue and Color( 0, 255, 0 ) or Color( 211, 92, 2 ) )
             cnt:SetTooltip( v[ 3 ] )
+            cnt:SetWrap(true)
+
+            if ( cnt.SetAutoStretchVertical ) then
+                cnt:SetAutoStretchVertical(true)
+            end
+
             function cnt:OnChange( val )
                 if val == cnt.OldValue then return end
                 local acc = ( IsValid( ply ) and ( ply:IsAdmin() or game.SinglePlayer() ) )
