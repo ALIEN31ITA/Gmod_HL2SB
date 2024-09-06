@@ -51,7 +51,7 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
             surface.DrawTexturedRectRotated( w/2, 134/2, 267, 134, 0 )
         end
         base:AddItem( logo )
-        
+
         local help = vgui.Create( "DPanel", base )
         help:Dock( TOP )
         help:SetSize( 0, 32 )
@@ -110,6 +110,8 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
             lab:Dock( TOP )
             lab:SetPos( 24, 40 )
             lab:SetFont( "TargetID" )
+            lab:SetWrap(true)
+            lab:SetAutoStretchVertical(true)
 
             base:AddItem( ckbx )
         end
