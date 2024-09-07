@@ -119,6 +119,14 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
             toggleButton:SetTooltip( v[ 3 ] )
             toggleButton:SizeToContents()
 
+            function toggleButton:Paint( w, h )
+                surface.SetDrawColor( color_base_bg )
+                surface.DrawRect( 0, 0, w, h )
+
+                surface.SetDrawColor( color_base_outline )
+                surface.DrawOutlinedRect( 0, 0, w, h )
+            end
+
             function toggleButton:DoClick()
                 local newVal = !GetConVar( v[ 3 ] ):GetBool()
                 local oldVal = GetConVar( v[ 3 ] ):GetBool()
