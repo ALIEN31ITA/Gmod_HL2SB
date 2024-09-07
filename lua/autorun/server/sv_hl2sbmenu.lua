@@ -9,11 +9,16 @@ local vars = {
 }
 
 net.Receive( "HL2SB_MenuCommand", function( len, ply )
-    if !IsValid( ply ) or ( !ply:IsAdmin() and !game.SinglePlayer() ) or len <= 0 then
-        return
+    if ( !IsValid(ply) ) then return end
+
+    local bHasAccess = false
+    if ( game.SinglePlayer() or ply:IsAdmin() ) then
+        bHasAccess = true
     end
+
     local str, bol = net.ReadString(), net.ReadBool()
-    if !vars[ str ] then return end
-    
+    if ( !str or bol == nil ) then return end
+    if ( !vars[ str ] ) then return end
+
     RunConsoleCommand( str, bol and 1 or 0 )
 end )
