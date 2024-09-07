@@ -167,7 +167,7 @@ hook.Add( "PopulateToolMenu", "HL2SB_Currentmap_Settings", function()
 		panel:ClearControls()
 		panel:Help(hl2sb_map_chapter..hl2sb_map_title)
 
-		if ( hl2sb_getmap == ( "gmhl2_coast_01" || "gmhl2_coast_bridge" ) ) then
+		if hl2sb_getmap == "gmhl2_coast_01" or hl2sb_getmap == "gmhl2_coast_bridge" then
 			panel:Help("One time only settings")
 			local HW17_B_ClearCars = panel:Button("Clear Wagons")
 			local function HW17_B_Cars()
