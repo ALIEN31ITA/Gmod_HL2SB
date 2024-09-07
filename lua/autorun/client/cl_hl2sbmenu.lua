@@ -81,6 +81,11 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
         if ( !bHasAccess ) then
             hasAccessLabel:SetText( "Access Denied" )
             hasAccessLabel:SetTextColor( color_access_denied )
+
+            base:AddItem( logoPanel )
+            base:AddItem( hasAccessLabel )
+
+            return
         end
 
         local settingsForMaps = vgui.Create( "DLabel", base )
@@ -108,7 +113,7 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
             title:SetFont( "HL2SBMenuFont1" )
             title:SetWrap(true)
             title:SetAutoStretchVertical(true)
-            title:SetTextColor( color_white )
+            title:SetTextColor( color_label_settingsForMaps )
             title:SetTooltip( v[ 3 ] )
 
             local toggleButton = vgui.Create( "DButton", scrollPanel )
@@ -152,7 +157,7 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
             local label = vgui.Create( "DLabel", scrollPanel )
             label:Dock( TOP )
             label:SetText( v[ 2 ] )
-            label:SetTextColor( color_label_settingsForMaps )
+            label:SetTextColor( color_white )
             label:SetFont( "HL2SBMenuFont2" )
             label:SetWrap(true)
             label:SetAutoStretchVertical(true)
@@ -161,60 +166,5 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
             base:AddItem( toggleButton )
             base:AddItem( label )
         end
-
-        /*
-        for k, v in ipairs( vars ) do
-            local cnt = vgui.Create( "DCheckBoxLabel", scrollPanel )
-            cnt:SetText( v[ 1 ] )
-            cnt:Dock( TOP )
-            cnt:SetFont( "HL2SBMenuFont1" )
-            cnt.OldValue = GetConVar( v[ 3 ] ):GetInt() > 0
-            cnt:SetValue( cnt.OldValue )
-            cnt:SetTextColor( cnt.OldValue and Color( 0, 255, 0 ) or Color( 211, 92, 2 ) )
-            cnt:SetTooltip( v[ 3 ] )
-            cnt:SetWrap(true)
-
-            local cnt_label = cnt:GetChildren()[2]
-            if ( IsValid(cnt_label) ) then
-                cnt_label:SetWrap(true)
-                cnt_label:SetAutoStretchVertical(true)
-            end
-
-            function cnt:OnChange( val )
-                if val == cnt.OldValue then return end
-                local acc = ( IsValid( ply ) and ( ply:IsAdmin() or game.SinglePlayer() ) )
-
-                if !acc then
-                    cnt:SetValue( cnt.OldValue )
-                    surface.PlaySound( "buttons/button10.wav" )
-                else
-                    cnt.OldValue = val
-                    cnt:SetTextColor( val and Color( 0, 255, 0 ) or Color( 211, 92, 2 ) )
-                    surface.PlaySound( "ui/buttonclickrelease.wav" )
-
-                    net.Start( "HL2SB_MenuCommand" )
-                    net.WriteString( v[ 3 ] )
-                    net.WriteBool( val )
-                    net.SendToServer()
-                end
-            end
-
-            local lab = vgui.Create( "DLabel", scrollPanel )
-            lab:SetText( v[ 2 ] )
-            lab:SetTextColor( Color( 0, 161, 255 ) )
-            lab:SetTextInset(16, 0)
-            lab:Dock( TOP )
-            lab:SetPos( 24, 40 )
-            lab:SetFont( "TargetID" )
-            lab:SetWrap(true)
-            lab:SetAutoStretchVertical(true)
-
-            base:AddItem( ckbx )
-        end
-
-        base:AddItem( scrollPanel )
-        */
-
-
 	end )
 end )
