@@ -47,12 +47,8 @@ if ( GlowLib ) then
 		end,
 		Attachment = "glowlib_camera",
 		Color = {
-			[0] = Color(0, 205, 255)
+			[0] = Color(0, 110, 140)
 		},
 		Size = 0.35
 	})
-else
-	if ( CLIENT ) then
-		MsgC(Color(255, 0, 0), "[ GlowLib ] ", color_white, "GlowLib is not installed! You could install it to use the custom glow data for HL2 Sandbox Support!\n")
-	end
 end
