@@ -6,6 +6,7 @@ local vars = {
     [ "hl2sb_deathpit_triggers" ] = true,
     [ "hl2sb_levelswitch_triggers" ] = true,
     [ "hl2sb_antlionspawn_triggers" ] = true,
+    [ "hl2sb_ep1_core_damage" ] = true,
 }
 
 net.Receive( "HL2SB_MenuCommand", function( len, ply )

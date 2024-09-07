@@ -29,6 +29,7 @@ local vars = {
     { "Death barriers", "Disable/Enable death barriers, pits, leeches", "hl2sb_deathpit_triggers" },
     { "Loading Zones", "Disable/Enable level switch triggers", "hl2sb_levelswitch_triggers" },
     { "Antlion spawns", "Disable/Enable antlions burrowing from the ground", "hl2sb_antlionspawn_triggers" },
+    { "[EP1] Disable Disintegration by the core", "Disable/Enable Core disintegrating.", "hl2sb_ep1_core_damage"}
 }
 
 local color_base_bg = Color( 25, 40, 55 )

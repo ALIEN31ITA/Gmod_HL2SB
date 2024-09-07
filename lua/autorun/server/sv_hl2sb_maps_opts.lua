@@ -299,7 +299,7 @@ local HL2SB_mapsettings = {
         end,
     },
 	HL2EP1SB_CoreDamage = {
-		value = CreateConVar( "hl2sb_ep1_core_damage", "0", FCVAR_ARCHIVE, "Toggle Core Damage", 0, 1 ),
+		value = CreateConVar( "hl2sb_ep1_core_damage", "1", FCVAR_ARCHIVE, "Toggle Core Damage", 0, 1 ),
 		on = function()
 		end,
 		off = function()
