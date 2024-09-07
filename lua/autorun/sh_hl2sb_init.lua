@@ -49,6 +49,5 @@ if ( GlowLib ) then
 		Color = {
 			[0] = Color(0, 255, 255, 150)
 		},
-		Size = 0.3
 	})
 end
