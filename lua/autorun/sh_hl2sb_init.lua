@@ -43,12 +43,11 @@ if ( GlowLib ) then
 			if ( !IsValid(ent) ) then return end
 
 			local attachmentData = ent:GetAttachment(ent:LookupAttachment("glowlib_camera"))
-			return attachmentData.Pos
+			return attachmentData.Pos + attachmentData.Ang:Right() * -1
 		end,
 		Attachment = "glowlib_camera",
 		Color = {
-			[0] = Color(0, 110, 140)
+			[0] = Color(0, 255, 255, 150)
 		},
-		Size = 0.35
 	})
 end
