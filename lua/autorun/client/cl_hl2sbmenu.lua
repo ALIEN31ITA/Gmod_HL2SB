@@ -100,12 +100,11 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
 
         local scrollPanel = vgui.Create( "DScrollPanel", base )
         scrollPanel:Dock( FILL )
-        scrollPanel:DockMargin( 6, 0, 6, 0 )
+        scrollPanel:DockMargin(6, 0, 6, 0)
 
         base:AddItem( logoPanel )
         base:AddItem( hasAccessLabel )
         base:AddItem( settingsForMaps )
-        base:AddItem( scrollPanel )
 
         for k, v in ipairs(vars) do
             local title = vgui.Create( "DLabel", scrollPanel )
@@ -167,5 +166,7 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
             base:AddItem( toggleButton )
             base:AddItem( label )
         end
+
+        base:AddItem( scrollPanel )
 	end )
 end )
