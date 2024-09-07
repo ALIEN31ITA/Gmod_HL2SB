@@ -22,10 +22,23 @@ hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
 	local map = game.GetMap()
 	if ( !map:find("gmhl2") ) then return end
 
-	local godModeTable = godModeNPCNames[ent_class]
-	if ( !godModeTable ) then return end
+	if ( map == "gmhl2e1_citadel_03" ) then
+		local bNearCore = false
 
-	if ( ent:IsNPC() and bGodmode ) then
+		for k, v in ipairs(ents.FindInSphere(ent:GetPos(), 200)) do
+			if ( v:GetClass() == "prop_coreball" ) then
+				bNearCore = true
+				break
+			end
+		end
+
+		if ( bNearCore and IsValid(dmginfo:GetAttacker()) and dmginfo:GetAttacker() == ent and GetConVar("hl2sb_ep1_core_damage"):GetBool() ) then
+			return true
+		end
+	end
+
+	local godModeTable = godModeNPCNames[ent_class]
+	if ( godModeTable and ent:IsNPC() and bGodmode ) then
 		for k, v in ipairs(godModeTable) do
 			if ( ent_name == v ) then
 				return true

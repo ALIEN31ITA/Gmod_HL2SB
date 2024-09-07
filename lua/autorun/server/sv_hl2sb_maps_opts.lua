@@ -297,7 +297,14 @@ local HL2SB_mapsettings = {
 				v:Fire("Trigger")
 			end
         end,
-    }
+    },
+	HL2EP1SB_CoreDamage = {
+		value = CreateConVar( "hl2sb_ep1_core_damage", "0", FCVAR_ARCHIVE, "Toggle Core Damage", 0, 1 ),
+		on = function()
+		end,
+		off = function()
+		end
+	}
 }
 
 //Map Breakable Props - Redox

@@ -52,7 +52,5 @@ if ( GlowLib ) then
 		Size = 0.35
 	})
 else
-	if ( CLIENT ) then
-		MsgC(Color(255, 0, 0), "[ GlowLib ] ", color_white, "GlowLib is not installed! You could install it to use the custom glow data for HL2 Sandbox Support!\n")
-	end
+	MsgC(Color(255, 0, 0), "[ GlowLib ] ", color_white, "GlowLib is not installed! You could install it to use the custom glow data for HL2 Sandbox Support!\n")
 end
