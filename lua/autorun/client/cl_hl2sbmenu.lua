@@ -136,7 +136,7 @@ hook.Add( "PopulateToolMenu", "HL2SB_General_Settings", function()
                 local newVal = !GetConVar( v[ 3 ] ):GetBool()
                 local oldVal = GetConVar( v[ 3 ] ):GetBool()
 
-                if ( newVal == oldVal ) then print("Aello") return end
+                if ( newVal == oldVal ) then return end
 
                 if ( bHasAccess ) then
                     self:SetTextColor( val and color_access_granted or color_label_settingsForMaps )

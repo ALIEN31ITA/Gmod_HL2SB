@@ -171,21 +171,29 @@ hook.Add( "PopulateToolMenu", "HL2SB_Currentmap_Settings", function()
 
 		if hl2sb_getmap == "gmhl2_coast_01" or hl2sb_getmap == "gmhl2_coast_bridge" then
 			panel:Help("One time only settings")
+
 			local HW17_B_ClearCars = panel:Button("Clear Wagons")
 			local function HW17_B_Cars()
 				net.Start("request_HL2SB_HW17_Bridge_ClearCars")
 				net.SendToServer()
 			end
-			function HW17_B_ClearCars:DoClick() HW17_B_Cars() end
+
+			function HW17_B_ClearCars:DoClick()
+				HW17_B_Cars()
+			end
 		end
 		if hl2sb_getmap == "gmhl2_trainstation_02" then
 			panel:Help("One time only settings")
+
 			local PI_TS2_ClearProps = panel:Button("Clear Furniture Blocks")
 			local function PI_TS2_CProps()
 				net.Start("request_HL2SB_TRAINSTATION_02_ClearProps")
 				net.SendToServer()
 			end
-			function PI_TS2_ClearProps:DoClick() PI_TS2_CProps() end
+
+			function PI_TS2_ClearProps:DoClick() P
+				I_TS2_CProps()
+			end
 		end
 		if hl2sb_getmap == "gmhl2_canals_01" then
 			local CAN01_Train_1 = panel:Button("Call Razor Train")
@@ -193,21 +201,34 @@ hook.Add( "PopulateToolMenu", "HL2SB_Currentmap_Settings", function()
 				net.Start("request_HL2SB_CAN01_TrainR")
 				net.SendToServer()
 			end
-			function CAN01_Train_1:DoClick() CAN01_Train_R() end
+
+			function CAN01_Train_1:DoClick()
+				CAN01_Train_R()
+			end
+
 			local CAN01_Train_2 = panel:Button("Call Civilian Train")
 			local function CAN01_Train_N()
 				net.Start("request_HL2SB_CAN01_TrainN")
 				net.SendToServer()
 			end
+
 			panel:Help("The civilian train must stop first!")
-			function CAN01_Train_2:DoClick() CAN01_Train_N() end
+
+			function CAN01_Train_2:DoClick()
+				CAN01_Train_N()
+			end
+
 			local CAN01_Train_1_Leave = panel:Button("Scram Civilian Train")
 			local function CAN01_Train_NGO()
 				net.Start("request_HL2SB_CAN01_TrainNGO")
 				net.SendToServer()
 			end
-			function CAN01_Train_1_Leave:DoClick() CAN01_Train_NGO() end
+
+			function CAN01_Train_1_Leave:DoClick()
+				CAN01_Train_NGO()
+			end
 		end
+
 		if hl2sb_getmap == "gmhl2_ravenholm" or hl2sb_getmap == "gmhl2_c17_part1" then
 			panel:Help("One time only settings")
 			local RAVEN_KillClouds = panel:Button("Remove Clouds [FPS]")
@@ -215,7 +236,10 @@ hook.Add( "PopulateToolMenu", "HL2SB_Currentmap_Settings", function()
 				net.Start("request_HL2SB_RAVEN_KillClouds")
 				net.SendToServer()
 			end
-			function RAVEN_KillClouds:DoClick() RAVEN_Clouds() end
+
+			function RAVEN_KillClouds:DoClick()
+				RAVEN_Clouds()
+			end
 		end
 		if hl2sb_getmap == "gmhl2_coast_bridge" then
 			local HW17_B_Train = panel:Button("Call Train")
@@ -227,12 +251,16 @@ hook.Add( "PopulateToolMenu", "HL2SB_Currentmap_Settings", function()
 		end
 		if hl2sb_getmap == "gmhl2_coast_09" then
 			panel:Help("One time only settings")
+
 			local HW17_C09_ClearCars = panel:Button("Clear Road")
 			local function HW17_C09_Cars()
 				net.Start("request_HL2SB_SANDTRAP_COAST_09_ClearCars")
 				net.SendToServer()
 			end
-			function HW17_C09_ClearCars:DoClick() HW17_C09_Cars() end
+
+			function HW17_C09_ClearCars:DoClick()
+				HW17_C09_Cars()
+			end
 		end
 	end )
 end )

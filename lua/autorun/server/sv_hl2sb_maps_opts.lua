@@ -342,9 +342,15 @@ end)
 
 local HL2SB_Introhasplayed = 0
 
+local introStarterMaps = {
+	["gmhl2e2_outland_01"] = true,
+	["gmhl2e1_citadel_00"] = true,
+	["gmhl2_trainstation_01"] = true
+}
 hook.Add("PlayerInitialSpawn", "HL2SB_INTROSTARTER", function(ply)
-	if ( hl2sb_getmap ==  "gmhl2e2_outland_01" or "gmhl2e1_citadel_00" or "gmhl2_trainstation_01" ) then
+	if introStarterMaps[hl2sb_getmap] then
 		HL2SB_Introhasplayed = 1
+
 		if HL2SB_mapsettings.HL2SB_GmanIntro.value:GetBool() then
 			ProtectedCall( HL2SB_mapsettings.HL2SB_GmanIntro.on )
 		else
@@ -470,7 +476,7 @@ hook.Add( "PostCleanupMap", "HL2SB_mapsettings", function()
 		end
 	end
 
-	if hl2sb_getmap == ( "gmhl2_eli_02" or "gmhl2e1_citadel_04" ) then
+	if hl2sb_getmap == "gmhl2_eli_02" or hl2sb_getmap == "gmhl2e1_citadel_04" then
 		for k, v in ipairs(ents.FindByName("spawn_alyx")) do
 			v:Fire("Spawn")
 		end

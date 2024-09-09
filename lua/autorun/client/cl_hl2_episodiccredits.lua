@@ -1,10 +1,4 @@
 local hl2credits_getmap = game.GetMap()
-local hl2credits_panel
-
-if ( IsValid(hl2credits_panel) ) then
-    hl2credits_panel:Remove()
-    hl2credits_panel = nil
-end
 
 surface.CreateFont("HL2SBCreditsFont", {
     font = "HL2Credits",
@@ -102,8 +96,8 @@ local function DrawIntro()
     local curTime = CurTime()
     local alpha = 255
 
-    if ( HL2SB_IntroFadeStart == 0 ) then return end
-    if ( alpha == 0 ) then return end
+    if HL2SB_IntroFadeStart == 0 then return end
+    if alpha == 0 then return end
 
     if curTime < HL2SB_IntroFadeEnd then
         alpha = Lerp((curTime - HL2SB_IntroFadeStart) / HL2SB_IntroFadeTime, 0, 255)
@@ -113,7 +107,7 @@ local function DrawIntro()
 
 	local hl2sb_markupfonts = markup.Parse("<font=HL2SBCreditsFont>HALF-LIFE'</font>\n<font=HL2SBGenericFont>   ==sandbox==</font>")
 	local mapName = creditsMap[hl2credits_getmap]
-    if ( mapName ) then
+    if mapName then
 	    draw.DrawText(mapName, "HL2SBCreditsFont", ScrW() / 2, ScrH() / 2.08, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER)
     else
         hl2sb_markupfonts:Draw(ScrW() / 2, ScrH() / 2.08, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, alpha)
@@ -126,8 +120,8 @@ local function DrawOutro()
     local curTime = CurTime()
     local alpha = 255
 
-    if ( HL2SB_OutroFadeStart == 0 ) then return end
-    if ( alpha == 0 ) then return end
+    if HL2SB_OutroFadeStart == 0 then return end
+    if alpha == 0 then return end
 
     if curTime < HL2SB_OutroFadeEnd then
         alpha = Lerp((curTime - HL2SB_OutroFadeStart) / HL2SB_OutroFadeTime * 10, 0, 255)
@@ -145,14 +139,15 @@ local function DrawOutro()
     markupBloodycop:Draw(ScrW() / 2 + 190, ScrH() / 1.75, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
 
 	// GAME TITLE
-	local hl2sb_markupfonts = markup.Parse("<font=HL2SBCreditsFontBig>HALF-LIFE'</font>\n<font=HL2SBGenericFontBig>   ==sandbox==</font>")
-		if hl2credits_getmap == "gmhl2e1_c17_03" or "ep1_c17_06" then
-			hl2sb_markupfonts = markup.Parse("<color=211, 92, 2><font=HL2SBCreditsFontBig>	 HALF-LIFE'</font></color>\n<font=HL2SBGenericFontBig>   ==episode one==</font>")
-		elseif hl2credits_getmap == "gmhl2e2_outland_12" or "ep2_outland_12a" then
-			hl2sb_markupfonts = markup.Parse("<color=211, 92, 2><font=HL2SBCreditsFontBig>	 HALF-LIFE'</font></color>\n<font=HL2SBGenericFontBig>   ==episode two==</font>")
-		end
-    hl2sb_markupfonts:Draw(ScrW() / 2, ScrH() / 5, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, alpha)
+    local parseText = "<font=HL2SBCreditsFontBig>HALF-LIFE'</font>\n<font=HL2SBGenericFontBig>   ==sandbox==</font>"
+    if hl2credits_getmap == "gmhl2e1_c17_03" or "ep1_c17_06" then
+        parseText = "<color=211, 92, 2><font=HL2SBCreditsFontBig>	 HALF-LIFE'</font></color>\n<font=HL2SBGenericFontBig>   ==episode one==</font>"
+    elseif hl2credits_getmap == "gmhl2e2_outland_12" or "ep2_outland_12a" then
+        parseText = "<color=211, 92, 2><font=HL2SBCreditsFontBig>	 HALF-LIFE'</font></color>\n<font=HL2SBGenericFontBig>   ==episode two==</font>"
+    end
 
+	local hl2sb_markupfonts = markup.Parse(parseText)
+    hl2sb_markupfonts:Draw(ScrW() / 2, ScrH() / 5, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, alpha)
 
 	// Thanks for playing and Description
 	local hl2sb_creditdescription = markup.Parse("<color=211, 92, 2><font=HL2SBGenericFontMed>           THANK YOU FOR PLAYING</color>\n   hopefully you had fun playing it.\n         see you next time... for now...</font>")
