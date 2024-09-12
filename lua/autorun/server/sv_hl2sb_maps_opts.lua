@@ -377,6 +377,16 @@ hook.Add( "InitPostEntity", "HL2SB_mapsettings", function()
         ProtectedCall( HL2SB_mapsettings.HL2SB_Antlions_Spawns.on )
     end
 
+	if ( hl2sb_getmap == "gmhl2e2_outland_02" and HL2SB_IsEP2NectarTriggered() ) then
+		local relay = ents.FindByName("relay_ep2_nectar")[1]
+
+		if ( IsValid(relay) ) then
+			relay:Fire("Trigger")
+		end
+	end
+
+	file.Delete("hl2sb_ep2_nectar.txt")
+
 	for k, v in ents.Iterator() do
 		if not ( IsValid(v) ) then continue end
 

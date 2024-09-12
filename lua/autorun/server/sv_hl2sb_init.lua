@@ -46,15 +46,3 @@ hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
 		end
 	end
 end)
-
-hook.Add("ShutDown", "HL2SB_SaveEP2Nectar", function()
-	file.Write("hl2sb_ep2_nectar.txt", "0")
-end)
-
-hook.Add("InitPostEntity", "HL2SB_EP2TriggerNectar", function()
-	file.Write("hl2sb_ep2_nectar.txt", "0")
-end)
-
-function HL2SB_EP2TriggerNectar()
-	file.Write("hl2sb_ep2_nectar.txt", "1")
-end
