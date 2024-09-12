@@ -19,11 +19,13 @@ if ( IsMounted( "ep2" ) ) then
 end
 
 function HL2SB_IsEP2NectarTriggered()
-	if ( !file.Exists("hl2sb_ep2_nectar", "DATA") ) then return false end
-	if ( game.GetMap() != "gmhl2e2_outland_02" ) then return false end
+	if ( !file.Exists("hl2sb_ep2_nectar", "DATA") ) then print("!file doesn't exist") return false end
+	if ( game.GetMap() != "gmhl2e2_outland_02" ) then print("! correct map") return false end
 
 	local nectar = file.Read("hl2sb_ep2_nectar.txt", "DATA")
+	print(nectar)
 	if ( nectar == "1" ) then
+		print("true")
 		return true
 	end
 
