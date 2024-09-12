@@ -182,6 +182,7 @@ hook.Add( "PopulateToolMenu", "HL2SB_Currentmap_Settings", function()
 				HW17_B_Cars()
 			end
 		end
+
 		if hl2sb_getmap == "gmhl2_trainstation_02" then
 			panel:Help("One time only settings")
 
@@ -191,10 +192,11 @@ hook.Add( "PopulateToolMenu", "HL2SB_Currentmap_Settings", function()
 				net.SendToServer()
 			end
 
-			function PI_TS2_ClearProps:DoClick() P
+			function PI_TS2_ClearProps:DoClick()
 				I_TS2_CProps()
 			end
 		end
+
 		if hl2sb_getmap == "gmhl2_canals_01" then
 			local CAN01_Train_1 = panel:Button("Call Razor Train")
 			local function CAN01_Train_R()
@@ -241,14 +243,19 @@ hook.Add( "PopulateToolMenu", "HL2SB_Currentmap_Settings", function()
 				RAVEN_Clouds()
 			end
 		end
+
 		if hl2sb_getmap == "gmhl2_coast_bridge" then
 			local HW17_B_Train = panel:Button("Call Train")
 			local function HW17_Train()
 				net.Start("request_HL2SB_HW17_Bridge_Train")
 				net.SendToServer()
 			end
-			function HW17_B_Train:DoClick() HW17_Train() end
+
+			function HW17_B_Train:DoClick()
+				HW17_Train()
+			end
 		end
+
 		if hl2sb_getmap == "gmhl2_coast_09" then
 			panel:Help("One time only settings")
 
