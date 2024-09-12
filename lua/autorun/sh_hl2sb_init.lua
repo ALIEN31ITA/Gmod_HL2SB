@@ -17,3 +17,15 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/choreo_launch.pcf" )
 	game.AddParticles( "particles/magnusson_burner.pcf" )
 end
+
+function HL2SB_IsEP2NectarTriggered()
+	if ( !file.Exists("hl2sb_ep2_nectar", "DATA") ) then return false end
+	if ( game.GetMap() != "gmhl2e2_outland_04" ) then return false end
+
+	local nectar = file.Read("hl2sb_ep2_nectar.txt", "DATA")
+	if ( nectar == "1" ) then
+		return true
+	end
+
+	return fals
+end
