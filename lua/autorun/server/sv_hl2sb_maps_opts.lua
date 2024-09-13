@@ -448,6 +448,51 @@ hook.Add( "PostCleanupMap", "hl2sb_PostCleanupMap", function()
     end
 end)
 
+local function EntityGodmode(ent, dmgInfo)
+	if !IsValid( ent ) then return end
+
+	local bGodmode = GetConVar("hl2sb_npcgodmode"):GetBool()
+	local ent_class = ent:GetClass()
+	local ent_name = ent:GetName()
+
+	if !tobool(hl2sb_getmap:lower():find("gmhl2", 1, true)) then return false end
+
+	if map == "gmhl2e1_citadel_03" then
+		local bNearCore = false
+
+		for k, v in ipairs(ents.FindInSphere(ent:GetPos(), 200)) do
+			if ( v:GetClass() == "prop_coreball" ) then
+				bNearCore = true
+				break
+			end
+		end
+
+		if ( bNearCore and IsValid(dmgInfo:GetAttacker()) and dmgInfo:GetAttacker() == ent and GetConVar("hl2sb_ep1_core_damage"):GetBool() ) then
+			return true
+		end
+	end
+
+	local godModeTable = hl2sb.godModeNPCNames[ent_class]
+	if ( godModeTable and ent:IsNPC() and bGodmode ) then
+		for k, v in ipairs(godModeTable) do
+			if ( ent_name == v ) then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+hook.Add("EntityTakeDamage", "hl2sb_EntityTakeDamage", function(ent, dmgInfo)
+	if !IsValid( ent ) then return end
+
+	local bGodmode = EntityGodmode(ent, dmgInfo)
+	if ( bGodmode ) then
+		return true
+	end
+end)
+
 // MAP SPECIFIC
 //TRAIN STATION 02
 util.AddNetworkString("request_hl2sb_TRAINSTATION_02_ClearProps")
