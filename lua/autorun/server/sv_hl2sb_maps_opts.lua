@@ -360,14 +360,15 @@ hook.Add("PlayerInitialSpawn", "HL2SB_INTROSTARTER", function(ply)
 end)
 
 hook.Add("PlayerInitialSpawn", "HL2SB_NECTARDUMBASS", function(ply)
-	print("PlayerInitialSpawn", HL2SB_IsEP2NectarTriggered())
 	if ( hl2sb_getmap == "gmhl2e2_outland_02" and HL2SB_IsEP2NectarTriggered() ) then
-		print("MAP IS CORRECT AND IS TRIGGERED")
-		for k, v in ipairs(ents.FindByName("debug_choreo_start_in_elevator")) do
-			v:Fire("Trigger")			
-		end
-		timer.Simple(10, function()
-			file.Delete("hl2sb_ep2_nectar.txt")
+		timer.Simple(1, function()
+			for k, v in ipairs(ents.FindByName("debug_choreo_start_in_elevator")) do
+				v:Fire("Trigger")
+			end
+
+			timer.Simple(1, function()
+				file.Delete("hl2sb_ep2_nectar.txt")
+			end)
 		end)
 	end
 end)
