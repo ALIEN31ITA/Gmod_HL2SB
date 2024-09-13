@@ -449,7 +449,7 @@ hook.Add( "PostCleanupMap", "hl2sb_PostCleanupMap", function()
 end)
 
 local function EntityGodmode(ent, dmgInfo)
-	if !IsValid( ent ) then return end
+	if ( !IsValid( ent ) ) then return false end
 
 	local bGodmode = GetConVar("hl2sb_npcgodmode"):GetBool()
 	local ent_class = ent:GetClass()
