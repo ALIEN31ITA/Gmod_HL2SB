@@ -366,12 +366,12 @@ hook.Add("PlayerInitialSpawn", "HL2SB_INTROSTARTER", function(ply)
 		if ( IsValid(relay) ) then
 			relay:Fire("Trigger")
 			print("fired")
+
+			timer.Simple(10, function()
+				file.Delete("hl2sb_ep2_nectar.txt")
+			end)
 		end
 	end
-
-	timer.Simple(10, function()
-		file.Delete("hl2sb_ep2_nectar.txt")
-	end)
 end)
 
 // MAP FIRST LOAD
