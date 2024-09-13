@@ -21,7 +21,17 @@ net.Receive( "hl2sb_MenuCommand", function( len, ply )
 
     local str, bol = net.ReadString(), net.ReadBool()
     if ( !str or bol == nil ) then return end
-    if ( !vars[ str ] ) then return end
+
+    local bVarExists = false
+
+    for k, v in pairs(hl2sb.cvars) do
+        if ( v.value:GetName() == str ) then
+            bVarExists = true
+            break
+        end
+    end
+
+    if ( !bVarExists ) then return end
 
     RunConsoleCommand( str, bol and 1 or 0 )
 end )

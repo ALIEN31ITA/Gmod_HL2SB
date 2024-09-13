@@ -26,15 +26,6 @@ surface.CreateFont("hl2sbMenuFont3", {
 
 local Mat = Material( "hud/hl2sb/logo.png" )
 
-local vars = {
-    { "[TRANSTATION-EP1] Toggle intro", "You don't need to hear all of this, you are a professional", "hl2sb_trainstation_intro" },
-    { "Toggle Story NPC's Godmode", "Enable/Disable Godmode for Story NPC's", "hl2sb_npcgodmode" },
-    { "Toggle Death barriers", "Enable/Disable death barriers, pits, leeches", "hl2sb_deathpit_triggers" },
-    { "Toggle Loading Zones", "Enable/Disable level switch triggers", "hl2sb_levelswitch_triggers" },
-    { "Toggle Antlion spawns", "Enable/Disable antlions burrowing from the ground", "hl2sb_antlionspawn_triggers" },
-    { "Toggle Core Damage", "Enable/Disable core damage in Episode 1", "hl2sb_ep1_core_damage" },
-}
-
 local color_base_bg = Color( 25, 40, 55 )
 local color_base_outline = Color( 210, 90, 0 )
 
@@ -105,36 +96,38 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
         base:AddItem( settingsForMaps )
         base:AddItem( scrollPanel )
 
-        for k, v in ipairs(vars) do
+        for k, v in pairs(hl2sb.cvars) do
+            local cvar = v.value
+
             local title = vgui.Create( "DLabel", scrollPanel )
             title:Dock( TOP )
-            title:SetText( v[ 1 ] )
+            title:SetText( v.menuText )
             title:SetFont( "hl2sbMenuFont1" )
             title:SetWrap(true)
             title:SetAutoStretchVertical(true)
             title:SetTextColor( color_white )
-            title:SetTooltip( v[ 3 ] )
+            title:SetTooltip( cvar:GetName() )
 
             local toggleButton = vgui.Create( "DButton", scrollPanel )
             toggleButton:Dock( TOP )
-            toggleButton:SetText( GetConVar( v[ 3 ] ):GetInt() > 0 && "Enabled" || "Disabled" )
-            toggleButton:SetTextColor(GetConVar( v[ 3 ] ):GetBool() && color_access_granted || color_access_denied)
+            toggleButton:SetText( cvar:GetInt() > 0 && "Enabled" || "Disabled" )
+            toggleButton:SetTextColor(cvar:GetBool() && color_access_granted || color_access_denied)
             toggleButton:SetFont( "hl2sbMenuFont1" )
-            toggleButton:SetTooltip( v[ 3 ] )
+            toggleButton:SetTooltip( cvar:GetName() )
             toggleButton:SizeToContents()
 
             function toggleButton:DoClick()
-                local newVal = !GetConVar( v[ 3 ] ):GetBool()
-                local oldVal = GetConVar( v[ 3 ] ):GetBool()
+                local newVal = !cvar:GetBool()
+                local oldVal = cvar:GetBool()
 
                 if ( newVal == oldVal ) then return end
 
                 if ( bHasAccess ) then
-                    self:SetTextColor( val and color_access_granted or color_label_settingsForMaps )
+                    self:SetTextColor( newVal and color_access_granted or color_label_settingsForMaps )
                     surface.PlaySound( "ui/buttonclickrelease.wav" )
 
                     net.Start( "hl2sb_MenuCommand" )
-                        net.WriteString( v[ 3 ] )
+                        net.WriteString( cvar:GetName() )
                         net.WriteBool( newVal )
                     net.SendToServer()
                 else
@@ -147,7 +140,7 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
 
             local label = vgui.Create( "DLabel", scrollPanel )
             label:Dock( TOP )
-            label:SetText( v[ 2 ] )
+            label:SetText( v.menuDesc )
             label:SetTextColor( color_label_settingsForMaps )
             label:SetFont( "hl2sbMenuFont2" )
             label:SetWrap(true)

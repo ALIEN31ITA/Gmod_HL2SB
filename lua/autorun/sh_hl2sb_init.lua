@@ -53,6 +53,9 @@ hl2sb.mapSettings = {
 				v:Fire("Disable")
 			end
         end,
+
+		menuText = "Toggle Death Barriers",
+		menuDesc = "Enable/Disable death barriers, pits, leeches",
     },
     hl2sb_LevelSwitchTriggers = {
         value = CreateConVar( "hl2sb_levelswitch_triggers", "1", FCVAR_ARCHIVE, "Toggle Changelevels", 0, 1 ),
@@ -75,6 +78,9 @@ hl2sb.mapSettings = {
 				v:Fire("Disable")
 			end
         end,
+
+		menuText = "Toggle Loading Zones",
+		menuDesc = "Enable/Disable level switch triggers",
     },
     hl2sb_Antlions_Spawns = {
         value = CreateConVar( "hl2sb_antlionspawn_triggers", "1", FCVAR_ARCHIVE, "Toggle Antlion Spawns", 0, 1 ),
@@ -92,7 +98,6 @@ hl2sb.mapSettings = {
 				v:Fire("Enable")
 			end
         end,
-
         off = function()
 			for k, v in ipairs(ents.FindByName("trigger_expanse_sand_1")) do
 				v:Fire("Disable")
@@ -106,6 +111,9 @@ hl2sb.mapSettings = {
 				v:Fire("Disable")
 			end
         end,
+
+		menuText = "Toggle Antlion spawns",
+		menuDesc = "Enable/Disable antlions burrowing from the ground",
     },
 	hl2sb_GmanIntro = {
 		value = CreateConVar( "hl2sb_trainstation_intro", "1", FCVAR_ARCHIVE, "Gman trainstation intro", 0, 1 ),
@@ -120,20 +128,31 @@ hl2sb.mapSettings = {
 				v:Fire("Trigger")
 			end
         end,
+
+		menuText = "Toggle G-Man Trainstation Intro",
+		menuDesc = "Enable/Disable G-Man trainstation intro",
     },
 	hl2sb_NPCGodmode = {
 		value = CreateConVar( "hl2sb_npcgodmode", "0", FCVAR_ARCHIVE, "Toggle NPC Godmode", 0, 1 ),
+
 		on = function()
 		end,
 		off = function()
-		end
+		end,
+
+		menuText = "Toggle Story NPC's Godmode",
+		menuDesc = "Enable/Disable Godmode for Story NPC's",
 	},
 	hl2sb_ep1_CoreDamage = {
 		value = CreateConVar( "hl2sb_ep1_core_damage", "1", FCVAR_ARCHIVE, "Toggle Core Damage", 0, 1 ),
+
 		on = function()
 		end,
 		off = function()
-		end
+		end,
+
+		menuText = "Toggle Core Damage",
+		menuDesc = "Enable/Disable core damage in Episode 1",
 	},
 }
 
@@ -152,7 +171,7 @@ hl2sb.godModeNPCNames = {
 hl2sb.cvars = {}
 
 for k, v in pairs(hl2sb.mapSettings) do
-	hl2sb.cvars[k] = v.value
+	hl2sb.cvars[k] = v
 end
 
 local gameMap = game.GetMap()
