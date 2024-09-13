@@ -144,14 +144,14 @@ local function DrawOutro()
     local markupAlien = markup.Parse("<font=hl2sbGenericFont>CREATOR\nALIEN31</font>")
     markupAlien:Draw(ScrW() / 2 - 190, ScrH() / 1.75, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
 
-	// EON Text
-    local markupBloodycop = markup.Parse("<font=hl2sbGenericFont>CODER\neon\n<color=255,0,0>bloodycop</color></font>")
-    markupBloodycop:Draw(ScrW() / 2 + 190, ScrH() / 1.75, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
-
     // Eon pfp
     surface.SetDrawColor(ColorAlpha(color_white, alpha))
     surface.SetMaterial(hl2sb.OutroIcons[2])
     surface.DrawTexturedRect(ScrW() / 2 + 128, ScrH() / 2 - 64, 128, 128)
+
+    // EON Text
+    local markupBloodycop = markup.Parse("<font=hl2sbGenericFont>CODER\neon\n<color=255,0,0>bloodycop</color></font>")
+    markupBloodycop:Draw(ScrW() / 2 + 190, ScrH() / 1.75, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
 
 	// GAME TITLE
 	local hl2sb_markupfonts = markup.Parse("<font=hl2sbCreditsFontBig>HALF-LIFE'</font>\n<font=hl2sbGenericFontBig>   ==sandbox==</font>")
