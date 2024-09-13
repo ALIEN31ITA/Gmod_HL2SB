@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models/hl2sb/characters/barneyface"
+	"$bumpmap" "models/hl2sb/characters/barneyface_n"
+	"$halflambert" 1
+	"$nodecal" "1"
+}

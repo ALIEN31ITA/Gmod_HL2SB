@@ -1,0 +1,8 @@
+patch
+{
+include "materials\models\vortigaunt\vortigaunt_blue_ep1.vmt"
+insert
+{
+$warpparam 1
+}
+}

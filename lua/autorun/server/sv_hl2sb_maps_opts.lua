@@ -359,21 +359,16 @@ hook.Add("PlayerInitialSpawn", "HL2SB_INTROSTARTER", function(ply)
 	end
 end)
 
-hook.Add("PlayerInitialSpawn", "HL2SB_INTROSTARTER", function(ply)
+hook.Add("PlayerInitialSpawn", "HL2SB_NECTARDUMBASS", function(ply)
 	print("PlayerInitialSpawn", HL2SB_IsEP2NectarTriggered())
 	if ( hl2sb_getmap == "gmhl2e2_outland_02" and HL2SB_IsEP2NectarTriggered() ) then
 		print("MAP IS CORRECT AND IS TRIGGERED")
-		local relay = ents.FindByName("debug_choreo_start_in_elevator")[1]
-		print("RELAY", relay)
-
-		if ( IsValid(relay) ) then
-			relay:Fire("Trigger")
-			print("fired")
-
-			timer.Simple(10, function()
-				file.Delete("hl2sb_ep2_nectar.txt")
-			end)
+		for k, v in ipairs(ents.FindByName("debug_choreo_start_in_elevator")) do
+			v:Fire("Trigger")			
 		end
+		timer.Simple(10, function()
+			file.Delete("hl2sb_ep2_nectar.txt")
+		end)
 	end
 end)
 

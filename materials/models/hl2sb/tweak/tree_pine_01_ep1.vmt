@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$alphatest" 1
+	"$basetexture" "models\hl2sb\tweak\tree_pine_01_ep1"
+	"$model" 1
+	"$nocull" 1
+}
+

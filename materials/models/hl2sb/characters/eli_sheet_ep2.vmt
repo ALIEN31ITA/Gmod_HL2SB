@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/hl2sb/characters/eli_sheet_ep2"
+    "$bumpmap" "models/hl2sb/characters/eli_sheet_ep2_normal"
+	"$halflambert" 1
+	"$nodecal" "1"
+	"$phong" "1"
+	"$phongboost" "4"
+	"$phongexponenttexture" "models/hl2sb/characters/eli_sheet_ep2_phong"
+	"$phongalbedotint" "1"										
+	"$phongfresnelranges"	"[.1 .5  1]"
+}
