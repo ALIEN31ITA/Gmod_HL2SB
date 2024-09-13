@@ -1,4 +1,6 @@
-util.AddNetworkString( "HL2SB_MenuCommand" )
+hl2sb = hl2sb or {}
+
+util.AddNetworkString( "hl2sb_MenuCommand" )
 
 local vars = {
     [ "hl2sb_trainstation_intro" ] = true,
@@ -9,7 +11,7 @@ local vars = {
     [ "hl2sb_ep1_core_damage" ] = true,
 }
 
-net.Receive( "HL2SB_MenuCommand", function( len, ply )
+net.Receive( "hl2sb_MenuCommand", function( len, ply )
     if ( !IsValid(ply) ) then return end
 
     local bHasAccess = false

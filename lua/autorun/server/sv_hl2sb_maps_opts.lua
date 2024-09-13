@@ -1,7 +1,8 @@
+hl2sb = hl2sb or {}
+
 local hl2sb_getmap = game.GetMap()
 
-// HL2SB NPC SWITCH - Zaurzo code
-hook.Add("PlayerSpawnedNPC", "HL2SB_NPC_SUBMATERIALS", function(ply, ent)
+local function SetupSubmaterials(ent)
 	if ent:GetClass() == "npc_eli" && ent.NPCTable.ListClass == "npc_eli_episodic" then
 		ent.NPCTable.Name = "Eli Vance"
 		ent:SetSubMaterial( 4, "models/hl2sb/characters/eli_sheet_ep2" )
@@ -32,7 +33,7 @@ hook.Add("PlayerSpawnedNPC", "HL2SB_NPC_SUBMATERIALS", function(ply, ent)
 	end
 
 	if ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
-		ent:SetNW2Entity("HL2SBSpawnedBy", ply)
+		ent:SetNW2Entity("hl2sbSpawnedBy", ply)
 
 		ent:SetSubMaterial( 0, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
 		ent:SetSubMaterial( 1, "models/hl2sb/characters/vortigaunt_blue_patch" )
@@ -42,6 +43,28 @@ hook.Add("PlayerSpawnedNPC", "HL2SB_NPC_SUBMATERIALS", function(ply, ent)
 		ent:SetSubMaterial( 5, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
 		ent.NPCTable.Name = "Vortigaunt"
 	end
+end
+
+local MAP_HELINPC = {
+	["npc_combinegunship"] = true,
+	["npc_helicopter"] = true,
+	["npc_combinedropship"] = true
+}
+
+local function SetHeliPath(ent)
+	if ( hl2sb_getmap == "gmhl2_coast_03" ) then
+		if MAP_HELINPC[ent:GetClass()] then
+			ent:Fire("SetTrack", "helipathstart", 0)
+		end
+	end
+end
+
+// hl2sb NPC SWITCH - Zaurzo code
+hook.Add("PlayerSpawnedNPC", "hl2sb_NPC_SUBMATERIALS", function(ply, ent)
+	if ( !IsValid(ent) or !IsValid(ply) ) then return end
+
+	SetupSubmaterials(ent)
+	SetHeliPath(ent)
 end)
 
 // Fisherman MDL code fix - Phoenixf
@@ -56,7 +79,7 @@ end
 // Vortiguant Blue - July Update
 local function EpisodeOneBlueVortigaunts(ent)
 	if ( !IsValid(ent) ) then return end
-	if ( IsValid(ent:GetNW2Entity("HL2SBSpawnedBy", nil)) ) then return end
+	if ( IsValid(ent:GetNW2Entity("hl2sbSpawnedBy", nil)) ) then return end
 	if ( ent:GetModel() != "models/vortigaunt_blue.mdl" ) then return end
 	if ( hl2sb_getmap != "gmhl2e1_citadel_00" ) then return end
 
@@ -75,7 +98,6 @@ local function SnowyMossman(ent)
 	ent:SetModel("models/hl2sb/characters/mossman_ep1.mdl")
 	ent:SetPos(ent:GetPos() + Vector(0, 0, 5))
 end
-
 
 local function EpisodicRetextures(ent)
 	if ( !IsValid(ent) ) then return end
@@ -145,7 +167,7 @@ local function AmmoCrateModelSwitch(ent)
 	end
 end
 
-hook.Add( "OnEntityCreated", "HL2SBInitPostEntity", function(ent)
+hook.Add( "OnEntityCreated", "hl2sb_OnEntityCreated", function(ent)
 	timer.Simple(0.1, function()
 		if ( !IsValid(ent) ) then return end
 
@@ -159,7 +181,7 @@ hook.Add( "OnEntityCreated", "HL2SBInitPostEntity", function(ent)
 end)
 
 // Ballspawner OFF ON START HACK - Thanks a lot VALVe... cheap ass solution
-local function HL2SB_BallspawnerOFF()
+local function hl2sb_BallspawnerOFF()
 	if hl2sb_getmap == "gmhl2_c17_part5" then
 		RunConsoleCommand("hl2_episodic", "1")
 
@@ -170,7 +192,7 @@ local function HL2SB_BallspawnerOFF()
 end
 
 // Lost coast Easter Egg
-local function HL2SB_LostCoast_Easteregg()
+local function hl2sb_LostCoast_Easteregg()
 	if ( IsMounted( "lostcoast" ) ) then
 		if hl2sb_getmap == "gmhl2_coast_03" then
 			for k, v in ipairs(ents.FindByName("trigger_lostcoast")) do
@@ -180,24 +202,11 @@ local function HL2SB_LostCoast_Easteregg()
 	end
 end
 
-local MAP_HELINPC = {
-	["npc_combinegunship"] = true,
-	["npc_helicopter"] = true,
-	["npc_combinedropship"] = true
-}
-
-if hl2sb_getmap == "gmhl2_coast_03" then
-	hook.Add("PlayerSpawnedNPC", "map_sethelinpcnode", function(ply, ent)
-		if MAP_HELINPC[ent:GetClass()] then
-			ent:Fire("SetTrack", "helipathstart", 0)
-		end
-	end)
-end
 
 // Hook Killfeed names
 // SCRAPPED - doesn't seem to work
 
-hook.Add( "GetDeathNoticeEntityName", "HL2SB_KillFeedNames", function(ent)
+hook.Add( "GetDeathNoticeEntityName", "hl2sb_KillFeedNames", function(ent)
 	if hl2sb_getmap == "gmhl2_c17_part3" then
 		if ( ent:GetClass() == "npc_barney" and ent:GetName() == "fakebarney" ) then
 			return "Fake Barney"
@@ -213,154 +222,61 @@ end)
 
 // TOGGLES CODE - Phatso
 
-local HL2SB_mapsettings = {
-    HL2SB_Deathpits = {
-        value = CreateConVar( "hl2sb_deathpit_triggers", "0", FCVAR_ARCHIVE, "Toggle death zones", 0, 1 ),
-        on = function()
-			for k, v in ipairs(ents.FindByName("waterdeath")) do
-				v:Fire("Disable")
-			end
-
-			for k, v in ipairs(ents.FindByName("pitdeath")) do
-				v:Fire("Disable")
-			end
-        end,
-        off = function()
-			for k, v in ipairs(ents.FindByName("waterdeath")) do
-				v:Fire("Enable")
-			end
-
-			for k, v in ipairs(ents.FindByName("pitdeath")) do
-				v:Fire("Enable")
-			end
-        end
-    },
-    HL2SB_LevelSwitchTriggers = {
-        value = CreateConVar( "hl2sb_levelswitch_triggers", "0", FCVAR_ARCHIVE, "Toggle Changelevels", 0, 1 ),
-        on = function()
-			for k, v in ipairs(ents.FindByClass("trigger_changelevel")) do
-				v:Fire("Disable")
-			end
-
-			for k, v in ipairs(ents.FindByName("changelvl_lua_trigger")) do
-				v:Fire("Disable")
-			end
-        end,
-        off = function()
-			for k, v in ipairs(ents.FindByClass("trigger_changelevel")) do
-				v:Fire("Enable")
-			end
-
-			for k, v in ipairs(ents.FindByName("changelvl_lua_trigger")) do
-				v:Fire("Enable")
-			end
-        end
-    },
-    HL2SB_Antlions_Spawns = {
-        value = CreateConVar( "hl2sb_antlionspawn_triggers", "0", FCVAR_ARCHIVE, "Toggle Antlion Spawns", 0, 1 ),
-        on = function()
-			for k, v in ipairs(ents.FindByName("trigger_expanse_sand_1")) do
-				v:Fire("Disable")
-			end
-
-			for k, v in ipairs(ents.FindByName("antlion_sand_trigger")) do
-				v:Fire("Disable")
-			end
-
-			for k, v in ipairs(ents.FindByName("antlion_spawner")) do
-				v:Fire("Disable")
-			end
-        end,
-        off = function()
-			for k, v in ipairs(ents.FindByName("trigger_expanse_sand_1")) do
-				v:Fire("Enable")
-			end
-
-			for k, v in ipairs(ents.FindByName("antlion_sand_trigger")) do
-				v:Fire("Enable")
-			end
-
-			for k, v in ipairs(ents.FindByName("antlion_spawner")) do
-				v:Fire("Enable")
-			end
-        end
-    },
-	HL2SB_GmanIntro = {
-        value = CreateConVar( "hl2sb_trainstation_intro", "0", FCVAR_ARCHIVE, "Gman trainstation intro"),
-        on = function()
-			for k, v in ipairs(ents.FindByName("intro_skip_start")) do
-				v:Fire("Trigger")
-			end
-        end,
-        off = function()
-			for k, v in ipairs(ents.FindByName("intro_start")) do
-				v:Fire("Trigger")
-			end
-        end,
-    },
-	HL2EP1SB_CoreDamage = {
-		value = CreateConVar( "hl2sb_ep1_core_damage", "1", FCVAR_ARCHIVE, "Toggle Core Damage", 0, 1 ),
-		on = function()
-		end,
-		off = function()
-		end
-	}
-}
-
 //Map Breakable Props - Redox
 // TODO - Need coder for making it as a toggle, so people decide if they can break them or not (MAP SPAWNED ONES)
 
-local HL2SB_Breakprops = {
+local hl2sb_Breakprops = {
     ["hl2sb/props_c17/utilitypole01b_break.mdl"] = true
 }
 
 cvars.AddChangeCallback( "hl2sb_deathpit_triggers", function( _, _, newValue )
     if newValue == "1" then
-        HL2SB_mapsettings.HL2SB_Deathpits.on()
+        hl2sb.mapSettings.hl2sb_Deathpits.on()
     else
-        HL2SB_mapsettings.HL2SB_Deathpits.off()
+        hl2sb.mapSettings.hl2sb_Deathpits.off()
     end
 end)
 
 cvars.AddChangeCallback( "hl2sb_levelswitch_triggers", function( _, _, newValue )
     if newValue == "1" then
-        HL2SB_mapsettings.HL2SB_LevelSwitchTriggers.on()
+        hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.on()
     else
-        HL2SB_mapsettings.HL2SB_LevelSwitchTriggers.off()
+        hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.off()
     end
 end)
 
 cvars.AddChangeCallback( "hl2sb_antlionspawn_triggers", function( _, _, newValue )
     if newValue == "1" then
-        HL2SB_mapsettings.HL2SB_Antlions_Spawns.on()
+        hl2sb.mapSettings.hl2sb_Antlions_Spawns.on()
     else
-        HL2SB_mapsettings.HL2SB_Antlions_Spawns.off()
+        hl2sb.mapSettings.hl2sb_Antlions_Spawns.off()
     end
 end)
 
 // STARTING INTRO
 
-local HL2SB_Introhasplayed = 0
+local hl2sb_Introhasplayed = 0
 
 local introStarterMaps = {
 	["gmhl2e2_outland_01"] = true,
 	["gmhl2e1_citadel_00"] = true,
 	["gmhl2_trainstation_01"] = true
 }
-hook.Add("PlayerInitialSpawn", "HL2SB_INTROSTARTER", function(ply)
-	if introStarterMaps[hl2sb_getmap] then
-		HL2SB_Introhasplayed = 1
 
-		if HL2SB_mapsettings.HL2SB_GmanIntro.value:GetBool() then
-			ProtectedCall( HL2SB_mapsettings.HL2SB_GmanIntro.on )
+local function IntroFunc()
+	if introStarterMaps[hl2sb_getmap] then
+		hl2sb_Introhasplayed = 1
+
+		if hl2sb.mapSettings.hl2sb_GmanIntro.value:GetBool() then
+			ProtectedCall( hl2sb.mapSettings.hl2sb_GmanIntro.on )
 		else
-			ProtectedCall( HL2SB_mapsettings.HL2SB_GmanIntro.off )
+			ProtectedCall( hl2sb.mapSettings.hl2sb_GmanIntro.off )
 		end
 	end
-end)
+end
 
-hook.Add("PlayerInitialSpawn", "HL2SB_NECTARDUMBASS", function(ply)
-	if ( hl2sb_getmap == "gmhl2e2_outland_02" and HL2SB_IsEP2NectarTriggered() ) then
+local function Episode2NectarStart()
+	if ( hl2sb_getmap == "gmhl2e2_outland_02" and hook.Run("IsEP2NectarTriggered") ) then
 		timer.Simple(1, function()
 			for k, v in ipairs(ents.FindByName("debug_choreo_start_in_elevator")) do
 				v:Fire("Trigger")
@@ -371,23 +287,28 @@ hook.Add("PlayerInitialSpawn", "HL2SB_NECTARDUMBASS", function(ply)
 			end)
 		end)
 	end
+end
+
+hook.Add("PlayerInitialSpawn", "hl2sb_PlayerInitialSpawn", function(ply)
+	IntroFunc()
+	Episode2NectarStart()
 end)
 
 // MAP FIRST LOAD
-hook.Add( "InitPostEntity", "HL2SB_mapsettings", function()
-	HL2SB_BallspawnerOFF()
-	HL2SB_LostCoast_Easteregg()
+hook.Add( "InitPostEntity", "hl2sb_InitPostEntity", function()
+	hl2sb_BallspawnerOFF()
+	hl2sb_LostCoast_Easteregg()
 
-    if HL2SB_mapsettings.HL2SB_Deathpits.value:GetBool() then
-        ProtectedCall( HL2SB_mapsettings.HL2SB_Deathpits.on )
+    if hl2sb.mapSettings.hl2sb_Deathpits.value:GetBool() then
+        ProtectedCall( hl2sb.mapSettings.hl2sb_Deathpits.on )
     end
 
-    if HL2SB_mapsettings.HL2SB_LevelSwitchTriggers.value:GetBool() then
-        ProtectedCall( HL2SB_mapsettings.HL2SB_LevelSwitchTriggers.on )
+    if hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.value:GetBool() then
+        ProtectedCall( hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.on )
     end
 
-    if HL2SB_mapsettings.HL2SB_Antlions_Spawns.value:GetBool() then
-        ProtectedCall( HL2SB_mapsettings.HL2SB_Antlions_Spawns.on )
+    if hl2sb.mapSettings.hl2sb_Antlions_Spawns.value:GetBool() then
+        ProtectedCall( hl2sb.mapSettings.hl2sb_Antlions_Spawns.on )
     end
 
 	for k, v in ents.Iterator() do
@@ -400,7 +321,7 @@ hook.Add( "InitPostEntity", "HL2SB_mapsettings", function()
 
 		if hl2sb_getmap == ( "gmhl2e1_citadel_03" or "ep2_outland_11b" or "ep1_citadel_03" ) then
 			if ( v:GetClass() == "npc_mossman" and v:GetName() == "mossman2" ) then
-				v:SetModel( "models/hl2sb/characters/Mossman_ep1.mdl" )
+				v:SetModel( Model( "models/hl2sb/characters/mossman_ep1.mdl" ) )
 				v:SetPos(v:GetPos() + Vector(0, 0, 5))
 			end
 		end
@@ -455,9 +376,9 @@ end)
 
 // ADMIN CLEANUP
 
-hook.Add( "PostCleanupMap", "HL2SB_mapsettings", function()
-	HL2SB_BallspawnerOFF()
-	HL2SB_LostCoast_Easteregg()
+hook.Add( "PostCleanupMap", "hl2sb_PostCleanupMap", function()
+	hl2sb_BallspawnerOFF()
+	hl2sb_LostCoast_Easteregg()
 
 	if hl2sb_getmap == "gmhl2_lostcoast" then
 		timer.Simple(0.1, function()
@@ -477,10 +398,10 @@ hook.Add( "PostCleanupMap", "HL2SB_mapsettings", function()
 		end
 	end
 
-	if HL2SB_mapsettings.HL2SB_GmanIntro.value:GetBool(true) then
-		ProtectedCall( HL2SB_mapsettings.HL2SB_GmanIntro.on )
+	if hl2sb.mapSettings.hl2sb_GmanIntro.value:GetBool() then
+		ProtectedCall( hl2sb.mapSettings.hl2sb_GmanIntro.on )
 	else
-		ProtectedCall( HL2SB_mapsettings.HL2SB_GmanIntro.off )
+		ProtectedCall( hl2sb.mapSettings.hl2sb_GmanIntro.off )
 	end
 
 	if hl2sb_getmap == "gmhl2_trainstation_02" then
@@ -514,31 +435,30 @@ hook.Add( "PostCleanupMap", "HL2SB_mapsettings", function()
 		end
 	end
 
-    if HL2SB_mapsettings.HL2SB_Deathpits.value:GetBool() then
-        ProtectedCall( HL2SB_mapsettings.HL2SB_Deathpits.on )
+    if hl2sb.mapSettings.hl2sb_Deathpits.value:GetBool() then
+        ProtectedCall( hl2sb.mapSettings.hl2sb_Deathpits.on )
     end
 
-    if HL2SB_mapsettings.HL2SB_LevelSwitchTriggers.value:GetBool() then
-        ProtectedCall( HL2SB_mapsettings.HL2SB_LevelSwitchTriggers.on )
+    if hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.value:GetBool() then
+        ProtectedCall( hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.on )
     end
 
-    if HL2SB_mapsettings.HL2SB_Antlions_Spawns.value:GetBool() then
-        ProtectedCall( HL2SB_mapsettings.HL2SB_Antlions_Spawns.on )
+    if hl2sb.mapSettings.hl2sb_Antlions_Spawns.value:GetBool() then
+        ProtectedCall( hl2sb.mapSettings.hl2sb_Antlions_Spawns.on )
     end
 end)
 
 // MAP SPECIFIC
 //TRAIN STATION 02
-util.AddNetworkString("request_HL2SB_TRAINSTATION_02_ClearProps")
+util.AddNetworkString("request_hl2sb_TRAINSTATION_02_ClearProps")
 // CANALS 01
-util.AddNetworkString("request_HL2SB_CAN01_TrainR")
-util.AddNetworkString("request_HL2SB_CAN01_TrainN")
-util.AddNetworkString("request_HL2SB_CAN01_TrainNGO")
+util.AddNetworkString("request_hl2sb_CAN01_TrainR")
+util.AddNetworkString("request_hl2sb_CAN01_TrainN")
+util.AddNetworkString("request_hl2sb_CAN01_TrainNGO")
 //RAVENHOLM
-util.AddNetworkString("request_HL2SB_RAVEN_KillClouds")
+util.AddNetworkString("request_hl2sb_RAVEN_KillClouds")
 
-
-net.Receive("request_HL2SB_CAN01_TrainR", function(len, ply)
+net.Receive("request_hl2sb_CAN01_TrainR", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("looping_traincar2")) do
@@ -550,7 +470,7 @@ net.Receive("request_HL2SB_CAN01_TrainR", function(len, ply)
     end
 end)
 
-net.Receive("request_HL2SB_CAN01_TrainN", function(len, ply)
+net.Receive("request_hl2sb_CAN01_TrainN", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("looping_traincar1")) do
@@ -563,7 +483,7 @@ net.Receive("request_HL2SB_CAN01_TrainN", function(len, ply)
 	end
 end)
 
-net.Receive("request_HL2SB_CAN01_TrainNGO", function(len, ply)
+net.Receive("request_hl2sb_CAN01_TrainNGO", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("depart_train1")) do
@@ -572,13 +492,13 @@ net.Receive("request_HL2SB_CAN01_TrainNGO", function(len, ply)
 end)
 
 // HIGHWAY BRIDGE
-util.AddNetworkString("request_HL2SB_HW17_Bridge_Train")
-util.AddNetworkString("request_HL2SB_HW17_Bridge_ClearCars")
+util.AddNetworkString("request_hl2sb_HW17_Bridge_Train")
+util.AddNetworkString("request_hl2sb_HW17_Bridge_ClearCars")
 
 // COAST 09
-util.AddNetworkString("request_HL2SB_SANDTRAP_COAST_09_ClearCars")
+util.AddNetworkString("request_hl2sb_SANDTRAP_COAST_09_ClearCars")
 
-net.Receive("request_HL2SB_HW17_Bridge_Train", function(len, ply)
+net.Receive("request_hl2sb_HW17_Bridge_Train", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("razortrain")) do
@@ -590,7 +510,7 @@ net.Receive("request_HL2SB_HW17_Bridge_Train", function(len, ply)
     end
 end)
 
-net.Receive("request_HL2SB_HW17_Bridge_ClearCars", function(len, ply)
+net.Receive("request_hl2sb_HW17_Bridge_ClearCars", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("clear_railways")) do
@@ -598,7 +518,7 @@ net.Receive("request_HL2SB_HW17_Bridge_ClearCars", function(len, ply)
     end
 end)
 
-net.Receive("request_HL2SB_TRAINSTATION_02_ClearProps", function(len, ply)
+net.Receive("request_hl2sb_TRAINSTATION_02_ClearProps", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("prop_stairblockers")) do
@@ -606,7 +526,7 @@ net.Receive("request_HL2SB_TRAINSTATION_02_ClearProps", function(len, ply)
     end
 end)
 
-net.Receive("request_HL2SB_RAVEN_KillClouds", function(len, ply)
+net.Receive("request_hl2sb_RAVEN_KillClouds", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("smokeclouds")) do
@@ -614,7 +534,7 @@ net.Receive("request_HL2SB_RAVEN_KillClouds", function(len, ply)
     end
 end)
 
-net.Receive("request_HL2SB_SANDTRAP_COAST_09_ClearCars", function(len, ply)
+net.Receive("request_hl2sb_SANDTRAP_COAST_09_ClearCars", function(len, ply)
 	if ( !ply:IsAdmin() ) then return end
 
 	for k, v in ipairs(ents.FindByName("clear_road")) do

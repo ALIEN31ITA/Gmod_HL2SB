@@ -1,3 +1,5 @@
+hl2sb = hl2sb or {}
+
 // EPISODIC Particle Mounting Fix
 if ( IsMounted( "episodic" ) ) then
 	game.AddParticles( "particles/ep1_fx.pcf" )
@@ -16,8 +18,4 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/door_explosion.pcf" )
 	game.AddParticles( "particles/choreo_launch.pcf" )
 	game.AddParticles( "particles/magnusson_burner.pcf" )
-end
-
-if ( !GlowLib ) then
-	MsgC(Color(255, 0, 0), "[ GlowLib ] ", color_white, "GlowLib is not installed! You could install it to use the custom glow data for HL2 Sandbox Support!\n")
 end

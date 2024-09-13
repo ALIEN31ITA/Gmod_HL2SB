@@ -1,5 +1,7 @@
+hl2sb = hl2sb or {}
+
 if ( SERVER ) then
-    hook.Add("CreateEntityRagdoll", "HL2VANILLA_Ragdoll", function( ent, ragdoll )
+    hook.Add("CreateEntityRagdoll", "hl2sb_CreateEntityRagdoll", function( ent, ragdoll )
         if ( !IsValid(ent) or !IsValid(ragdoll) ) then return end
 
         local mats = ent:GetMaterials()
@@ -8,7 +10,7 @@ if ( SERVER ) then
         end
     end)
 else
-    hook.Add("CreateClientsideRagdoll", "HL2VANILLA_RagdollClientside", function( ent, ragdoll )
+    hook.Add("CreateClientsideRagdoll", "hl2sb_CreateClientsideRagdoll", function( ent, ragdoll )
         if ( !IsValid(ent) or !IsValid(ragdoll) ) then return end
 
         local mats = ent:GetMaterials()

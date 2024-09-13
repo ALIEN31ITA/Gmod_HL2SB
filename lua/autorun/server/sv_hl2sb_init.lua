@@ -1,3 +1,5 @@
+hl2sb = hl2sb or {}
+
 CreateConVar("hl2sb_npcgodmode", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Enable/Disable NPC Godmode for Story NPCs")
 
 local godModeNPCNames = {
@@ -12,7 +14,7 @@ local godModeNPCNames = {
 	["npc_mossman"] = {"mossman", "mossman2"},
 }
 
-hook.Add("EntityTakeDamage", "HL2SB_NPCGodmode", function(ent, dmginfo)
+hook.Add("EntityTakeDamage", "hl2sb_NPCGodmode", function(ent, dmginfo)
 	if !IsValid( ent ) then return end
 
 	local bGodmode = GetConVar("hl2sb_npcgodmode"):GetBool()
