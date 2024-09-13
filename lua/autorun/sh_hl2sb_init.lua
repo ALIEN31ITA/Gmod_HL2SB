@@ -130,6 +130,12 @@ hl2sb.mapSettings = {
 	}
 }
 
+hl2sb.cvars = {}
+
+for k, v in pairs(hl2sb.mapSettings) do
+	hl2sb.cvars[k] = v.value
+end
+
 local gameMap = game.GetMap()
 hl2sb.mapTitle = "."
 hl2sb.mapChapter = "Not an HL2:SB Map"

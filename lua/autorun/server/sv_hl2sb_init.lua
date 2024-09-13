@@ -41,7 +41,7 @@ hook.Add("EntityTakeDamage", "hl2sb_NPCGodmode", function(ent, dmginfo)
 
 	local godModeTable = hl2sb.godModeNPCNames[ent_class]
 	if ( godModeTable and ent:IsNPC() and bGodmode ) then
-		for k, v in ipairs(hl2sb.godModeTable) do
+		for k, v in ipairs(godModeTable) do
 			if ( ent_name == v ) then
 				return true
 			end
