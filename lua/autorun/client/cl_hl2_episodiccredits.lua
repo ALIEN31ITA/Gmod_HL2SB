@@ -140,9 +140,18 @@ local function DrawOutro()
     surface.SetMaterial(hl2sb.OutroIcons[1])
     surface.DrawTexturedRect(ScrW() / 2 - 256, ScrH() / 2 - 64, 128, 128)
 
+    // Alien Text
+    local markupAlien = markup.Parse("<font=hl2sbGenericFont>CREATOR\nALIEN31</font>")
+    markupAlien:Draw(ScrW() / 2 - 190, ScrH() / 1.75, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
+
 	// EON Text
     local markupBloodycop = markup.Parse("<font=hl2sbGenericFont>CODER\neon\n<color=255,0,0>bloodycop</color></font>")
     markupBloodycop:Draw(ScrW() / 2 + 190, ScrH() / 1.75, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
+
+    // Eon pfp
+    surface.SetDrawColor(ColorAlpha(color_white, alpha))
+    surface.SetMaterial(hl2sb.OutroIcons[2])
+    surface.DrawTexturedRect(ScrW() / 2 + 128, ScrH() / 2 - 64, 128, 128)
 
 	// GAME TITLE
 	local hl2sb_markupfonts = markup.Parse("<font=hl2sbCreditsFontBig>HALF-LIFE'</font>\n<font=hl2sbGenericFontBig>   ==sandbox==</font>")
@@ -157,15 +166,6 @@ local function DrawOutro()
 	// Thanks for playing and Description
 	local hl2sb_creditdescription = markup.Parse("<color=211, 92, 2><font=hl2sbGenericFontMed>           THANK YOU FOR PLAYING</color>\n   hopefully you had fun playing it.\n         see you next time... for now...</font>")
     hl2sb_creditdescription:Draw(ScrW() / 2, ScrH() / 1.35, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, alpha)
-
-	// Eon pfp
-    surface.SetDrawColor(ColorAlpha(color_white, alpha))
-    surface.SetMaterial(hl2sb.OutroIcons[2])
-    surface.DrawTexturedRect(ScrW() / 2 + 128, ScrH() / 2 - 64, 128, 128)
-
-	// Alien Text
-    local markupAlien = markup.Parse("<font=hl2sbGenericFont>CREATOR\nALIEN31</font>")
-    markupAlien:Draw(ScrW() / 2 - 190, ScrH() / 1.75, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, alpha, TEXT_ALIGN_CENTER)
 end
 
 hook.Add("HUDPaint", "HL2EP1Sandbox", function()
