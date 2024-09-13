@@ -359,6 +359,17 @@ hook.Add("PlayerInitialSpawn", "HL2SB_INTROSTARTER", function(ply)
 	end
 end)
 
+hook.Add("PlayerInitialSpawn", "HL2SB_INTROSTARTER", function(ply)
+	if ( hl2sb_getmap == "gmhl2e2_outland_02" and HL2SB_IsEP2NectarTriggered() ) then
+		local relay = ents.FindByName("relay_ep2_nectar")[1]
+
+		if ( IsValid(relay) ) then
+			relay:Fire("Trigger")
+		end
+	end
+
+	file.Delete("hl2sb_ep2_nectar.txt")
+end)
 
 // MAP FIRST LOAD
 hook.Add( "InitPostEntity", "HL2SB_mapsettings", function()
