@@ -2,7 +2,7 @@ hl2sb = hl2sb or {}
 
 CreateConVar("hl2sb_npcgodmode", "0", {FCVAR_ARCHIVE, FCVAR_NOTIFY}, "Enable/Disable NPC Godmode for Story NPCs")
 
-local godModeNPCNames = {
+hl2sb.godModeNPCNames = {
 	["npc_alyx"] = {"alyx"},
 	["npc_barney"] = {"barney"},
 	["npc_breen"] = {"breen"},
@@ -39,9 +39,9 @@ hook.Add("EntityTakeDamage", "hl2sb_NPCGodmode", function(ent, dmginfo)
 		end
 	end
 
-	local godModeTable = godModeNPCNames[ent_class]
+	local godModeTable = hl2sb.godModeNPCNames[ent_class]
 	if ( godModeTable and ent:IsNPC() and bGodmode ) then
-		for k, v in ipairs(godModeTable) do
+		for k, v in ipairs(hl2sb.godModeTable) do
 			if ( ent_name == v ) then
 				return true
 			end
