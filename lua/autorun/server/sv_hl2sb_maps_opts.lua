@@ -493,96 +493,90 @@ hook.Add("EntityTakeDamage", "hl2sb_EntityTakeDamage", function(ent, dmgInfo)
 	end
 end)
 
-// MAP SPECIFIC
-//TRAIN STATION 02
-util.AddNetworkString("request_hl2sb_TRAINSTATION_02_ClearProps")
-// CANALS 01
-util.AddNetworkString("request_hl2sb_CAN01_TrainR")
-util.AddNetworkString("request_hl2sb_CAN01_TrainN")
-util.AddNetworkString("request_hl2sb_CAN01_TrainNGO")
-//RAVENHOLM
-util.AddNetworkString("request_hl2sb_RAVEN_KillClouds")
+do
+	util.AddNetworkString("request_hl2sb_TRAINSTATION_02_ClearProps")
+	util.AddNetworkString("request_hl2sb_CAN01_TrainR")
+	util.AddNetworkString("request_hl2sb_CAN01_TrainN")
+	util.AddNetworkString("request_hl2sb_CAN01_TrainNGO")
+	util.AddNetworkString("request_hl2sb_RAVEN_KillClouds")
+	util.AddNetworkString("request_hl2sb_HW17_Bridge_Train")
+	util.AddNetworkString("request_hl2sb_HW17_Bridge_ClearCars")
+	util.AddNetworkString("request_hl2sb_SANDTRAP_COAST_09_ClearCars")
 
-net.Receive("request_hl2sb_CAN01_TrainR", function(len, ply)
-	if ( !ply:IsAdmin() ) then return end
+	net.Receive("request_hl2sb_CAN01_TrainR", function(len, ply)
+		if ( !ply:IsAdmin() ) then return end
 
-	for k, v in ipairs(ents.FindByName("looping_traincar2")) do
-        v:Fire("teleporttopathtrack", "train_2_start", 0)
-    end
+		for k, v in ipairs(ents.FindByName("looping_traincar2")) do
+			v:Fire("teleporttopathtrack", "train_2_start", 0)
+		end
 
-	for k, v in ipairs(ents.FindByName("call_train_razor")) do
-        v:Fire("Trigger", 0)
-    end
-end)
+		for k, v in ipairs(ents.FindByName("call_train_razor")) do
+			v:Fire("Trigger", 0)
+		end
+	end)
 
-net.Receive("request_hl2sb_CAN01_TrainN", function(len, ply)
-	if ( !ply:IsAdmin() ) then return end
+	net.Receive("request_hl2sb_CAN01_TrainN", function(len, ply)
+		if ( !ply:IsAdmin() ) then return end
 
-	for k, v in ipairs(ents.FindByName("looping_traincar1")) do
-        v:Fire("teleporttopathtrack", "train_1_start", 0)
-		v:Fire("startforward", 0)
-    end
+		for k, v in ipairs(ents.FindByName("looping_traincar1")) do
+			v:Fire("teleporttopathtrack", "train_1_start", 0)
+			v:Fire("startforward", 0)
+		end
 
-	for k, v in ipairs(ents.FindByName("trainstopped_wav")) do
-		v:Fire("StopSound", 0)
-	end
-end)
+		for k, v in ipairs(ents.FindByName("trainstopped_wav")) do
+			v:Fire("StopSound", 0)
+		end
+	end)
 
-net.Receive("request_hl2sb_CAN01_TrainNGO", function(len, ply)
-	if ( !ply:IsAdmin() ) then return end
+	net.Receive("request_hl2sb_CAN01_TrainNGO", function(len, ply)
+		if ( !ply:IsAdmin() ) then return end
 
-	for k, v in ipairs(ents.FindByName("depart_train1")) do
-        v:Fire("Trigger", 0)
-    end
-end)
+		for k, v in ipairs(ents.FindByName("depart_train1")) do
+			v:Fire("Trigger", 0)
+		end
+	end)
 
-// HIGHWAY BRIDGE
-util.AddNetworkString("request_hl2sb_HW17_Bridge_Train")
-util.AddNetworkString("request_hl2sb_HW17_Bridge_ClearCars")
+	net.Receive("request_hl2sb_HW17_Bridge_Train", function(len, ply)
+		if ( !ply:IsAdmin() ) then return end
 
-// COAST 09
-util.AddNetworkString("request_hl2sb_SANDTRAP_COAST_09_ClearCars")
+		for k, v in ipairs(ents.FindByName("razortrain")) do
+			v:Fire("teleporttopathtrack", "train_2_start", 0)
+		end
 
-net.Receive("request_hl2sb_HW17_Bridge_Train", function(len, ply)
-	if ( !ply:IsAdmin() ) then return end
+		for k, v in ipairs(ents.FindByName("call_train")) do
+			v:Fire("Trigger", 0)
+		end
+	end)
 
-	for k, v in ipairs(ents.FindByName("razortrain")) do
-        v:Fire("teleporttopathtrack", "train_2_start", 0)
-    end
+	net.Receive("request_hl2sb_HW17_Bridge_ClearCars", function(len, ply)
+		if ( !ply:IsAdmin() ) then return end
 
-	for k, v in ipairs(ents.FindByName("call_train")) do
-        v:Fire("Trigger", 0)
-    end
-end)
+		for k, v in ipairs(ents.FindByName("clear_railways")) do
+			v:Fire("Trigger", 0)
+		end
+	end)
 
-net.Receive("request_hl2sb_HW17_Bridge_ClearCars", function(len, ply)
-	if ( !ply:IsAdmin() ) then return end
+	net.Receive("request_hl2sb_TRAINSTATION_02_ClearProps", function(len, ply)
+		if ( !ply:IsAdmin() ) then return end
 
-	for k, v in ipairs(ents.FindByName("clear_railways")) do
-        v:Fire("Trigger", 0)
-    end
-end)
+		for k, v in ipairs(ents.FindByName("prop_stairblockers")) do
+			v:Fire("Kill", 0)
+		end
+	end)
 
-net.Receive("request_hl2sb_TRAINSTATION_02_ClearProps", function(len, ply)
-	if ( !ply:IsAdmin() ) then return end
+	net.Receive("request_hl2sb_RAVEN_KillClouds", function(len, ply)
+		if ( !ply:IsAdmin() ) then return end
 
-	for k, v in ipairs(ents.FindByName("prop_stairblockers")) do
-        v:Fire("Kill", 0)
-    end
-end)
+		for k, v in ipairs(ents.FindByName("smokeclouds")) do
+			v:Fire("Kill", 0)
+		end
+	end)
 
-net.Receive("request_hl2sb_RAVEN_KillClouds", function(len, ply)
-	if ( !ply:IsAdmin() ) then return end
+	net.Receive("request_hl2sb_SANDTRAP_COAST_09_ClearCars", function(len, ply)
+		if ( !ply:IsAdmin() ) then return end
 
-	for k, v in ipairs(ents.FindByName("smokeclouds")) do
-        v:Fire("Kill", 0)
-    end
-end)
-
-net.Receive("request_hl2sb_SANDTRAP_COAST_09_ClearCars", function(len, ply)
-	if ( !ply:IsAdmin() ) then return end
-
-	for k, v in ipairs(ents.FindByName("clear_road")) do
-        v:Fire("Trigger", 0)
-    end
-end)
+		for k, v in ipairs(ents.FindByName("clear_road")) do
+			v:Fire("Trigger", 0)
+		end
+	end)
+end
