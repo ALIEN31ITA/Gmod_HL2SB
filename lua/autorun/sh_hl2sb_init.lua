@@ -121,13 +121,32 @@ hl2sb.mapSettings = {
 			end
         end,
     },
-	HL2EP1SB_CoreDamage = {
+	hl2sb_NPCGodmode = {
+		value = CreateConVar( "hl2sb_npcgodmode", "0", FCVAR_ARCHIVE, "Toggle NPC Godmode", 0, 1 ),
+		on = function()
+		end,
+		off = function()
+		end
+	},
+	hl2sb_ep1_CoreDamage = {
 		value = CreateConVar( "hl2sb_ep1_core_damage", "1", FCVAR_ARCHIVE, "Toggle Core Damage", 0, 1 ),
 		on = function()
 		end,
 		off = function()
 		end
-	}
+	},
+}
+
+hl2sb.godModeNPCNames = {
+	["npc_alyx"] = {"alyx"},
+	["npc_barney"] = {"barney"},
+	["npc_breen"] = {"breen"},
+	["npc_dog"] = {"dog"},
+	["npc_kleiner"] = {"kleiner"},
+	["npc_eli"] = {"eli"},
+	["npc_citizen"] = {"odessa"},
+	["npc_monk"] = {"monk"},
+	["npc_mossman"] = {"mossman", "mossman2"},
 }
 
 hl2sb.cvars = {}
