@@ -27,11 +27,12 @@ surface.CreateFont("hl2sbMenuFont3", {
 local Mat = Material( "hud/hl2sb/logo.png" )
 
 local vars = {
-    { "[TRANSTATION-EP1] Disable intros", "You don't need to hear all of this, you are a professional", "hl2sb_trainstation_intro" },
-    { "Story NPC's are Immortal", "Disable/Enable Godmode for Story NPC's", "hl2sb_npcgodmode" },
-    { "Death barriers", "Disable/Enable death barriers, pits, leeches", "hl2sb_deathpit_triggers" },
-    { "Loading Zones", "Disable/Enable level switch triggers", "hl2sb_levelswitch_triggers" },
-    { "Antlion spawns", "Disable/Enable antlions burrowing from the ground", "hl2sb_antlionspawn_triggers" },
+    { "[TRANSTATION-EP1] Toggle intro", "You don't need to hear all of this, you are a professional", "hl2sb_trainstation_intro" },
+    { "Toggle Story NPC's Godmode", "Enable/Disable Godmode for Story NPC's", "hl2sb_npcgodmode" },
+    { "Toggle Death barriers", "Enable/Disable death barriers, pits, leeches", "hl2sb_deathpit_triggers" },
+    { "Toggle Loading Zones", "Enable/Disable level switch triggers", "hl2sb_levelswitch_triggers" },
+    { "Toggle Antlion spawns", "Enable/Disable antlions burrowing from the ground", "hl2sb_antlionspawn_triggers" },
+    { "Toggle Core Damage", "Enable/Disable core damage in Episode 1", "hl2sb_ep1_core_damage" },
 }
 
 local color_base_bg = Color( 25, 40, 55 )
