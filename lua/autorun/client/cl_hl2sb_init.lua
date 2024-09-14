@@ -1,8 +1,17 @@
 hl2sb = hl2sb or {}
+hl2sb.logo = Material( "hud/hl2sb/logo.png" )
 
 CreateConVar("hl2sb_showsettings", "0", {FCVAR_REPLICATED}, "Show the current settings.")
 
 do
+    surface.CreateFont("hl2sbCreditsFontSmall", {
+        font = "HL2Generic",
+        size = 24,
+        weight = 500,
+        antialias = true,
+        shadow = false
+    })
+
     surface.CreateFont("hl2sbCreditsFont", {
         font = "HL2Credits",
         size = 35,
@@ -14,6 +23,14 @@ do
     surface.CreateFont("hl2sbCreditsFontBig", {
         font = "HL2Credits",
         size = 95,
+        weight = 500,
+        antialias = true,
+        shadow = false
+    })
+
+    surface.CreateFont("hl2sbGenericFontSmall", {
+        font = "HL2Generic",
+        size = 24,
         weight = 500,
         antialias = true,
         shadow = false
@@ -188,3 +205,19 @@ hook.Add("HUDPaint", "HL2EP1Sandbox", function()
     DrawOutro()
     DrawSettings()
 end)
+
+do
+    net.Receive( "hl2sb_MenuPlaySound" , function()
+        local ply = LocalPlayer()
+        if ( !IsValid(ply) ) then return end
+
+        local ostPath = net.ReadString()
+        if ( !ostPath ) then return end
+
+        RunConsoleCommand("stopsound")
+
+        timer.Simple(0, function()
+            RunConsoleCommand("play", ostPath)
+        end)
+    end )
+end
