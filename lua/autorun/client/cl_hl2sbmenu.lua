@@ -249,7 +249,7 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
         base:AddItem( buttonPanel )
         base:AddItem( scrollPanel )
 
-        for k, v in SortedPairs(hl2sb.soundtracks) do
+        for k, v in SortedPairsByMemberValue(hl2sb.soundtracks, 1) do
             local ostName = v[1]
             local ostDesc = v[2]
             local ostPath = v[3]
