@@ -391,11 +391,38 @@ hl2sb.soundtracks = {
 	{"Calabi-Yau Model", "Played in \"Sandtraps\" upon entering the camp and in \"Follow Freeman!\" upon entering the Zombie-Infested Building.", "music/hl2_song30.mp3"},
 	{"Brane Scan", "Played when you're fighting in the plaza and waiting for the generator to be brought down.", "music/hl2_song31.mp3"},
 	{"Slow Light", "Played after the Gunship at NLO has been defeated.", "music/hl2_song32.mp3"},
-	{"Probably Not a ProblemProbably Not a Problem", "Played during the shelling in \"Route Kanal\".", "music/hl2_song33.mp3"},
+	{"Probably Not a Problem", "Played during the shelling in \"Route Kanal\".", "music/hl2_song33.mp3"},
 	{"The Innsbruck Experiment", "Played in \"Route Kanal\" when the SMG metrocops rappel down and in \"Anticitizen One\" when Dog starts fighting.", "music/hl2_song4.mp3"},
 	{"Pulse Phase", "Played in \"Follow Freeman!\" when the player goes outside and fights striders and in \"Dark Energy\" when the player is descending in an elevator to defeat Breen.", "music/hl2_song6.mp3"},
 	{"Ravenholm Reprise", "Played in the beginning of \"We don't go to Ravenholm...\".", "music/hl2_song7.mp3"},
 	{"Highway 17", "Played in \"Sandtraps\" at the house by the coast where the Combin eare burning bodies.", "music/hl2_song8.mp3"},
 	{"Requiem For Ravenholm", "Played after you pass by the gate that Grigori opens for you.", "music/ravenholm_1.mp3"},
-	{"Radio", "GOR---... C-- --U -E-- --", "music/radio1.mp3"}
+	{"Radio", "GOR---... C-- --U -E-- --", "music/radio1.mp3"},
+
+	// Episode One
+	{"[Episode One] Eine Kleiner Elevatormuzik", "Played when you look over the ledge in the Citadel before Alyx says \"I had no idea\".", "music/vlvx_song1.mp3"},
+	{"[Episode One] Disrupted Original", "Played in the first large fight in the tunnels.", "music/vlvx_song11.mp3"},
+	{"[Episode One] Self Destruction", "Played when Alyx says \"here comes trouble\".", "music/vlvx_song12.mp3"},
+	{"[Episode One] What Kind of Hospital Is This?", "Played after Alyx gets a shotgun and you enter the hall.", "music/vlvx_song18.mp3"},
+	{"[Episode One] Infraradiant", "Played when you enter the Citadel Core.", "music/vlvx_song19a.mp3"},
+	{"[Episode One] Decay Mode", "Played after the lights go out in the elevator section.", "music/vlvx_song19b.mp3"},
+	{"[Episode One] Combine Advisory", "Played when you enter the room with advisor pods.", "music/vlvx_song2.mp3"},
+	{"[Episode One] Penultimatum", "Played during the last Strider Fight at the end.", "music/vlvx_song21.mp3"},
+	{"[Episode One] Guard Down", "Played when Alyx uses the mounted gun after killing the antlion guardian.", "music/vlvx_song4.mp3"},
+	{"[Episode One] Darkness at Noon", "Played when you enter the vents and alyx comments \"blind as a bat\".", "music/vlvx_song8.mp3"},
+
+	// Episode Two
+	{"[Episode Two] No One Rides For Free", "Played when you drive away from the junkyard.", "music/vlvx_song0.mp3"},
+	{"[Episode Two] Nectarium", "Played when you find the larval extract.", "music/vlvx_song15.mp3"},
+	{"[Episode Two] Extinction Event Horizon", "Played in the start of the game.", "music/vlvx_song20.mp3"},
+	{"[Episode Two] Vortal Combat", "Played during the last wave of Antlions", "music/vlvx_song22.mp3"},
+	{"[Episode Two] Sector Sweep", "Played when the Hunter-Chopper starts chasing you.", "music/vlvx_song23.mp3"},
+	{"[Episode Two] Shu'ulathoi", "Played during the scene with the Barn Advisor.", "music/vlvx_song23ambient.mp3"},
+	{"[Episode Two] Last Legs", "Played during the second wave of Hunters and Striders.", "music/vlvx_song24.mp3"},
+	{"[Episode Two] Abandoned In Place", "Played during the Combine Breach on White Forest.", "music/vlvx_song25.mp3"},
+	{"[Episode Two] Inhuman Frequency", "Played during the GMan Sequence.", "music/vlvx_song26.mp3"},
+	{"[Episode Two] Hunting Party", "Played during the Hunter ambush.", "music/vlvx_song27.mp3"},
+	{"[Episode Two] Eon Trap", "Played during the Ambush at the House.", "music/vlvx_song28.mp3"},
+	{"[Episode Two] Dark Interval", "Played during the Final Scene and Credits.", "music/vlvx_song3.mp3"},
+	{"[Episode Two] Crawl Yard", "Plays near one of the Radioactive Leaks", "music/vlvx_song9.mp3"}
 }

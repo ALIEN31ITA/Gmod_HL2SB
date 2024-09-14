@@ -1,4 +1,5 @@
 hl2sb = hl2sb or {}
+hl2sb.logo = Material( "hud/hl2sb/logo.png" )
 
 do
     surface.CreateFont("hl2sbMenuFontVerySmall", {
@@ -49,6 +50,10 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
     local bHasAccess = false
     if ( game.SinglePlayer() or ply:IsAdmin() ) then
         bHasAccess = true
+    end
+
+    if ( !hl2sb.logo ) then
+        hl2sb.logo = Material( "hud/hl2sb/logo.png" )
     end
 
 	spawnmenu.AddToolMenuOption( "Utilities", "HL2 Sandbox", "Settings", "#Settings", "", "", function( base )
@@ -263,6 +268,8 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             local ostName = v[1]
             local ostDesc = v[2]
             local ostPath = v[3]
+
+            if ( !file.Exists( "sound/" .. ostPath, "GAME" ) ) then continue end
 
             local title = vgui.Create( "DLabel", scrollPanel )
             title:Dock( TOP )
