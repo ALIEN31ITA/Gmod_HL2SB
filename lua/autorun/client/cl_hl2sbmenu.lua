@@ -1,6 +1,14 @@
 hl2sb = hl2sb or {}
 
 do
+    surface.CreateFont("hl2sbMenuFontVerySmall", {
+        font = "Tahoma",
+        size = 21,
+        scanlines = 2,
+        extended = true,
+        antialias = true,
+    })
+
     surface.CreateFont("hl2sbMenuFontSmall", {
         font = "Tahoma",
         size = 23,
@@ -190,15 +198,58 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
         musicLabel:SetWrap(true)
         musicLabel:SetAutoStretchVertical(true)
 
+        local buttonPanel = vgui.Create( "DPanel", base )
+        buttonPanel:Dock( TOP )
+        buttonPanel:DockMargin(6, 0, 6, 0)
+        buttonPanel:SetTall( 55 )
+        function buttonPanel:Paint( w, h )
+            surface.SetDrawColor( color_base_bg )
+            surface.DrawRect( 0, 0, w, h )
+
+            surface.SetDrawColor( color_base_outline )
+            surface.DrawOutlinedRect( 0, 0, w, h )
+        end
+
+        local stopAll = vgui.Create( "DButton", buttonPanel )
+        stopAll:Dock( TOP )
+        stopAll:SetText( "Stop All Locally" )
+        stopAll:SetTextColor( color_access_granted )
+        stopAll:SetFont( "hl2sbMenuFontSmall" )
+        stopAll:SizeToContents()
+
+        function stopAll:DoClick()
+            RunConsoleCommand("stopsound")
+        end
+
+        stopAll.Paint = nil
+
+        local stopAllGlobal = vgui.Create( "DButton", buttonPanel )
+        stopAllGlobal:Dock( TOP )
+        stopAllGlobal:SetText( "Stop All Globally" )
+        stopAllGlobal:SetTextColor( color_access_granted )
+        stopAllGlobal:SetFont( "hl2sbMenuFontSmall" )
+        stopAllGlobal:SizeToContents()
+
+        function stopAllGlobal:DoClick()
+            if ( !bHasAccess ) then return end
+
+            net.Start( "hl2sb_MenuPlaySound" )
+                net.WriteString( "" )
+            net.SendToServer()
+        end
+
+        stopAllGlobal.Paint = nil
+
         local scrollPanel = vgui.Create( "DScrollPanel", base )
         scrollPanel:Dock( FILL )
         scrollPanel:DockMargin( 6, 0, 6, 0 )
 
         base:AddItem( logoPanel )
         base:AddItem( musicLabel )
+        base:AddItem( buttonPanel )
         base:AddItem( scrollPanel )
 
-        for k, v in ipairs(hl2sb.soundtracks) do
+        for k, v in SortedPairs(hl2sb.soundtracks) do
             local ostName = v[1]
             local ostDesc = v[2]
             local ostPath = v[3]
@@ -214,14 +265,25 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             local desc = vgui.Create( "DLabel", scrollPanel )
             desc:Dock( TOP )
             desc:SetText( ostDesc )
-            desc:SetFont( "hl2sbMenuFontSmall" )
+            desc:SetFont( "hl2sbMenuFontVerySmall" )
             desc:SetWrap( true )
             desc:SetAutoStretchVertical( true )
             desc:SetTextColor( color_label_settingsForMaps )
 
+            local buttonsPanel = vgui.Create( "DPanel", scrollPanel )
+            buttonsPanel:Dock( TOP )
+            buttonsPanel:DockMargin(40, 0, 40, 0)
+            buttonsPanel:SetTall( 30 )
+            function buttonsPanel:Paint( w, h )
+                surface.SetDrawColor( color_base_bg )
+                surface.DrawRect( 0, 0, w, h )
 
-            local play_local = vgui.Create( "DButton", scrollPanel )
-            play_local:Dock( TOP )
+                surface.SetDrawColor( color_base_outline )
+                surface.DrawOutlinedRect( 0, 0, w, h )
+            end
+
+            local play_local = vgui.Create( "DButton", buttonsPanel )
+            play_local:Dock( LEFT )
             play_local:SetText( "Play Local" )
             play_local:SetTextColor( color_access_granted )
             play_local:SetFont( "hl2sbMenuFontSmall" )
@@ -229,9 +291,6 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             play_local:SizeToContents()
 
             function play_local:Paint(width, height)
-                surface.SetDrawColor( color_base_outline )
-                surface.DrawOutlinedRect( 0, 0, width, height )
-
                 if ( !file.Exists( "sound/" .. ostPath, "GAME" ) ) then
                     self:SetTextColor( color_access_denied )
                 end
@@ -247,8 +306,8 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
                 end)
             end
 
-            local play_global = vgui.Create( "DButton", scrollPanel )
-            play_global:Dock( TOP )
+            local play_global = vgui.Create( "DButton", buttonsPanel )
+            play_global:Dock( RIGHT )
             play_global:SetText( "Play Global" )
             play_global:SetTextColor( color_access_granted )
             play_global:SetFont( "hl2sbMenuFontSmall" )
@@ -256,9 +315,6 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             play_global:SizeToContents()
 
             function play_global:Paint(width, height)
-                surface.SetDrawColor( color_base_outline )
-                surface.DrawOutlinedRect( 0, 0, width, height )
-
                 if ( !file.Exists( "sound/" .. ostPath, "GAME" ) or !bHasAccess ) then
                     self:SetTextColor( color_access_denied )
                 end
@@ -273,8 +329,7 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             end
 
             base:AddItem( title )
-            base:AddItem( play_local )
-            base:AddItem( play_global )
+            base:AddItem( buttonsPanel )
             base:AddItem( desc )
         end
     end )
