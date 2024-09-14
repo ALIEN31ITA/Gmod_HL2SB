@@ -2,6 +2,7 @@ hl2sb = hl2sb or {}
 
 util.AddNetworkString( "hl2sb_MenuCommand" )
 util.AddNetworkString( "hl2sb_MenuPlaySound" )
+util.AddNetworkString( "hl2sb_MenuStopSound" )
 
 local vars = {
     [ "hl2sb_trainstation_intro" ] = true,
@@ -52,5 +53,19 @@ net.Receive( "hl2sb_MenuPlaySound", function( len, ply )
 
     net.Start("hl2sb_MenuPlaySound")
         net.WriteString( str )
+    net.Broadcast()
+end )
+
+net.Receive( "hl2sb_MenuStopSound", function( len, ply )
+    if ( !IsValid(ply) ) then return end
+
+    local bHasAccess = false
+    if ( game.SinglePlayer() or ply:IsAdmin() ) then
+        bHasAccess = true
+    end
+
+    if ( !bHasAccess ) then return end
+
+    net.Start("hl2sb_MenuStopSound")
     net.Broadcast()
 end )

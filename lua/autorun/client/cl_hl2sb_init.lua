@@ -214,10 +214,20 @@ do
         local ostPath = net.ReadString()
         if ( !ostPath ) then return end
 
-        RunConsoleCommand("stopsound")
-
         timer.Simple(0, function()
             RunConsoleCommand("play", ostPath)
         end)
+    end )
+
+    net.Receive( "hl2sb_MenuStopSound" , function()
+        local ply = LocalPlayer()
+        if ( !IsValid(ply) ) then return end
+
+        for k, v in ipairs(hl2sb.soundtracks) do
+            local ostPath = v[3]
+            if ( file.Exists( "sound/" .. ostPath, "GAME" ) ) then
+                ply:StopSound( ostPath )
+            end
+        end
     end )
 end

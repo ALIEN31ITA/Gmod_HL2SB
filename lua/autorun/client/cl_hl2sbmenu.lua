@@ -218,7 +218,12 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
         stopAll:SizeToContents()
 
         function stopAll:DoClick()
-            RunConsoleCommand("stopsound")
+            for k, v in ipairs(hl2sb.soundtracks) do
+                local ostPath = v[3]
+                if ( file.Exists( "sound/" .. ostPath, "GAME" ) ) then
+                    ply:StopSound( ostPath )
+                end
+            end
         end
 
         stopAll.Paint = nil
@@ -233,12 +238,17 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
         function stopAllGlobal:DoClick()
             if ( !bHasAccess ) then return end
 
-            net.Start( "hl2sb_MenuPlaySound" )
-                net.WriteString( "" )
+            net.Start( "hl2sb_MenuStopSound" )
             net.SendToServer()
         end
 
-        stopAllGlobal.Paint = nil
+        stopAllGlobal.Paint = function(this, width, height)
+            if ( !bHasAccess ) then
+                this:SetTextColor( color_access_denied )
+            else
+                this:SetTextColor( color_access_granted )
+            end
+        end
 
         local scrollPanel = vgui.Create( "DScrollPanel", base )
         scrollPanel:Dock( FILL )
@@ -299,8 +309,6 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             function play_local:DoClick()
                 if ( !file.Exists( "sound/" .. ostPath, "GAME" ) ) then return end
 
-                RunConsoleCommand("stopsound")
-
                 timer.Simple( 0, function()
                     RunConsoleCommand("play", ostPath)
                 end)
@@ -317,6 +325,8 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             function play_global:Paint(width, height)
                 if ( !file.Exists( "sound/" .. ostPath, "GAME" ) or !bHasAccess ) then
                     self:SetTextColor( color_access_denied )
+                else
+                    self:SetTextColor( color_access_granted )
                 end
             end
 
