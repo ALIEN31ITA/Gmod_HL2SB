@@ -1,4 +1,5 @@
 hl2sb = hl2sb or {}
+hl2sb.logo = Material( "hud/hl2sb/logo.png" )
 
 CreateConVar("hl2sb_showsettings", "0", {FCVAR_REPLICATED}, "Show the current settings.")
 
