@@ -17,10 +17,33 @@ local function SetupSubmaterials(ent)
 		ent.NPCTable.Name = "Dr. Judith Mossman"
 	end
 
-	if ent:GetClass() == "npc_barney" && ent.NPCTable.ListClass == "npc_barney_episodic" then
-		ent.NPCTable.Name = "Barney Calhoun"
-		ent:SetSubMaterial( 2, "models/hl2sb/characters/barneyface_ep1" )
+	if ent:GetClass() == "npc_barney" then
+		if ent.NPCTable.ListClass == "npc_barney_episodic" then
+			ent.NPCTable.Name = "Barney Calhoun"
+			ent:SetSubMaterial( 2, "models/hl2sb/characters/barneyface_ep1" )
+		elseif ent.NPCTable.ListClass == "npc_barney_cp" then
+			ent:SetName("hl2sb_barney_cp" .. ent:EntIndex())
+			ent.NPCTable.Name = "Barney Calhoun (CP)"
+
+			local maskPlateBack = ents.Create("prop_dynamic")
+			maskPlateBack:SetModel("models/barneyhelmet.mdl")
+			maskPlateBack:Fire("SetParent", "hl2sb_barney_cp" .. ent:EntIndex())
+			maskPlateBack:Fire("SetParentAttachment", "helmet_attachment")
+			maskPlateBack:Spawn()
+
+			local maskPlateFront = ents.Create("prop_dynamic")
+			maskPlateFront:SetModel("models/barneyhelmet_faceplate.mdl")
+			maskPlateFront:Fire("SetParent", "hl2sb_barney_cp" .. ent:EntIndex())
+			maskPlateFront:Fire("SetParentAttachment", "helmet_attachment")
+			maskPlateFront:Spawn()
+		end
 	end
+
+	if ent:GetClass() == "npc_metropolice" then
+		if ent.NPCTable.ListClass == "npc_barney_cp_hostile" then
+			ent.NPCTable.Name = "Barney Calhoun (CP)"
+		end
+ 	end
 
 	if ( ent:GetClass() == "npc_helicopter" && ent.NPCTable.ListClass == "npc_helicopter_nightlights" ) or ( ent:GetClass() == "npc_combinegunship" && ent.NPCTable.ListClass == "npc_gunship_chopper" ) then
 		ent.NPCTable.Name = "Hunter-Chopper"

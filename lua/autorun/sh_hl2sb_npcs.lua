@@ -36,6 +36,28 @@ if ( IsMounted( "episodic" ) ) then
 	list.Set( "NPC", "npc_barney_episodic", hl2sb_NPC_BARNEYBLOOD )
 end
 
+local hl2sb_NPC_BARNEY_CP = {
+	Name = "Barney Calhoun (CP)",
+	Class = "npc_barney",
+	Category = "Combine",
+	Weapons = { "weapon_smg1", "weapon_ar2" },
+	KeyValues = { SquadName = "overwatch" },
+	ListClass = "npc_barney_cp",
+}
+
+list.Set( "NPC", "npc_barney_cp", hl2sb_NPC_BARNEY_CP )
+
+local hl2sb_NPC_BARNEY_CP_HOSTILE = {
+	Name = "Barney Calhoun (CP Hostile)",
+	Class = "npc_metropolice",
+	Category = "Combine",
+	Weapons = { "weapon_smg1" },
+	KeyValues = { SquadName = "overwatch" },
+	ListClass = "npc_barney_cp_hostile",
+}
+
+list.Set( "NPC", "npc_barney_cp_hostile", hl2sb_NPC_BARNEY_CP_HOSTILE )
+
 local hl2sb_NPC_KLEINER = {
 	Name = "Kleiner (Dark Labcoat)",
 	Class = "npc_kleiner",
