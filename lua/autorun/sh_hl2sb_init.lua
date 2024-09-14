@@ -154,6 +154,48 @@ hl2sb.mapSettings = {
 		menuText = "Toggle Core Damage",
 		menuDesc = "Enable/Disable core damage in Episode 1",
 	},
+	hl2sb_SoldiersVeryGoodAim = {
+		value = CreateConVar( "hl2sb_soldiers_verygoodaim", "0", FCVAR_ARCHIVE, "Toggle Soldiers Very Good Aim", 0, 1 ),
+
+		on = function()
+			for k, v in ipairs(ents.FindByClass("npc_combine_s")) do
+				if ( !IsValid(v) ) then continue end
+
+				v:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_VERY_GOOD)
+			end
+		end,
+		off = function()
+			for k, v in ipairs(ents.FindByClass("npc_combine_s")) do
+				if ( !IsValid(v) ) then continue end
+
+				v:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_GOOD)
+			end
+		end,
+
+		menuText = "Toggle Soldiers Very Good Aim",
+		menuDesc = "Enable/Disable Soldiers Very Good Aim",
+	},
+	hl2sb_SoldiersInfiniteThrowable = {
+		value = CreateConVar( "hl2sb_soldiers_infinitethrowable", "0", FCVAR_ARCHIVE, "Toggle Soldiers Infinite Throwables", 0, 1 ),
+
+		on = function()
+			for k, v in ipairs(ents.FindByClass("npc_combine_s")) do
+				if ( !IsValid(v) ) then continue end
+
+				v:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_VERY_GOOD)
+			end
+		end,
+		off = function()
+			for k, v in ipairs(ents.FindByClass("npc_combine_s")) do
+				if ( !IsValid(v) ) then continue end
+
+				v:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_GOOD)
+			end
+		end,
+
+		menuText = "Toggle Soldiers Infinite Throwables",
+		menuDesc = "Enable/Disable Soldiers having infinite throwables",
+	}
 }
 
 hl2sb.godModeNPCNames = {

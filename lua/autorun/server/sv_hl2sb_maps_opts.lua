@@ -167,16 +167,35 @@ local function AmmoCrateModelSwitch(ent)
 	end
 end
 
+local function SoldiersModifier(ent)
+	if ( !IsValid(ent) ) then return end
+	if ( ent:GetClass() != "npc_combine_s" ) then return end
+
+	if ( hl2sb.cvars.hl2sb_SoldiersVeryGoodAim.value:GetBool() ) then
+		ent:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_VERY_GOOD)
+	end
+
+	if ( hl2sb.cvars.hl2sb_SoldiersInfiniteThrowable.value:GetBool() ) then
+		for k, v in ipairs(ent:GetWeapons()) do
+			v:SetSaveValue("m_iSecondaryAmmoCount", "-1")
+		end
+
+		ent:SetSaveValue("NumGrenades", "-1")
+		ent:SetKeyValue("NumGrenades", "-1")
+	end
+end
+
 hook.Add( "OnEntityCreated", "hl2sb_OnEntityCreated", function(ent)
 	timer.Simple(0.1, function()
 		if ( !IsValid(ent) ) then return end
 
-		PhysicalCanisters(ent)
-		EpisodicRetextures(ent)
-		SnowyMossman(ent)
-		EpisodeOneBlueVortigaunts(ent)
-		FisherManFix(ent)
-		AmmoCrateModelSwitch(ent)
+		PhysicalCanisters( ent )
+		EpisodicRetextures( ent )
+		SnowyMossman( ent )
+		EpisodeOneBlueVortigaunts( ent )
+		FisherManFix( ent )
+		AmmoCrateModelSwitch( ent )
+		SoldiersModifier( ent )
 	end)
 end)
 

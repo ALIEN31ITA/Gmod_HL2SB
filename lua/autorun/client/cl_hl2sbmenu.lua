@@ -138,6 +138,11 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
                 self:SetTextColor( newVal && color_access_granted || color_access_denied )
             end
 
+            function toggleButton:Paint(width, height)
+                surface.SetDrawColor( color_base_outline )
+                surface.DrawOutlinedRect( 0, 0, width, height )
+            end
+
             local label = vgui.Create( "DLabel", scrollPanel )
             label:Dock( TOP )
             label:SetText( v.menuDesc )
