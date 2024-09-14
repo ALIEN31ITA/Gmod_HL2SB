@@ -289,3 +289,19 @@ hl2sb.mapTitles = {
 if ( hl2sb.mapTitles[gameMap] ) then
 	hl2sb.mapTitle = hl2sb.mapTitles[gameMap]
 end
+
+hl2sb.creditsMap = {
+    ["gmhl2e1_citadel_00"] = "HALF-LIFE'\n== episode one==",
+    ["ep1_citadel_00"] = "HALF-LIFE'\n== episode one==",
+    ["gmhl2e1_c17_03"] = "HALF-LIFE'\n== episode one==",
+    ["ep1_c17_06"] = "HALF-LIFE'\n== episode one==",
+    ["gmhl2e2_outland_01"] = "HALF-LIFE'\n== episode two==",
+    ["ep2_outland_01"] = "HALF-LIFE'\n== episode two=="
+}
+
+hl2sb.creditsEpisodes = {
+    ["gmhl2e1_c17_03"] = "==episode one==",
+    ["ep1_c17_06"] = "==episode one==",
+    ["gmhl2e2_outland_12"] = "==episode two==",
+    ["ep2_outland_12"] = "==episode two=="
+}
