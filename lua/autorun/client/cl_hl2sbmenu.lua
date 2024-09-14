@@ -52,9 +52,7 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
         bHasAccess = true
     end
 
-    if ( !hl2sb.logo ) then
-        hl2sb.logo = Material( "hud/hl2sb/logo.png" )
-    end
+    hl2sb.logo = hl2sb.logo or Material( "hud/hl2sb/logo.png" )
 
 	spawnmenu.AddToolMenuOption( "Utilities", "HL2 Sandbox", "Settings", "#Settings", "", "", function( base )
 		base:ClearControls()
