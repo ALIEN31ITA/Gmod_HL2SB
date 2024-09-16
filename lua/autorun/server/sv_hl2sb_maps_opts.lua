@@ -49,11 +49,19 @@ local function SetupSubmaterials(ent)
 		ent.NPCTable.Name = "Hunter-Chopper"
 	end
 
-	if ent:GetClass() == "npc_rollermine" && ent.NPCTable.ListClass == "npc_rollermine_alyxhack" then
-		ent.NPCTable.Name = "Rollermine"
-		ent:SetSaveValue( "m_bHackedByAlyx", true )
-		ent:SetSkin(1)
-		ent:SetKeyValue("spawnflags", bit.bor(ent:GetSpawnFlags(), SF_ROLLERMINE_FRIENDLY))
+	if ent:GetClass() == "npc_rollermine" then
+		if ent.NPCTable.ListClass == "npc_rollermine_alyxhack" then
+			ent.NPCTable.Name = "Rollermine"
+			ent:SetSaveValue( "m_bHackedByAlyx", true )
+			ent:SetSkin(1)
+			ent:SetKeyValue("spawnflags", bit.bor(ent:GetSpawnFlags(), SF_ROLLERMINE_FRIENDLY))
+		elseif ent.NPCTable.ListClass == "npc_rollermine_buried" then
+			ent.NPCTable.Name = "Rollermine"
+			ent:SetKeyValue("startburied", "1")
+			ent:SetSaveValue( "m_bBuried", true )
+			ent:SetPos(ent:GetPos() + ent:GetUp() * -35)
+			ent:SetMoveType(MOVETYPE_NONE)
+		end
 	end
 
 	if ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then

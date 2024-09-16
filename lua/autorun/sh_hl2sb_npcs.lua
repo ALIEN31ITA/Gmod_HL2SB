@@ -117,6 +117,18 @@ end
 
 local Category = "Combine"
 
+local hl2sb_NPC_ROLLER_BURIED = {
+	Name = "Rollermine (Buried)",
+	Class = "npc_rollermine",
+	Category = Category,
+	KeyValues = { SquadName = "overwatch" },
+	NoDrop = false,
+	ListClass = "npc_rollermine_buried",
+	OnFloor = true,
+}
+
+list.Set( "NPC", "npc_rollermine_buried", hl2sb_NPC_ROLLER_BURIED )
+
 local hl2sb_NPC_HELICOPTER_NIGHT = {
 	Name = "Hunter-Chopper (Lights)",
 	Class = "npc_helicopter",
