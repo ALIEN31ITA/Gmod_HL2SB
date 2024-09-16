@@ -53,6 +53,7 @@ local function SetupSubmaterials(ent)
 		ent.NPCTable.Name = "Rollermine"
 		ent:SetSaveValue( "m_bHackedByAlyx", true )
 		ent:SetSkin(1)
+		ent:SetKeyValue("spawnflags", bit.bor(ent:GetSpawnFlags(), SF_ROLLERMINE_FRIENDLY))
 	end
 
 	if ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
