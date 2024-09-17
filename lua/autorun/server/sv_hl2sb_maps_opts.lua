@@ -82,7 +82,6 @@ local function SetupSubmaterials(ent)
 	if ent:GetClass() == "npc_zombie" and ent.NPCTable.ListClass == "npc_zombie_crabless" then
 		ent.NPCTable.Name = "Zombie"
 
-		ent:SetSaveValue("m_fIsHeadless", true)
 		ent:SetBodygroup(1, 0)
 	end
 
