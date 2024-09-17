@@ -449,3 +449,9 @@ function hl2sb:IsEnabled(identifier)
 
 	return setting.value:GetBool()
 end
+
+function hl2sb:IsMap(mapName)
+	if ( !mapName ) then mapName = game.GetMap() end
+
+	return hl2sb.mapChapters[mapName] != nil // smart ik ik
+end
