@@ -377,14 +377,14 @@ hook.Add( "InitPostEntity", "hl2sb_InitPostEntity", function()
 			v:SetPos(v:GetPos() + Vector(0, 0, 5))
 		end
 
-		if hl2sb_getmap == ( "gmhl2e1_citadel_03" or "ep2_outland_11b" or "ep1_citadel_03" ) then
+		if hl2sb_getmap == "gmhl2e1_citadel_03" or hl2sb_getmap == "ep2_outland_11b" or hl2sb_getmap == "ep1_citadel_03" then
 			if ( v:GetClass() == "npc_mossman" and v:GetName() == "mossman2" ) then
 				v:SetModel( Model( "models/hl2sb/characters/mossman_ep1.mdl" ) )
 				v:SetPos(v:GetPos() + Vector(0, 0, 5))
 			end
 		end
 
-		if ( hl2sb_getmap == "gmhl2e2_outland_12" ) then
+		if hl2sb_getmap == "gmhl2e2_outland_12" then
 			if ( v:GetClass() == "npc_eli" and ent:GetName() == "eli" ) then
 				v:SetSubMaterial( 4, "models/hl2sb/characters/eli_sheet_ep2" )
 			end
@@ -394,13 +394,13 @@ hook.Add( "InitPostEntity", "hl2sb_InitPostEntity", function()
 			end
 		end
 
-		if ( hl2sb_getmap == "gmhl2e1_c17_02" or hl2sb_getmap == "gmhl2e1_c17_03" ) then
+		if hl2sb_getmap == "gmhl2e1_c17_02" or hl2sb_getmap == "gmhl2e1_c17_03" then
 			if ( v:GetClass() == "npc_barney" and v:GetName() == "barney" ) then
 				v:SetSubMaterial( 2, "models/hl2sb/characters/barneyface_ep1" )
 			end
 		end
 
-		if ( hl2sb_getmap == "gmhl2e1_c17_03" ) then
+		if hl2sb_getmap == "gmhl2e1_c17_03" then
 			if ( v:GetClass() == "env_headcrabcanister" ) then
 				v:SetMoveType( MOVETYPE_VPHYSICS )
 				v:PhysicsInit( SOLID_VPHYSICS )
@@ -476,8 +476,8 @@ hook.Add( "PostCleanupMap", "hl2sb_PostCleanupMap", function()
 
 	if hl2sb_getmap == "gmhl2e1_c17_03" then
 		for k, v in ipairs(ents.FindByName("fog")) do
-			v:Fire("SetColor", "214 198 169")
-			v:Fire("SetColorSecondary", "214 198 169")
+			v:Fire("SetColor", "215 200 170")
+			v:Fire("SetColorSecondary", "215 200 170")
 			v:Fire("SetStartDist", 200)
 			v:Fire("SetEndDist", 13000)
 		end
@@ -551,47 +551,53 @@ hook.Add("EntityTakeDamage", "hl2sb_EntityTakeDamage", function(ent, dmgInfo)
 	end
 end)
 
-hook.Add("OnNPCKilled", "hl2sb_OnNPCKilled", function(ent, attacker, inflictor)
-	if !IsValid( ent ) then return end
+local function ZombieHeadless(ent)
+	if !IsValid(ent) then return end
+	if ent:GetClass() != ( "npc_zombie" || "npc_fastzombie" || "npc_poisonzombie" ) then return end
+	if !ent.NPCTable or !ent.NPCTable.ListClass then return end
 
-	if ent.NPCTable and ent.NPCTable.ListClass then
-		if ent:GetClass() == "npc_zombie" and ent.NPCTable.ListClass == "npc_zombie_crabless" then
-			local attachment = ent:LookupAttachment("headcrab")
+	if ent:GetClass() == "npc_zombie" and ent.NPCTable.ListClass == "npc_zombie_crabless" then
+		local attachment = ent:LookupAttachment("headcrab")
+		local data_attach = ent:GetAttachment(attachment)
+
+		if data_attach then
+			for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 10)) do
+				if v:GetClass() == "npc_headcrab" then
+					SafeRemoveEntity(v)
+				end
+			end
+		end
+	elseif ent:GetClass() == "npc_poisonzombie" and ent.NPCTable.ListClass == "npc_poisonzombie_crabless" then
+		for i = 1, 5 do
+			local attachment = ent:LookupAttachment("headcrab" .. i)
 			local data_attach = ent:GetAttachment(attachment)
 
 			if data_attach then
-				for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 10)) do
-					if v:GetClass() == "npc_headcrab" then
-						SafeRemoveEntity(v)
-					end
-				end
-			end
-		elseif ent:GetClass() == "npc_poisonzombie" and ent.NPCTable.ListClass == "npc_poisonzombie_crabless" then
-			for i = 1, 5 do
-				local attachment = ent:LookupAttachment("headcrab" .. i)
-				local data_attach = ent:GetAttachment(attachment)
-
-				if data_attach then
-					for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 20)) do
-						if v:GetClass() == "npc_headcrab_black" or v:GetClass() == "npc_headcrab_poison" then
-							SafeRemoveEntity(v)
-						end
-					end
-				end
-			end
-		elseif ent:GetClass() == "npc_fastzombie" and ent.NPCTable.ListClass == "npc_fastzombie_crabless" then
-			local attachment = ent:LookupAttachment("headcrab")
-			local data_attach = ent:GetAttachment(attachment)
-
-			if data_attach then
-				for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 10)) do
-					if v:GetClass() == "npc_headcrab_fast" then
+				for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 20)) do
+					if v:GetClass() == "npc_headcrab_black" or v:GetClass() == "npc_headcrab_poison" then
 						SafeRemoveEntity(v)
 					end
 				end
 			end
 		end
+	elseif ent:GetClass() == "npc_fastzombie" and ent.NPCTable.ListClass == "npc_fastzombie_crabless" then
+		local attachment = ent:LookupAttachment("headcrab")
+		local data_attach = ent:GetAttachment(attachment)
+
+		if data_attach then
+			for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 10)) do
+				if v:GetClass() == "npc_headcrab_fast" then
+					SafeRemoveEntity(v)
+				end
+			end
+		end
 	end
+end
+
+hook.Add("OnNPCKilled", "hl2sb_OnNPCKilled", function(ent, attacker, inflictor)
+	if !IsValid( ent ) then return end
+
+	ZombieHeadless(ent)
 end)
 
 do
@@ -605,7 +611,7 @@ do
 	util.AddNetworkString("request_hl2sb_SANDTRAP_COAST_09_ClearCars")
 
 	net.Receive("request_hl2sb_CAN01_TrainR", function(len, ply)
-		if ( !ply:IsAdmin() ) then return end
+		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("looping_traincar2")) do
 			v:Fire("teleporttopathtrack", "train_2_start", 0)
@@ -617,7 +623,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_CAN01_TrainN", function(len, ply)
-		if ( !ply:IsAdmin() ) then return end
+		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("looping_traincar1")) do
 			v:Fire("teleporttopathtrack", "train_1_start", 0)
@@ -630,7 +636,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_CAN01_TrainNGO", function(len, ply)
-		if ( !ply:IsAdmin() ) then return end
+		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("depart_train1")) do
 			v:Fire("Trigger", 0)
@@ -638,7 +644,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_HW17_Bridge_Train", function(len, ply)
-		if ( !ply:IsAdmin() ) then return end
+		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("razortrain")) do
 			v:Fire("teleporttopathtrack", "train_2_start", 0)
@@ -650,7 +656,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_HW17_Bridge_ClearCars", function(len, ply)
-		if ( !ply:IsAdmin() ) then return end
+		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("clear_railways")) do
 			v:Fire("Trigger", 0)
@@ -658,7 +664,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_TRAINSTATION_02_ClearProps", function(len, ply)
-		if ( !ply:IsAdmin() ) then return end
+		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("prop_stairblockers")) do
 			v:Fire("Kill", 0)
@@ -666,7 +672,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_RAVEN_KillClouds", function(len, ply)
-		if ( !ply:IsAdmin() ) then return end
+		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("smokeclouds")) do
 			v:Fire("Kill", 0)
@@ -674,7 +680,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_SANDTRAP_COAST_09_ClearCars", function(len, ply)
-		if ( !ply:IsAdmin() ) then return end
+		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("clear_road")) do
 			v:Fire("Trigger", 0)
