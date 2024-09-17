@@ -79,6 +79,13 @@ local function SetupSubmaterials(ent)
 		end
 	end
 
+	if ent:GetClass() == "npc_zombie" and ent.NPCTable.ListClass == "npc_zombie_crabless" then
+		ent.NPCTable.Name = "Zombie"
+
+		ent:SetSaveValue("m_fIsHeadless", true)
+		ent:SetBodygroup(1, 0)
+	end
+
 	if ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
 		ent:SetNW2Entity("hl2sbSpawnedBy", ply)
 
@@ -556,6 +563,19 @@ hook.Add("EntityTakeDamage", "hl2sb_EntityTakeDamage", function(ent, dmgInfo)
 	local bGodmode = EntityGodmode(ent, dmgInfo)
 	if ( bGodmode ) then
 		return true
+	end
+end)
+
+hook.Add("OnNPCKilled", "hl2sb_OnNPCKilled", function(ent, attacker, inflictor)
+	if !IsValid( ent ) then return end
+
+	if ent:GetClass() == "npc_zombie" and ent.NPCTable and ent.NPCTable.ListClass == "npc_zombie_crabless" then
+		local attachmentPos = ( ent:LookupAttachment("headcrab") and ent:GetAttachment(ent:LookupAttachment("headcrab")).Pos ) or ent:EyePos()
+		for k, v in ipairs(ents.FindInSphere(attachmentPos, 10)) do
+			if v:GetClass() != "npc_headcrab" then continue end
+
+			return v:Remove()
+		end
 	end
 end)
 

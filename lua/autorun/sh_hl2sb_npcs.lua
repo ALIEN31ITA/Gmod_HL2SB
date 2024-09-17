@@ -168,6 +168,16 @@ local hl2sb_NPC_ZOMBIE_POISON_CRABLESS = {
 
 list.Set( "NPC", "npc_poisonzombie_crabless", hl2sb_NPC_ZOMBIE_POISON_CRABLESS )
 
+local hl2sb_NPC_ZOMBIE_CRABLESS = {
+	Name = "Zombies (Crabless)",
+	Class = "npc_zombie",
+	Category = Category,
+	KeyValues = { SquadName = "zombies" },
+	ListClass = "npc_zombie_crabless",
+}
+
+list.Set( "NPC", "npc_zombie_crabless", hl2sb_NPC_ZOMBIE_CRABLESS )
+
 // VEHICLES
 
 local Category = "Half-Life 2"
