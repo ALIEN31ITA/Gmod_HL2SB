@@ -6,18 +6,12 @@ local function SetupSubmaterials(ent)
 	if ent:GetClass() == "npc_eli" && ent.NPCTable.ListClass == "npc_eli_episodic" then
 		ent.NPCTable.Name = "Eli Vance"
 		ent:SetSubMaterial( 4, "models/hl2sb/characters/eli_sheet_ep2" )
-	end
-
-	if ent:GetClass() == "npc_kleiner" && ent.NPCTable.ListClass == "npc_kleiner_episodic" then
+	elseif ent:GetClass() == "npc_kleiner" && ent.NPCTable.ListClass == "npc_kleiner_episodic" then
 		ent.NPCTable.Name = "Dr. Isaac Kleiner"
 		ent:SetSubMaterial( 0, "models/hl2sb/characters/kleiner_sheet_ep2" )
-	end
-
-	if ent:GetClass() == "npc_mossman" && ent.NPCTable.ListClass == "npc_mossman_episodic" then
+	elseif ent:GetClass() == "npc_mossman" && ent.NPCTable.ListClass == "npc_mossman_episodic" then
 		ent.NPCTable.Name = "Dr. Judith Mossman"
-	end
-
-	if ent:GetClass() == "npc_barney" then
+	elseif ent:GetClass() == "npc_barney" then
 		if ent.NPCTable.ListClass == "npc_barney_episodic" then
 			ent.NPCTable.Name = "Barney Calhoun"
 			ent:SetSubMaterial( 2, "models/hl2sb/characters/barneyface_ep1" )
@@ -37,19 +31,13 @@ local function SetupSubmaterials(ent)
 			maskPlateFront:Fire("SetParentAttachment", "helmet_attachment")
 			maskPlateFront:Spawn()
 		end
-	end
-
-	if ent:GetClass() == "npc_metropolice" then
+	elseif ent:GetClass() == "npc_metropolice" then
 		if ent.NPCTable.ListClass == "npc_barney_cp_hostile" then
 			ent.NPCTable.Name = "Barney Calhoun (CP)"
 		end
- 	end
-
-	if ( ent:GetClass() == "npc_helicopter" && ent.NPCTable.ListClass == "npc_helicopter_nightlights" ) or ( ent:GetClass() == "npc_combinegunship" && ent.NPCTable.ListClass == "npc_gunship_chopper" ) then
+	elseif ( ent:GetClass() == "npc_helicopter" && ent.NPCTable.ListClass == "npc_helicopter_nightlights" ) or ( ent:GetClass() == "npc_combinegunship" && ent.NPCTable.ListClass == "npc_gunship_chopper" ) then
 		ent.NPCTable.Name = "Hunter-Chopper"
-	end
-
-	if ent:GetClass() == "npc_rollermine" then
+	elseif ent:GetClass() == "npc_rollermine" then
 		if ent.NPCTable.ListClass == "npc_rollermine_alyxhack" then
 			ent.NPCTable.Name = "Rollermine"
 			ent:SetSaveValue( "m_bHackedByAlyx", true )
@@ -62,9 +50,7 @@ local function SetupSubmaterials(ent)
 			ent:SetPos(ent:GetPos() + ent:GetUp() * -35)
 			ent:SetMoveType(MOVETYPE_NONE)
 		end
-	end
-
-	if ent:GetClass() == "npc_poisonzombie" and ent.NPCTable.ListClass == "npc_poisonzombie_crabless" then
+	elseif ent:GetClass() == "npc_poisonzombie" and ent.NPCTable.ListClass == "npc_poisonzombie_crabless" then
 		ent.NPCTable.Name = "Poison Zombie"
 
 		ent:SetSaveValue("m_nCrabCount", 0)
@@ -77,21 +63,15 @@ local function SetupSubmaterials(ent)
 		for i = 1, 5 do
 			ent:SetBodygroup(i, 0)
 		end
-	end
-
-	if ent:GetClass() == "npc_zombie" and ent.NPCTable.ListClass == "npc_zombie_crabless" then
+	elseif ent:GetClass() == "npc_zombie" and ent.NPCTable.ListClass == "npc_zombie_crabless" then
 		ent.NPCTable.Name = "Zombie"
 
 		ent:SetBodygroup(1, 0)
-	end
-
-	if ent:GetClass() == "npc_fastzombie" and ent.NPCTable.ListClass == "npc_fastzombie_crabless" then
+	elseif ent:GetClass() == "npc_fastzombie" and ent.NPCTable.ListClass == "npc_fastzombie_crabless" then
 		ent.NPCTable.Name = "Fast Zombie"
 
 		ent:SetBodygroup(1, 0)
-	end
-
-	if ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
+	elseif ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
 		ent:SetNW2Entity("hl2sbSpawnedBy", ply)
 
 		ent:SetSubMaterial( 0, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
