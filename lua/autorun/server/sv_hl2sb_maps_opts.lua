@@ -525,7 +525,7 @@ local function EntityGodmode(ent, dmgInfo)
 			end
 		end
 
-		if ( bNearCore and IsValid(dmgInfo:GetAttacker()) and dmgInfo:GetAttacker() == ent and GetConVar("hl2sb_ep1_core_damage"):GetBool() ) then
+		if ( bNearCore and IsValid(dmgInfo:GetAttacker()) and dmgInfo:GetAttacker() == ent and hl2:IsEnabled("hl2sb_ep1_CoreDamage") ) then
 			return true
 		end
 	end
