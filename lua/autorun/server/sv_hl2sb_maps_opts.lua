@@ -85,6 +85,12 @@ local function SetupSubmaterials(ent)
 		ent:SetBodygroup(1, 0)
 	end
 
+	if ent:GetClass() == "npc_fastzombie" and ent.NPCTable.ListClass == "npc_fastzombie_crabless" then
+		ent.NPCTable.Name = "Fast Zombie"
+
+		ent:SetBodygroup(1, 0)
+	end
+
 	if ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
 		ent:SetNW2Entity("hl2sbSpawnedBy", ply)
 
@@ -568,12 +574,42 @@ end)
 hook.Add("OnNPCKilled", "hl2sb_OnNPCKilled", function(ent, attacker, inflictor)
 	if !IsValid( ent ) then return end
 
-	if ent:GetClass() == "npc_zombie" and ent.NPCTable and ent.NPCTable.ListClass == "npc_zombie_crabless" then
-		local attachmentPos = ( ent:LookupAttachment("headcrab") and ent:GetAttachment(ent:LookupAttachment("headcrab")).Pos ) or ent:EyePos()
-		for k, v in ipairs(ents.FindInSphere(attachmentPos, 10)) do
-			if v:GetClass() != "npc_headcrab" then continue end
+	if ent.NPCTable and ent.NPCTable.ListClass then
+		if ent:GetClass() == "npc_zombie" and ent.NPCTable.ListClass == "npc_zombie_crabless" then
+			local attachment = ent:LookupAttachment("headcrab")
+			local data_attach = ent:GetAttachment(attachment)
 
-			return v:Remove()
+			if data_attach then
+				for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 10)) do
+					if v:GetClass() == "npc_headcrab" then
+						SafeRemoveEntity(v)
+					end
+				end
+			end
+		elseif ent:GetClass() == "npc_poisonzombie" and ent.NPCTable.ListClass == "npc_poisonzombie_crabless" then
+			for i = 1, 5 do
+				local attachment = ent:LookupAttachment("headcrab" .. i)
+				local data_attach = ent:GetAttachment(attachment)
+
+				if data_attach then
+					for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 20)) do
+						if v:GetClass() == "npc_headcrab_black" or v:GetClass() == "npc_headcrab_poison" then
+							SafeRemoveEntity(v)
+						end
+					end
+				end
+			end
+		elseif ent:GetClass() == "npc_fastzombie" and ent.NPCTable.ListClass == "npc_fastzombie_crabless" then
+			local attachment = ent:LookupAttachment("headcrab")
+			local data_attach = ent:GetAttachment(attachment)
+
+			if data_attach then
+				for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 10)) do
+					if v:GetClass() == "npc_headcrab_fast" then
+						SafeRemoveEntity(v)
+					end
+				end
+			end
 		end
 	end
 end)
