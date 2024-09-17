@@ -1,6 +1,8 @@
 hl2sb = hl2sb or {}
 hl2sb.logo = Material( "hud/hl2sb/logo.png" )
 
+local hl2sb_getmap = game.GetMap()
+
 do
     surface.CreateFont("hl2sbMenuFontVerySmall", {
         font = "Tahoma",
@@ -53,6 +55,71 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
     end
 
     hl2sb.logo = hl2sb.logo or Material( "hud/hl2sb/logo.png" )
+
+    spawnmenu.AddToolMenuOption( "Utilities", "HL2 Sandbox", "Current Map", "#Current Map", "", "", function(panel)
+		panel:ClearControls()
+		panel:Help(hl2sb.mapChapter .. hl2sb.mapTitle)
+
+		if hl2sb_getmap == "gmhl2_coast_01" or hl2sb_getmap == "gmhl2_coast_bridge" then
+			panel:Help("One time only settings")
+
+			local HW17_B_ClearCars = panel:Button("Clear Wagons")
+			function HW17_B_ClearCars:DoClick()
+				net.Start("request_hl2sb_HW17_Bridge_ClearCars")
+				net.SendToServer()
+			end
+        elseif hl2sb_getmap == "gmhl2_trainstation_02" then
+            panel:Help("One time only settings")
+
+            local PI_TS2_ClearProps = panel:Button("Clear Furniture Blocks")
+            function PI_TS2_ClearProps:DoClick()
+                net.Start("request_hl2sb_TRAINSTATION_02_ClearProps")
+                net.SendToServer()
+            end
+        elseif hl2sb_getmap == "gmhl2_canals_01" then
+			local CAN01_Train_1 = panel:Button("Call Razor Train")
+			function CAN01_Train_1:DoClick()
+				net.Start("request_hl2sb_CAN01_TrainR")
+				net.SendToServer()
+			end
+
+			local CAN01_Train_2 = panel:Button("Call Civilian Train")
+			panel:Help("The civilian train must stop first!")
+
+			function CAN01_Train_2:DoClick()
+				net.Start("request_hl2sb_CAN01_TrainN")
+				net.SendToServer()
+			end
+
+			local CAN01_Train_1_Leave = panel:Button("Scram Civilian Train")
+			function CAN01_Train_1_Leave:DoClick()
+				net.Start("request_hl2sb_CAN01_TrainNGO")
+				net.SendToServer()
+			end
+        elseif hl2sb_getmap == "gmhl2_ravenholm" or hl2sb_getmap == "gmhl2_c17_part1" then
+			panel:Help("One time only settings")
+
+			local RAVEN_KillClouds = panel:Button("Remove Clouds [FPS]")
+			function RAVEN_KillClouds:DoClick()
+				net.Start("request_hl2sb_RAVEN_KillClouds")
+				net.SendToServer()
+			end
+        elseif hl2sb_getmap == "gmhl2_coast_bridge" then
+			local HW17_B_Train = panel:Button("Call Train")
+			function HW17_B_Train:DoClick()
+				net.Start("request_hl2sb_HW17_Bridge_Train")
+				net.SendToServer()
+			end
+        elseif hl2sb_getmap == "gmhl2_coast_09" then
+			panel:Help("One time only settings")
+
+			local HW17_C09_ClearCars = panel:Button("Clear Road")
+			function HW17_C09_ClearCars:DoClick()
+				net.Start("request_hl2sb_SANDTRAP_COAST_09_ClearCars")
+				net.SendToServer()
+			end
+		end
+	end )
 
 	spawnmenu.AddToolMenuOption( "Utilities", "HL2 Sandbox", "Settings", "#Settings", "", "", function( base )
 		base:ClearControls()
@@ -122,14 +189,14 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             local toggleButton = vgui.Create( "DButton", scrollPanel )
             toggleButton:Dock( TOP )
             toggleButton:SetText( cvar:GetInt() > 0 && "Enabled" || "Disabled" )
-            toggleButton:SetTextColor(cvar:GetBool() && color_access_granted || color_access_denied)
+            toggleButton:SetTextColor(hl2sb:IsEnabled(k) && color_access_granted || color_access_denied)
             toggleButton:SetFont( "hl2sbMenuFontSmall" )
             toggleButton:SetTooltip( cvar:GetName() )
             toggleButton:SizeToContents()
 
             function toggleButton:DoClick()
-                local newVal = !cvar:GetBool()
-                local oldVal = cvar:GetBool()
+                local newVal = !hl2sb:IsEnabled(k)
+                local oldVal = hl2sb:IsEnabled(k)
 
                 if ( newVal == oldVal ) then return end
 
@@ -348,4 +415,8 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             base:AddItem( desc )
         end
     end )
+end )
+
+hook.Add( "AddToolMenuCategories", "hl2sbCategory", function()
+	spawnmenu.AddToolCategory( "Utilities", "HL2 Sandbox", "#HL2: Sandbox" )
 end )

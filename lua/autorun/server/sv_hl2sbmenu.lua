@@ -4,15 +4,6 @@ util.AddNetworkString( "hl2sb_MenuCommand" )
 util.AddNetworkString( "hl2sb_MenuPlaySound" )
 util.AddNetworkString( "hl2sb_MenuStopSound" )
 
-local vars = {
-    [ "hl2sb_trainstation_intro" ] = true,
-    [ "hl2sb_npcgodmode" ] = true,
-    [ "hl2sb_deathpit_triggers" ] = true,
-    [ "hl2sb_levelswitch_triggers" ] = true,
-    [ "hl2sb_antlionspawn_triggers" ] = true,
-    [ "hl2sb_ep1_core_damage" ] = true,
-}
-
 net.Receive( "hl2sb_MenuCommand", function( len, ply )
     if ( !IsValid(ply) ) then return end
 

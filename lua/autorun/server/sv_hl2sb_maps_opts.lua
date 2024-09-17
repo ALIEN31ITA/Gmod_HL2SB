@@ -509,7 +509,7 @@ end)
 local function EntityGodmode(ent, dmgInfo)
 	if ( !IsValid( ent ) ) then return false end
 
-	local bGodmode = GetConVar("hl2sb_npcgodmode"):GetBool()
+	local bGodmode = hl2sb:IsEnabled("hl2sb_NPCGodmode") or false
 	local ent_class = ent:GetClass()
 	local ent_name = ent:GetName()
 

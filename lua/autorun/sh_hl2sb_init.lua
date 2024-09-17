@@ -195,6 +195,18 @@ hl2sb.mapSettings = {
 
 		menuText = "Toggle Soldiers Infinite Throwables",
 		menuDesc = "Enable/Disable Soldiers having infinite throwables",
+	},
+	hl2sb_NPCsExplodeOnDeath = {
+		value = CreateConVar( "hl2sb_npcs_explodeondeath", "0", FCVAR_ARCHIVE, "Toggle NPCs Explode on Death", 0, 1 ),
+
+		on = function()
+		end,
+
+		off = function()
+		end,
+
+		menuText = "Toggle NPCs Explode on Death",
+		menuDesc = "Enable/Disable NPCs Explode on Death",
 	}
 }
 
@@ -426,3 +438,14 @@ hl2sb.soundtracks = {
 	{"[Episode Two] Dark Interval", "Played during the Final Scene and Credits.", "music/vlvx_song3.mp3"},
 	{"[Episode Two] Crawl Yard", "Plays near one of the Radioactive Leaks", "music/vlvx_song9.mp3"}
 }
+
+function hl2sb:IsEnabled(identifier)
+	if ( !identifier ) then return false end
+
+	local setting = hl2sb.mapSettings[identifier]
+	if ( !setting ) then return false end
+
+	if ( !setting.value ) then return false end
+
+	return setting.value:GetBool()
+end
