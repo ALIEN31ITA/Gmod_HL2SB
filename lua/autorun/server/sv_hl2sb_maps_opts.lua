@@ -594,10 +594,24 @@ local function ZombieHeadless(ent)
 	end
 end
 
+local function ExplodeNPC(ent)
+	if !IsValid(ent) then return end
+	if !hl2sb:IsEnabled("hl2sb_NPCsExplodeOnDeath") then return end
+	if !ent:IsNPC() then return end
+
+	local env_explosion = ents.Create("env_explosion")
+	env_explosion:SetPos(ent:GetPos())
+	env_explosion:SetOwner(ent)
+	env_explosion:SetKeyValue("iMagnitude", "0")
+	env_explosion:Spawn()
+	env_explosion:Fire("Explode", 0, 0)
+end
+
 hook.Add("OnNPCKilled", "hl2sb_OnNPCKilled", function(ent, attacker, inflictor)
 	if !IsValid( ent ) then return end
 
 	ZombieHeadless(ent)
+	ExplodeNPC(ent)
 end)
 
 do
