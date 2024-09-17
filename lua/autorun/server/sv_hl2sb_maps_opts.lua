@@ -64,6 +64,21 @@ local function SetupSubmaterials(ent)
 		end
 	end
 
+	if ent:GetClass() == "npc_poisonzombie" and ent.NPCTable.ListClass == "npc_poisonzombie_crabless" then
+		ent.NPCTable.Name = "Poison Zombie"
+
+		ent:SetSaveValue("m_nCrabCount", 0)
+		ent:SetSaveValue("m_bCrabs", {
+			[0] = false,
+			[1] = false,
+			[2] = false
+		})
+
+		for i = 1, 5 do
+			ent:SetBodygroup(i, 0)
+		end
+	end
+
 	if ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
 		ent:SetNW2Entity("hl2sbSpawnedBy", ply)
 

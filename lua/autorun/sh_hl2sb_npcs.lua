@@ -156,6 +156,18 @@ local hl2sb_NPC_HELICOPTER_GUNSHIP = {
 
 list.Set( "NPC", "npc_gunship_chopper", hl2sb_NPC_HELICOPTER_GUNSHIP )
 
+local Category = "Zombies + Enemy Aliens"
+
+local hl2sb_NPC_ZOMBIE_POISON_CRABLESS = {
+	Name = "Poison Zombies (Crabless)",
+	Class = "npc_poisonzombie",
+	Category = Category,
+	KeyValues = { SquadName = "poison" },
+	ListClass = "npc_poisonzombie_crabless",
+}
+
+list.Set( "NPC", "npc_poisonzombie_crabless", hl2sb_NPC_ZOMBIE_POISON_CRABLESS )
+
 // VEHICLES
 
 local Category = "Half-Life 2"
