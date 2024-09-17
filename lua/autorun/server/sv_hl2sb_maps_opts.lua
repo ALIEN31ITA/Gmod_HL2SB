@@ -101,6 +101,7 @@ end
 // hl2sb NPC SWITCH - Zaurzo code
 hook.Add("PlayerSpawnedNPC", "hl2sb_NPC_SUBMATERIALS", function(ply, ent)
 	if ( !IsValid(ent) or !IsValid(ply) ) then return end
+	if !hl2sb:IsMap() then return end
 
 	SetupSubmaterials(ent)
 	SetHeliPath(ent)
@@ -227,6 +228,7 @@ end
 hook.Add( "OnEntityCreated", "hl2sb_OnEntityCreated", function(ent)
 	timer.Simple(0.1, function()
 		if ( !IsValid(ent) ) then return end
+		if !hl2sb:IsMap() then return end
 
 		PhysicalCanisters( ent )
 		EpisodicRetextures( ent )
@@ -265,6 +267,8 @@ end
 // SCRAPPED - doesn't seem to work
 
 hook.Add( "GetDeathNoticeEntityName", "hl2sb_KillFeedNames", function(ent)
+	if !hl2sb:IsMap() then return end
+
 	if hl2sb_getmap == "gmhl2_c17_part3" then
 		if ( ent:GetClass() == "npc_barney" and ent:GetName() == "fakebarney" ) then
 			return "Fake Barney"
@@ -288,6 +292,8 @@ local hl2sb_Breakprops = {
 }
 
 cvars.AddChangeCallback( "hl2sb_deathpit_triggers", function( _, _, newValue )
+	if !hl2sb:IsMap() then return end
+
     if newValue == "1" then
         hl2sb.mapSettings.hl2sb_Deathpits.on()
     else
@@ -296,6 +302,8 @@ cvars.AddChangeCallback( "hl2sb_deathpit_triggers", function( _, _, newValue )
 end)
 
 cvars.AddChangeCallback( "hl2sb_levelswitch_triggers", function( _, _, newValue )
+	if !hl2sb:IsMap() then return end
+
     if newValue == "1" then
         hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.on()
     else
@@ -304,6 +312,8 @@ cvars.AddChangeCallback( "hl2sb_levelswitch_triggers", function( _, _, newValue 
 end)
 
 cvars.AddChangeCallback( "hl2sb_antlionspawn_triggers", function( _, _, newValue )
+	if !hl2sb:IsMap() then return end
+
     if newValue == "1" then
         hl2sb.mapSettings.hl2sb_Antlions_Spawns.on()
     else
@@ -348,12 +358,16 @@ local function Episode2NectarStart()
 end
 
 hook.Add("PlayerInitialSpawn", "hl2sb_PlayerInitialSpawn", function(ply)
+	if !hl2sb:IsMap() then return end
+
 	IntroFunc()
 	Episode2NectarStart()
 end)
 
 // MAP FIRST LOAD
 hook.Add( "InitPostEntity", "hl2sb_InitPostEntity", function()
+	if !hl2sb:IsMap() then return end
+
 	hl2sb_BallspawnerOFF()
 	hl2sb_LostCoast_Easteregg()
 
@@ -435,6 +449,8 @@ end)
 // ADMIN CLEANUP
 
 hook.Add( "PostCleanupMap", "hl2sb_PostCleanupMap", function()
+	if !hl2sb:IsMap() then return end
+
 	hl2sb_BallspawnerOFF()
 	hl2sb_LostCoast_Easteregg()
 
@@ -513,8 +529,6 @@ local function EntityGodmode(ent, dmgInfo)
 	local ent_class = ent:GetClass()
 	local ent_name = ent:GetName()
 
-	if !tobool(hl2sb_getmap:lower():find("gmhl2", 1, true)) then return false end
-
 	if map == "gmhl2e1_citadel_03" then
 		local bNearCore = false
 
@@ -544,6 +558,7 @@ end
 
 hook.Add("EntityTakeDamage", "hl2sb_EntityTakeDamage", function(ent, dmgInfo)
 	if !IsValid( ent ) then return end
+	if !hl2sb:IsMap() then return end
 
 	local bGodmode = EntityGodmode(ent, dmgInfo)
 	if ( bGodmode ) then
@@ -609,6 +624,7 @@ end
 
 hook.Add("OnNPCKilled", "hl2sb_OnNPCKilled", function(ent, attacker, inflictor)
 	if !IsValid( ent ) then return end
+	if !hl2sb:IsMap() then return end
 
 	ZombieHeadless(ent)
 	ExplodeNPC(ent)
@@ -625,6 +641,7 @@ do
 	util.AddNetworkString("request_hl2sb_SANDTRAP_COAST_09_ClearCars")
 
 	net.Receive("request_hl2sb_CAN01_TrainR", function(len, ply)
+		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("looping_traincar2")) do
@@ -637,6 +654,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_CAN01_TrainN", function(len, ply)
+		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("looping_traincar1")) do
@@ -650,6 +668,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_CAN01_TrainNGO", function(len, ply)
+		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("depart_train1")) do
@@ -658,6 +677,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_HW17_Bridge_Train", function(len, ply)
+		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("razortrain")) do
@@ -670,6 +690,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_HW17_Bridge_ClearCars", function(len, ply)
+		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("clear_railways")) do
@@ -678,6 +699,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_TRAINSTATION_02_ClearProps", function(len, ply)
+		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("prop_stairblockers")) do
@@ -686,6 +708,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_RAVEN_KillClouds", function(len, ply)
+		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("smokeclouds")) do
@@ -694,6 +717,7 @@ do
 	end)
 
 	net.Receive("request_hl2sb_SANDTRAP_COAST_09_ClearCars", function(len, ply)
+		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
 
 		for k, v in ipairs(ents.FindByName("clear_road")) do
