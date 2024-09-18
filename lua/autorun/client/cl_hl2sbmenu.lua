@@ -45,18 +45,23 @@ local color_label_settingsForMaps = Color( 210, 90, 0 )
 local color_access_granted = Color( 0, 255, 0 )
 local color_access_denied = Color( 255, 0, 0 )
 
-hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
-    local ply = LocalPlayer()
-    if ( !IsValid( ply ) ) then return end
+hook.Add( "AddToolMenuCategories", "hl2sb_AddToolMenuCategories", function()
+	spawnmenu.AddToolCategory( "Utilities", "HL2 Sandbox", "#HL2: Sandbox" )
+end )
 
-    local bHasAccess = false
-    if ( game.SinglePlayer() or ply:IsAdmin() ) then
-        bHasAccess = true
-    end
-
+hook.Add( "PopulateToolMenu", "hl2sb_PopulateToolMenu", function()
     hl2sb.logo = hl2sb.logo or Material( "hud/hl2sb/logo.png" )
 
+    local bHasAccess = false
+
     spawnmenu.AddToolMenuOption( "Utilities", "HL2 Sandbox", "Current Map", "#Current Map", "", "", function(panel)
+        local ply = LocalPlayer()
+        if ( !IsValid( ply ) ) then return end
+
+        if ( game.SinglePlayer() or ply:IsAdmin() ) then
+            bHasAccess = true
+        end
+
 		panel:ClearControls()
 		panel:Help(hl2sb.mapChapter .. hl2sb.mapTitle)
 
@@ -122,6 +127,13 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
 	end )
 
 	spawnmenu.AddToolMenuOption( "Utilities", "HL2 Sandbox", "Settings", "#Settings", "", "", function( base )
+        local ply = LocalPlayer()
+        if ( !IsValid( ply ) ) then return end
+
+        if ( game.SinglePlayer() or ply:IsAdmin() ) then
+            bHasAccess = true
+        end
+
 		base:ClearControls()
         base:SetLabel( "" )
 
@@ -177,6 +189,8 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
         for k, v in pairs(hl2sb.cvars) do
             local cvar = v.value
 
+            v.type = v.type or "checkbox"
+
             local title = vgui.Create( "DLabel", scrollPanel )
             title:Dock( TOP )
             title:SetText( v.menuText )
@@ -186,39 +200,69 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             title:SetTextColor( color_white )
             title:SetTooltip( cvar:GetName() )
 
-            local toggleButton = vgui.Create( "DButton", scrollPanel )
-            toggleButton:Dock( TOP )
-            toggleButton:SetText( cvar:GetInt() > 0 && "Enabled" || "Disabled" )
-            toggleButton:SetTextColor(hl2sb:IsEnabled(k) && color_access_granted || color_access_denied)
-            toggleButton:SetFont( "hl2sbMenuFontSmall" )
-            toggleButton:SetTooltip( cvar:GetName() )
-            toggleButton:SizeToContents()
+            base:AddItem( title )
 
-            function toggleButton:DoClick()
-                local newVal = !hl2sb:IsEnabled(k)
-                local oldVal = hl2sb:IsEnabled(k)
+            if v.type == "checkbox" then
+                local toggleButton = vgui.Create( "DButton", scrollPanel )
+                toggleButton:Dock( TOP )
+                toggleButton:SetText( cvar:GetInt() > 0 && "Enabled" || "Disabled" )
+                toggleButton:SetTextColor(hl2sb:IsEnabled(k) && color_access_granted || color_access_denied)
+                toggleButton:SetFont( "hl2sbMenuFontSmall" )
+                toggleButton:SetTooltip( cvar:GetName() )
+                toggleButton:SizeToContents()
 
-                if ( newVal == oldVal ) then return end
+                function toggleButton:DoClick()
+                    local newVal = !hl2sb:IsEnabled(k)
+                    local oldVal = hl2sb:IsEnabled(k)
 
-                if ( bHasAccess ) then
-                    self:SetTextColor( newVal and color_access_granted or color_label_settingsForMaps )
-                    surface.PlaySound( "ui/buttonclickrelease.wav" )
+                    if ( newVal == oldVal ) then return end
 
-                    net.Start( "hl2sb_MenuCommand" )
-                        net.WriteString( cvar:GetName() )
-                        net.WriteBool( newVal )
-                    net.SendToServer()
-                else
-                    surface.PlaySound( "buttons/button10.wav" )
+                    if ( bHasAccess ) then
+                        self:SetTextColor( newVal and color_access_granted or color_label_settingsForMaps )
+                        surface.PlaySound( "ui/buttonclickrelease.wav" )
+
+                        net.Start( "hl2sb_MenuCommand" )
+                            net.WriteString( cvar:GetName() )
+                            net.WriteType(newVal)
+                        net.SendToServer()
+                    else
+                        surface.PlaySound( "buttons/button10.wav" )
+                    end
+
+                    self:SetText( newVal && "Enabled" || "Disabled" )
+                    self:SetTextColor( newVal && color_access_granted || color_access_denied )
                 end
 
-                self:SetText( newVal && "Enabled" || "Disabled" )
-                self:SetTextColor( newVal && color_access_granted || color_access_denied )
-            end
+                function toggleButton:Paint( width, height )
+                    surface.SetDrawColor( color_base_outline )
+                    surface.DrawOutlinedRect( 0, 0, width, height )
+                end
 
-            function toggleButton:Paint( width, height )
-                surface.SetDrawColor( color_base_outline )
-                surface.DrawOutlinedRect( 0, 0, width, height )
+                base:AddItem( toggleButton )
+            elseif v.type == "slider" then
+                local slider = vgui.Create( "DNumSlider", scrollPanel )
+                slider:Dock( TOP )
+                slider:SetText( "" )
+                slider:SetMin( v.min or 0 )
+                slider:SetMax( v.max or 1 )
+                slider:SetDecimals( v.decimals or 0 )
+                slider:SetValue( cvar:GetInt() )
+                slider:SetTooltip( cvar:GetName() )
+
+                function slider:OnValueChanged( val )
+                    if ( bHasAccess ) then
+                        surface.PlaySound( "ui/buttonclickrelease.wav" )
+
+                        net.Start( "hl2sb_MenuCommand" )
+                            net.WriteString( cvar:GetName() )
+                            net.WriteType(val)
+                        net.SendToServer()
+                    else
+                        surface.PlaySound( "buttons/button10.wav" )
+                    end
+                end
+
+                base:AddItem( slider )
             end
 
             local label = vgui.Create( "DLabel", scrollPanel )
@@ -229,8 +273,6 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             label:SetWrap( true )
             label:SetAutoStretchVertical( true )
 
-            base:AddItem( title )
-            base:AddItem( toggleButton )
             base:AddItem( label )
         end
 	end )
@@ -238,6 +280,10 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
     spawnmenu.AddToolMenuOption( "Utilities", "HL2 Sandbox", "Soundtracks", "#Soundtracks", "", "", function( base )
         local ply = LocalPlayer()
         if ( !IsValid( ply ) ) then return end
+
+        if ( game.SinglePlayer() or ply:IsAdmin() ) then
+            bHasAccess = true
+        end
 
 		base:ClearControls()
         base:SetLabel( "" )
@@ -415,8 +461,4 @@ hook.Add( "PopulateToolMenu", "hl2sb_General_Settings", function()
             base:AddItem( desc )
         end
     end )
-end )
-
-hook.Add( "AddToolMenuCategories", "hl2sbCategory", function()
-	spawnmenu.AddToolCategory( "Utilities", "HL2 Sandbox", "#HL2: Sandbox" )
 end )

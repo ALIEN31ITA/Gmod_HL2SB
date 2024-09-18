@@ -212,6 +212,8 @@ hl2sb.mapSettings = {
 
 		menuText = "Toggle NPCs Explode on Death",
 		menuDesc = "Enable/Disable NPCs Explode on Death",
+
+		type = "slider"
 	}
 }
 
@@ -471,6 +473,7 @@ end
 
 function hl2sb:IsMap(mapName, episode)
 	if !mapName then mapName = game.GetMap() end
+	if GetConVar("developer"):GetInt() > 0 then return true end
 
 	if episode then
 		if episode != "ep1" or episode != "ep2" then return false end

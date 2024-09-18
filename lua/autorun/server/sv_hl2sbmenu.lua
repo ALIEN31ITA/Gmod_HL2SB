@@ -12,8 +12,8 @@ net.Receive( "hl2sb_MenuCommand", function( len, ply )
         bHasAccess = true
     end
 
-    local str, bol = net.ReadString(), net.ReadBool()
-    if ( !str or bol == nil ) then return end
+    local str, value = net.ReadString(), net.ReadType()
+    if ( !str ) then return end
 
     local bVarExists = false
 
@@ -26,7 +26,11 @@ net.Receive( "hl2sb_MenuCommand", function( len, ply )
 
     if ( !bVarExists ) then return end
 
-    RunConsoleCommand( str, bol and 1 or 0 )
+    if isbool(value) then
+        value = value && 1 || 0
+    end
+
+    RunConsoleCommand( str, value )
 end )
 
 net.Receive( "hl2sb_MenuPlaySound", function( len, ply )
