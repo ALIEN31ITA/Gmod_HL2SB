@@ -7,6 +7,12 @@
 
 	"settings"
 	{
-		// Original maps by VALVe, i just edited them lol. 
+		1
+		{
+			"name"		"hl2sb_deathpit_triggers"
+			"text"		"Death Triggers"
+			"type"		"CheckBox"
+			"dontcreate"	"1"
+		}
 	}
 }
