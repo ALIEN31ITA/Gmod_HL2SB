@@ -369,22 +369,22 @@ end)
 
 // MAP FIRST LOAD
 hook.Add( "InitPostEntity", "hl2sb_InitPostEntity", function()
-	if !hl2sb:IsMap() then return end
+	if hl2sb:IsMap() then
+		hl2sb_BallspawnerOFF()
+		hl2sb_LostCoast_Easteregg()
 
-	hl2sb_BallspawnerOFF()
-	hl2sb_LostCoast_Easteregg()
+		if hl2sb.mapSettings.hl2sb_Deathpits.value:GetBool() then
+			ProtectedCall( hl2sb.mapSettings.hl2sb_Deathpits.on )
+		end
 
-    if hl2sb.mapSettings.hl2sb_Deathpits.value:GetBool() then
-        ProtectedCall( hl2sb.mapSettings.hl2sb_Deathpits.on )
-    end
+		if hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.value:GetBool() then
+			ProtectedCall( hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.on )
+		end
 
-    if hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.value:GetBool() then
-        ProtectedCall( hl2sb.mapSettings.hl2sb_LevelSwitchTriggers.on )
-    end
-
-    if hl2sb.mapSettings.hl2sb_Antlions_Spawns.value:GetBool() then
-        ProtectedCall( hl2sb.mapSettings.hl2sb_Antlions_Spawns.on )
-    end
+		if hl2sb.mapSettings.hl2sb_Antlions_Spawns.value:GetBool() then
+			ProtectedCall( hl2sb.mapSettings.hl2sb_Antlions_Spawns.on )
+		end
+	end
 
 	for k, v in ents.Iterator() do
 		if not ( IsValid(v) ) then continue end
