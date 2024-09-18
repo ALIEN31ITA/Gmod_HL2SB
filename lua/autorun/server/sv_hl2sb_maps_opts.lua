@@ -2,7 +2,7 @@ hl2sb = hl2sb or {}
 
 local hl2sb_getmap = game.GetMap()
 
-local function SetupSubmaterials(ent)
+local function SetupNPCs(ent)
 	if ent:GetClass() == "npc_eli" && ent.NPCTable.ListClass == "npc_eli_episodic" then
 		ent.NPCTable.Name = "Eli Vance"
 		ent:SetSubMaterial( 4, "models/hl2sb/characters/eli_sheet_ep2" )
@@ -101,10 +101,12 @@ end
 // hl2sb NPC SWITCH - Zaurzo code
 hook.Add("PlayerSpawnedNPC", "hl2sb_NPC_SUBMATERIALS", function(ply, ent)
 	if ( !IsValid(ent) or !IsValid(ply) ) then return end
-	if !hl2sb:IsMap() then return end
 
-	SetupSubmaterials(ent)
-	SetHeliPath(ent)
+	SetupNPCs(ent)
+
+	if hl2sb:IsMap() then
+		SetHeliPath(ent)
+	end
 end)
 
 // Fisherman MDL code fix - Phoenixf
@@ -228,15 +230,16 @@ end
 hook.Add( "OnEntityCreated", "hl2sb_OnEntityCreated", function(ent)
 	timer.Simple(0.1, function()
 		if ( !IsValid(ent) ) then return end
-		if !hl2sb:IsMap() then return end
+		if hl2sb:IsMap() then
+			EpisodicRetextures( ent )
+			SnowyMossman( ent )
+			EpisodeOneBlueVortigaunts( ent )
+			SoldiersModifier( ent )
+		end
 
 		PhysicalCanisters( ent )
-		EpisodicRetextures( ent )
-		SnowyMossman( ent )
-		EpisodeOneBlueVortigaunts( ent )
 		FisherManFix( ent )
 		AmmoCrateModelSwitch( ent )
-		SoldiersModifier( ent )
 	end)
 end)
 
