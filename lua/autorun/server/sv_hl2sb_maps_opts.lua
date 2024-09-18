@@ -646,6 +646,7 @@ do
 	net.Receive("request_hl2sb_CAN01_TrainR", function(len, ply)
 		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
+		if hl2sb_getmap != "gmhl2_canals_01" then return end
 
 		for k, v in ipairs(ents.FindByName("looping_traincar2")) do
 			v:Fire("teleporttopathtrack", "train_2_start", 0)
@@ -659,6 +660,7 @@ do
 	net.Receive("request_hl2sb_CAN01_TrainN", function(len, ply)
 		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
+		if hl2sb_getmap != "gmhl2_canals_01" then return end
 
 		for k, v in ipairs(ents.FindByName("looping_traincar1")) do
 			v:Fire("teleporttopathtrack", "train_1_start", 0)
@@ -673,6 +675,7 @@ do
 	net.Receive("request_hl2sb_CAN01_TrainNGO", function(len, ply)
 		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
+		if hl2sb_getmap != "gmhl2_canals_01" then return end
 
 		for k, v in ipairs(ents.FindByName("depart_train1")) do
 			v:Fire("Trigger", 0)
@@ -682,6 +685,7 @@ do
 	net.Receive("request_hl2sb_HW17_Bridge_Train", function(len, ply)
 		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
+		if hl2sb_getmap != "gmhl2_coast_bridge" then return end
 
 		for k, v in ipairs(ents.FindByName("razortrain")) do
 			v:Fire("teleporttopathtrack", "train_2_start", 0)
@@ -695,6 +699,7 @@ do
 	net.Receive("request_hl2sb_HW17_Bridge_ClearCars", function(len, ply)
 		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
+		if hl2sb_getmap != "gmhl2_coast_01" or hl2sb_getmap != "gmhl2_coast_bridge" then return end
 
 		for k, v in ipairs(ents.FindByName("clear_railways")) do
 			v:Fire("Trigger", 0)
@@ -704,6 +709,7 @@ do
 	net.Receive("request_hl2sb_TRAINSTATION_02_ClearProps", function(len, ply)
 		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
+		if hl2sb_getmap != "gmhl2_trainstation_02" then return end
 
 		for k, v in ipairs(ents.FindByName("prop_stairblockers")) do
 			v:Fire("Kill", 0)
@@ -713,6 +719,7 @@ do
 	net.Receive("request_hl2sb_RAVEN_KillClouds", function(len, ply)
 		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
+		if hl2sb_getmap != "gmhl2_ravenholm" or hl2sb_getmap != "gmhl2_c17_part1" then return end
 
 		for k, v in ipairs(ents.FindByName("smokeclouds")) do
 			v:Fire("Kill", 0)
@@ -722,6 +729,7 @@ do
 	net.Receive("request_hl2sb_SANDTRAP_COAST_09_ClearCars", function(len, ply)
 		if !hl2sb:IsMap() then return end
 		if !ply:IsAdmin() then return end
+		if hl2sb_getmap != "gmhl2_coast_09" then return end
 
 		for k, v in ipairs(ents.FindByName("clear_road")) do
 			v:Fire("Trigger", 0)
