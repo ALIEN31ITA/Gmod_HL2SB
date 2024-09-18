@@ -1,8 +1,8 @@
-"hl2sbgmod_EP2_maps"
+"hl2sbgmod_ep1_maps"
 {
 	"base"		"base"
-	"title"		"Half-Life 2 EP2: Sandbox"
-	"maps"		"^gmhl2e2_"
+	"title"		"Half-Life 2 EP1: Sandbox"
+	"maps"		"^gmhl2e1_"
 	"menusystem"	"0"
 
 	"settings"
