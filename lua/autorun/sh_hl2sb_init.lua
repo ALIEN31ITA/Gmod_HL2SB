@@ -153,6 +153,11 @@ hl2sb.mapSettings = {
 
 		menuText = "Toggle Core Damage",
 		menuDesc = "Enable/Disable core damage in Episode 1",
+
+		bDisplay = function()
+
+			return true
+		end
 	},
 	hl2sb_SoldiersVeryGoodAim = {
 		value = CreateConVar( "hl2sb_soldiers_verygoodaim", "0", FCVAR_ARCHIVE, "Toggle Soldiers Very Good Aim", 0, 1 ),
@@ -353,6 +358,20 @@ hl2sb.creditsMap = {
     ["ep2_outland_01"] = "HALF-LIFE'\n== episode two=="
 }
 
+hl2sb.episodeOneMaps = {
+	["gmhl2e1_citadel_00"] = true,
+	["gmhl2e1_citadel_01"] = true,
+	["gmhl2e1_citadel_02"] = true,
+	["gmhl2e1_citadel_02b"] = true,
+	["gmhl2e1_citadel_03"] = true,
+	["gmhl2e1_citadel_04"] = true,
+
+	["gmhl2e1_c17_00"] = true,
+	["gmhl2e1_c17_01"] = true,
+	["gmhl2e1_c17_02"] = true,
+	["gmhl2e1_c17_03"] = true,
+}
+
 hl2sb.creditsEpisodes = {
     ["gmhl2e1_c17_03"] = "==episode one==",
     ["ep1_c17_06"] = "==episode one==",
@@ -450,8 +469,20 @@ function hl2sb:IsEnabled(identifier)
 	return setting.value:GetBool()
 end
 
-function hl2sb:IsMap(mapName)
-	if ( !mapName ) then mapName = game.GetMap() end
+function hl2sb:IsMap(mapName, episode)
+	if !mapName then mapName = game.GetMap() end
+
+	if episode then
+		if episode != "ep1" or episode != "ep2" then return false end
+
+		local mapTable = hl2sb.episodeOneMaps
+
+		if episode == "ep2" then
+			// TODO: Finish
+		end
+
+		return mapTable[mapName]
+	end
 
 	return hl2sb.mapChapters[mapName] != nil // smart ik ik
 end
