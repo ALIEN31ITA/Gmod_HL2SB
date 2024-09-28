@@ -627,10 +627,11 @@ end
 
 hook.Add("OnNPCKilled", "hl2sb_OnNPCKilled", function(ent, attacker, inflictor)
 	if !IsValid( ent ) then return end
-	if !hl2sb:IsMap() then return end
-
 	ZombieHeadless(ent)
-	ExplodeNPC(ent)
+
+	if hl2sb:IsMap() then
+		ExplodeNPC(ent)
+	end
 end)
 
 do
