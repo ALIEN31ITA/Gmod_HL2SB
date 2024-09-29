@@ -35,8 +35,24 @@ local function SetupNPCs(ent)
 		if ent.NPCTable.ListClass == "npc_barney_cp_hostile" then
 			ent.NPCTable.Name = "Barney Calhoun (CP)"
 		end
-	elseif ( ent:GetClass() == "npc_helicopter" && ent.NPCTable.ListClass == "npc_helicopter_nightlights" ) or ( ent:GetClass() == "npc_combinegunship" && ent.NPCTable.ListClass == "npc_gunship_chopper" ) then
-		ent.NPCTable.Name = "Hunter-Chopper"
+	elseif ( ent:GetClass() == "npc_helicopter" ) then
+		if ( ent.NPCTable.ListClass == "npc_helicopter_nightlights" ) or ( ent:GetClass() == "npc_combinegunship" && ent.NPCTable.ListClass == "npc_gunship_chopper" ) then
+			ent.NPCTable.Name = "Hunter-Chopper"
+		elseif ( ent.NPCTable.ListClass == "npc_helicopter_nightlightsplusspot" ) then
+			local attachment = ent:LookupAttachment("Spotlight")
+			local data_attach = ent:GetAttachment(attachment)
+
+			ent.spotLight = ents.Create("point_spotlight")
+			ent.spotLight:SetPos(data_attach.Pos)
+			ent.spotLight:SetAngles(data_attach.Ang)
+			ent.spotLight:SetParent(ent, attachment)
+			ent.spotLight:SetKeyValue("spotlightlength", "500")
+			ent.spotLight:SetKeyValue("spotlightwidth", "45")
+			ent.spotLight:SetKeyValue("rendermode", "9")
+			ent.spotLight:SetKeyValue("spawnflags", "1")
+			ent.spotLight:Spawn()
+			ent.spotLight:Activate()
+		end
 	elseif ent:GetClass() == "npc_rollermine" then
 		if ent.NPCTable.ListClass == "npc_rollermine_alyxhack" then
 			ent.NPCTable.Name = "Rollermine"

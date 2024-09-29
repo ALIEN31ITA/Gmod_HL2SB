@@ -143,6 +143,20 @@ local hl2sb_NPC_HELICOPTER_NIGHT = {
 
 list.Set( "NPC", "npc_helicopter_nightlights", hl2sb_NPC_HELICOPTER_NIGHT )
 
+local hl2sb_NPC_HELICOPTER_NIGHT_SPOT = {
+	Name = "Hunter-Chopper (Lights + Spotlight)",
+	Class = "npc_helicopter",
+	Category = Category,
+	Offset = 300,
+	Health = 600,
+	KeyValues = { SquadName = "overwatch" },
+	NoDrop = true,
+	SpawnFlags = 262144,
+	ListClass = "npc_helicopter_nightlightsplusspot",
+}
+
+list.Set( "NPC", "npc_helicopter_nightlightsplusspot", hl2sb_NPC_HELICOPTER_NIGHT_SPOT )
+
 local hl2sb_NPC_HELICOPTER_GUNSHIP = {
 	Name = "Hunter-Chopper (Gunship)",
 	Class = "npc_combinegunship",
