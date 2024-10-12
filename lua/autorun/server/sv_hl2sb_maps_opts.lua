@@ -659,6 +659,7 @@ do
 	util.AddNetworkString("request_hl2sb_HW17_Bridge_Train")
 	util.AddNetworkString("request_hl2sb_HW17_Bridge_ClearCars")
 	util.AddNetworkString("request_hl2sb_SANDTRAP_COAST_09_ClearCars")
+	util.AddNetworkString("request_hl2sb_RemoveNPCs")
 
 	net.Receive("request_hl2sb_CAN01_TrainR", function(len, ply)
 		if !hl2sb:IsMap() then return end
@@ -750,6 +751,15 @@ do
 
 		for k, v in ipairs(ents.FindByName("clear_road")) do
 			v:Fire("Trigger", 0)
+		end
+	end)
+
+	net.Receive("request_hl2sb_RemoveNPCs", function(len, ply)
+		if !hl2sb:IsMap() then return end
+		if !ply:IsAdmin() then return end
+
+		for k, v in ipairs(ents.FindByClass("npc_*")) do
+			SafeRemoveEntity(v)
 		end
 	end)
 end
