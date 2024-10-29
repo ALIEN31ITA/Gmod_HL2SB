@@ -205,11 +205,14 @@ hl2sb.mapSettings = {
 					if ( !v_wep.m_iOldSecondaryAmmoCount ) then continue end
 
 					v_wep:SetSaveValue("m_iSecondaryAmmoCount", v_wep.m_iOldSecondaryAmmoCount)
+					v_wep.m_iOldSecondaryAmmoCount = nil
 				end
 
 				if ( v.oldNumGreandes ) then
 					v:SetSaveValue("NumGrenades", v.oldNumGreandes)
 					v:SetKeyValue("NumGrenades", v.oldNumGreandes)
+
+					v.oldNumGreandes = nil
 				end
 			end
 		end,
