@@ -187,14 +187,30 @@ hl2sb.mapSettings = {
 			for k, v in ipairs(ents.FindByClass("npc_combine_s")) do
 				if ( !IsValid(v) ) then continue end
 
-				v:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_VERY_GOOD)
+				for v_wep_index, v_wep in ipairs(v:GetWeapons()) do
+					v_wep.m_iOldSecondaryAmmoCount = v:GetSaveValue("m_iSecondaryAmmoCount")
+					v_wep:SetSaveValue("m_iSecondaryAmmoCount", "-1")
+				end
+
+				v.oldNumGreandes = v:GetInternalVariable("NumGrenades")
+				v:SetSaveValue("NumGrenades", "-1")
+				v:SetKeyValue("NumGrenades", "-1")
 			end
 		end,
 		off = function()
 			for k, v in ipairs(ents.FindByClass("npc_combine_s")) do
 				if ( !IsValid(v) ) then continue end
 
-				v:SetCurrentWeaponProficiency(WEAPON_PROFICIENCY_GOOD)
+				for v_wep_index, v_wep in ipairs(v:GetWeapons()) do
+					if ( !v_wep.m_iOldSecondaryAmmoCount ) then continue end
+
+					v_wep:SetSaveValue("m_iSecondaryAmmoCount", v_wep.m_iOldSecondaryAmmoCount)
+				end
+
+				if ( v.oldNumGreandes ) then
+					v:SetSaveValue("NumGrenades", v.oldNumGreandes)
+					v:SetKeyValue("NumGrenades", v.oldNumGreandes)
+				end
 			end
 		end,
 
