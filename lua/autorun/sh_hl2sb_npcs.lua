@@ -99,20 +99,6 @@ if ( IsMounted( "ep2" ) ) then
 	}
 
 	list.Set( "NPC", "npc_combinemine_resistance", hl2sb_NPC_COMBINEMINE_FRIENDLY )
-
-	local hl2sb_NPC_TURRETFLOOR_FRIENDLY = {
-		Name = "Turret (Modified)",
-		Class = "npc_turret_floor",
-		Category = Category,
-		SpawnFlags = 512,
-		OnFloor = true,
-		Rotate = Angle( 0, 180, 0 ),
-		Offset = 2,
-		KeyValues = { SquadName = "resistance" },
-		ListClass = "npc_turretfloor_resistance",
-	}
-
-	list.Set( "NPC", "npc_turretfloor_resistance", hl2sb_NPC_TURRETFLOOR_FRIENDLY )
 end
 
 local Category = "Combine"
