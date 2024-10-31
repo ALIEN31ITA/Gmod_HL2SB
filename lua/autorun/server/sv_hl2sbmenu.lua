@@ -3,6 +3,7 @@ hl2sb = hl2sb or {}
 util.AddNetworkString( "hl2sb_MenuCommand" )
 util.AddNetworkString( "hl2sb_MenuPlaySound" )
 util.AddNetworkString( "hl2sb_MenuStopSound" )
+util.AddNetworkString( "hl2sb_MenuRemoveAllNPCs" )
 
 net.Receive( "hl2sb_MenuCommand", function( len, ply )
     if ( !IsValid(ply) ) then return end

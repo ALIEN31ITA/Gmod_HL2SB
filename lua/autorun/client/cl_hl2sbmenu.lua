@@ -186,6 +186,33 @@ hook.Add( "PopulateToolMenu", "hl2sb_PopulateToolMenu", function()
         base:AddItem( settingsForMaps )
         base:AddItem( scrollPanel )
 
+        local removeAllNPCs = vgui.Create( "DButton", scrollPanel )
+        removeAllNPCs:Dock( TOP )
+        removeAllNPCs:SetText( "Remove All NPCs" )
+        removeAllNPCs:SetTextColor( color_access_granted )
+        removeAllNPCs:SetFont( "hl2sbMenuFontSmall" )
+        removeAllNPCs:SizeToContents()
+
+        function removeAllNPCs:DoClick()
+            if ( !bHasAccess ) then return end
+
+            net.Start( "request_hl2sb_RemoveNPCs" )
+            net.SendToServer()
+        end
+
+        removeAllNPCs.Paint = function(this, width, height)
+            if ( !bHasAccess ) then
+                this:SetTextColor( color_access_denied )
+            else
+                this:SetTextColor( color_access_granted )
+            end
+
+            surface.SetDrawColor( color_base_outline )
+            surface.DrawOutlinedRect( 0, 0, width, height )
+        end
+
+        base:AddItem( removeAllNPCs )
+
         for k, v in pairs(hl2sb.cvars) do
             local cvar = v.value
 
