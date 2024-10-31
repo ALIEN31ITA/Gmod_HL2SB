@@ -5,7 +5,7 @@ local hl2sb_getmap = game.GetMap()
 local function SetupNPCs(ent)
 	if ent:GetClass() == "npc_eli" && ent.NPCTable.ListClass == "npc_eli_episodic" then
 		ent.NPCTable.Name = "Eli Vance"
-		ent:SetSubMaterial( 4, "models/hl2sb/characters/eli_sheet_ep2" )
+		ent:SetSubMaterial( 0, "models/hl2sb/characters/eli_sheet_ep2" )
 	elseif ent:GetClass() == "npc_kleiner" && ent.NPCTable.ListClass == "npc_kleiner_episodic" then
 		ent.NPCTable.Name = "Dr. Isaac Kleiner"
 		ent:SetSubMaterial( 0, "models/hl2sb/characters/kleiner_sheet_ep2" )
@@ -362,25 +362,10 @@ local function IntroFunc()
 	end
 end
 
-local function Episode2NectarStart()
-	if ( hl2sb_getmap == "gmhl2e2_outland_02" and hook.Run("IsEP2NectarTriggered") ) then
-		timer.Simple(1, function()
-			for k, v in ipairs(ents.FindByName("debug_choreo_start_in_elevator")) do
-				v:Fire("Trigger")
-			end
-
-			timer.Simple(1, function()
-				file.Delete("hl2sb_ep2_nectar.txt")
-			end)
-		end)
-	end
-end
-
 hook.Add("PlayerInitialSpawn", "hl2sb_PlayerInitialSpawn", function(ply)
 	if !hl2sb:IsMap() then return end
 
 	IntroFunc()
-	Episode2NectarStart()
 end)
 
 // MAP FIRST LOAD
