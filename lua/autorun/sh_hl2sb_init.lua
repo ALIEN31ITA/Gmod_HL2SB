@@ -20,18 +20,6 @@ if ( IsMounted( "ep2" ) ) then
 	game.AddParticles( "particles/magnusson_burner.pcf" )
 end
 
-hook.Add("IsEP2NectarTriggered", "hl2sb_IsEP2NectarTriggered", function()
-	if ( !file.Exists("hl2sb_ep2_nectar.txt", "DATA") ) then return false end
-	if ( game.GetMap() != "gmhl2e2_outland_02" ) then return false end
-
-	local nectar = file.Read("hl2sb_ep2_nectar.txt", "DATA")
-	if ( nectar == "1" ) then
-		return true
-	end
-
-	return false
-end)
-
 hl2sb.mapSettings = {
     hl2sb_Deathpits = {
         value = CreateConVar( "hl2sb_deathpit_triggers", "0", FCVAR_ARCHIVE, "Toggle death zones", 0, 1 ),

@@ -7,7 +7,7 @@ hl2sb.logo = Material( "hud/hl2sb/logo.png" )
 // KILLICONS
 //NPC LIST
 
-local killIconColor = Color( 255, 80, 0, 255 )
+local killIconColor = Color( 255, 80, 0 )
 
 killicon.Add( "npc_helicopter", "hud/hl2sb/killicons/npc_helicopter", killIconColor )
 killicon.Add( "grenade_helicopter", "hud/hl2sb/killicons/grenade_helicopter", killIconColor )
