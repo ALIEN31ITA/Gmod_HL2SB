@@ -1,6 +1,8 @@
 hl2sb = hl2sb or {}
 hl2sb.logo = Material( "hud/hl2sb/logo.png" )
 
+local gameMap = game.GetMap()
+
 CreateConVar("hl2sb_showsettings", "0", {FCVAR_REPLICATED}, "Show the current settings.")
 
 do
@@ -114,7 +116,7 @@ local function DrawIntro()
     end
 
 	local hl2sb_markupfonts = markup.Parse("<font=hl2sbCreditsFont>HALF-LIFE'</font>\n<font=hl2sbGenericFont>   ==sandbox==</font>")
-	local mapName = creditsMap[hl2credits_getmap]
+	local mapName = hl2sb.creditsMap[gameMap]
     if ( mapName ) then
 	    draw.DrawText(mapName, "hl2sbCreditsFont", ScrW() / 2, ScrH() / 2.08, ColorAlpha(color_white, alpha), TEXT_ALIGN_CENTER)
     else
@@ -160,9 +162,9 @@ local function DrawOutro()
 
 	// GAME TITLE
 	local hl2sb_markupfonts = markup.Parse("<font=hl2sbCreditsFontBig>HALF-LIFE'</font>\n<font=hl2sbGenericFontBig>   ==sandbox==</font>")
-    if hl2credits_getmap == "gmhl2e1_c17_03" or "ep1_c17_06" then
+    if gameMap == "gmhl2e1_c17_03" or gameMap == "ep1_c17_06" then
         hl2sb_markupfonts = markup.Parse("<color=211, 92, 2><font=hl2sbCreditsFontBig>	 HALF-LIFE'</font></color>\n<font=hl2sbGenericFontBig>   ==episode one==</font>")
-    elseif hl2credits_getmap == "gmhl2e2_outland_12" or "ep2_outland_12a" then
+    elseif gameMap == "gmhl2e2_outland_12" or gameMap == "ep2_outland_12a" then
         hl2sb_markupfonts = markup.Parse("<color=211, 92, 2><font=hl2sbCreditsFontBig>	 HALF-LIFE'</font></color>\n<font=hl2sbGenericFontBig>   ==episode two==</font>")
     end
 
