@@ -1,5 +1,3 @@
-hl2sb = hl2sb or {}
-
 local Category = "Humans + Resistance"
 
 if ( IsMounted( "episodic" ) ) then

@@ -1,5 +1,3 @@
-hl2sb = hl2sb or {}
-
 if ( !GlowLib ) then
     return MsgC(Color(255, 0, 0), "[ GlowLib ] ", color_white, "GlowLib is not installed! You could install it to use the custom glow data for HL2 Sandbox Support!\n")
 end

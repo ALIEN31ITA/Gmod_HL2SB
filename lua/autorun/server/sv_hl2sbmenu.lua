@@ -1,5 +1,3 @@
-hl2sb = hl2sb or {}
-
 util.AddNetworkString( "hl2sb_MenuCommand" )
 util.AddNetworkString( "hl2sb_MenuPlaySound" )
 util.AddNetworkString( "hl2sb_MenuStopSound" )
@@ -13,22 +11,31 @@ net.Receive( "hl2sb_MenuCommand", function( len, ply )
         bHasAccess = true
     end
 
+    if ( !bHasAccess ) then return end
+
     local str, value = net.ReadString(), net.ReadType()
     if ( !str ) then return end
 
-    local bVarExists = false
-
+    local settingData = nil
     for k, v in pairs(hl2sb.cvars) do
         if ( v.value:GetName() == str ) then
-            bVarExists = true
+            settingData = v
             break
         end
     end
 
-    if ( !bVarExists ) then return end
+    if ( !settingData ) then return end
 
     if isbool(value) then
         value = value && 1 || 0
+    end
+
+    if ( settingData.value ) then
+        if ( !settingData.value:GetBool() ) then
+            if ( settingData.on) then settingData.on() end
+        else
+            if ( settingData.off ) then settingData.off() end
+        end
     end
 
     RunConsoleCommand( str, value )

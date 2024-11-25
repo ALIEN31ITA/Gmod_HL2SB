@@ -1,5 +1,3 @@
-hl2sb = hl2sb or {}
-
 if ( SERVER ) then
     hook.Add("CreateEntityRagdoll", "hl2sb_CreateEntityRagdoll", function( ent, ragdoll )
         if ( !IsValid(ent) or !IsValid(ragdoll) ) then return end

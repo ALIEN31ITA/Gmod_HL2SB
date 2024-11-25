@@ -1,6 +1,3 @@
-hl2sb = hl2sb or {}
-hl2sb.logo = Material( "hud/hl2sb/logo.png" )
-
 // Yes i am a terrible coder
 // Help gained from the Gmod Discord, i am not a coder!!
 

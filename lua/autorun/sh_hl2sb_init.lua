@@ -143,7 +143,6 @@ hl2sb.mapSettings = {
 		menuDesc = "Enable/Disable core damage in Episode 1",
 
 		bDisplay = function()
-
 			return true
 		end
 	},
@@ -478,9 +477,11 @@ function hl2sb:IsEnabled(identifier)
 	return setting.value:GetBool()
 end
 
+local convar_developer = GetConVar("developer")
+
 function hl2sb:IsMap(mapName, episode)
 	if !mapName then mapName = game.GetMap() end
-	if GetConVar("developer"):GetInt() > 0 then return true end
+	if convar_developer:GetInt() > 0 then return true end
 
 	if episode then
 		if episode != "ep1" or episode != "ep2" then return false end

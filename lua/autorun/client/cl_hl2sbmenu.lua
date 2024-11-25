@@ -1,5 +1,4 @@
-hl2sb = hl2sb or {}
-hl2sb.logo = Material( "hud/hl2sb/logo.png" )
+local logo = Material( "hud/hl2sb/logo.png" )
 
 local hl2sb_getmap = game.GetMap()
 
@@ -149,7 +148,7 @@ hook.Add( "PopulateToolMenu", "hl2sb_PopulateToolMenu", function()
         logoPanel:Dock( TOP )
         logoPanel:SetTall(135)
         function logoPanel:Paint( w, h )
-            surface.SetMaterial( hl2sb.logo )
+            surface.SetMaterial( logo )
             surface.SetDrawColor( color_white )
             surface.DrawTexturedRect( 0, 0, w, h )
         end
@@ -232,7 +231,7 @@ hook.Add( "PopulateToolMenu", "hl2sb_PopulateToolMenu", function()
             if v.type == "checkbox" then
                 local toggleButton = vgui.Create( "DButton", scrollPanel )
                 toggleButton:Dock( TOP )
-                toggleButton:SetText( cvar:GetInt() > 0 && "Enabled" || "Disabled" )
+                toggleButton:SetText( cvar:GetInt() > 0 && "Disable" || "Enable" )
                 toggleButton:SetTextColor(hl2sb:IsEnabled(k) && color_access_granted || color_access_denied)
                 toggleButton:SetFont( "hl2sbMenuFontSmall" )
                 toggleButton:SetTooltip( cvar:GetName() )
@@ -256,7 +255,7 @@ hook.Add( "PopulateToolMenu", "hl2sb_PopulateToolMenu", function()
                         surface.PlaySound( "buttons/button10.wav" )
                     end
 
-                    self:SetText( newVal && "Enabled" || "Disabled" )
+                    self:SetText( newVal && "Disable" || "Enable" )
                     self:SetTextColor( newVal && color_access_granted || color_access_denied )
                 end
 

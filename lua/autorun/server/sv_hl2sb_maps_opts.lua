@@ -1,5 +1,3 @@
-hl2sb = hl2sb or {}
-
 local hl2sb_getmap = game.GetMap()
 
 local function SetupNPCs(ent)
