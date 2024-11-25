@@ -195,6 +195,8 @@ hook.Add( "PopulateToolMenu", "hl2sb_PopulateToolMenu", function()
         function removeAllNPCs:DoClick()
             if ( !bHasAccess ) then return end
 
+            surface.PlaySound( "ui/buttonclickrelease.wav" )
+
             net.Start( "request_hl2sb_RemoveNPCs" )
             net.SendToServer()
         end
@@ -223,7 +225,7 @@ hook.Add( "PopulateToolMenu", "hl2sb_PopulateToolMenu", function()
             title:SetFont( "hl2sbMenuFontMedium" )
             title:SetWrap( true )
             title:SetAutoStretchVertical( true )
-            title:SetTextColor( color_white )
+            title:SetTextColor( color_label_settingsForMaps )
             title:SetTooltip( cvar:GetName() )
 
             base:AddItem( title )
@@ -260,7 +262,7 @@ hook.Add( "PopulateToolMenu", "hl2sb_PopulateToolMenu", function()
                 end
 
                 function toggleButton:Paint( width, height )
-                    surface.SetDrawColor( color_base_outline )
+                    surface.SetDrawColor( hl2sb:IsEnabled(k) and color_access_granted or color_access_denied )
                     surface.DrawOutlinedRect( 0, 0, width, height )
                 end
 
@@ -294,7 +296,7 @@ hook.Add( "PopulateToolMenu", "hl2sb_PopulateToolMenu", function()
             local label = vgui.Create( "DLabel", scrollPanel )
             label:Dock( TOP )
             label:SetText( v.menuDesc )
-            label:SetTextColor( color_label_settingsForMaps )
+            label:SetTextColor( color_white )
             label:SetFont( "hl2sbMenuFontSmall" )
             label:SetWrap( true )
             label:SetAutoStretchVertical( true )

@@ -218,8 +218,6 @@ hl2sb.mapSettings = {
 
 		menuText = "Toggle NPCs Explode on Death",
 		menuDesc = "Enable/Disable NPCs Explode on Death",
-
-		type = "slider"
 	}
 }
 
