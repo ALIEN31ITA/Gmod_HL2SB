@@ -293,7 +293,12 @@ hl2sb.mapChapters = {
 	["gmhl2e1_c17_00"] = "Lowlife: ",
 	["gmhl2e1_c17_01"] = "Urban Flight: ",
 	["gmhl2e1_c17_02"] = "Urban Flight: ",
-	["gmhl2e1_c17_03"] = "Exit 17: "
+	["gmhl2e1_c17_03"] = "Exit 17: ",
+	["gmhl2e2_outland_01"] = "To the White Forest :",
+	["gmhl2e2_outland_02"] = "This Vortal Coil :",
+	["gmhl2e2_outland_03"] = "This Vortal Coil :",
+	["gmhl2e2_outland_05"] = "Freeman Pontifex :",
+	["gmhl2e2_outland_06a"] = "Riding Shotgun :"
 }
 
 if ( hl2sb.mapChapters[gameMap] ) then
@@ -349,7 +354,12 @@ hl2sb.mapTitles = {
 	["gmhl2e1_c17_00"] = "Tunnels, Parking lots, Zombies and a lot of hungry Antlions!",
 	["gmhl2e1_c17_01"] = "Streetwars between snipers and antlions",
 	["gmhl2e1_c17_02"] = "Kleiner wants you to get busy, and also Barney has something to give you.",
-	["gmhl2e1_c17_03"] = "Final push towards the outlands..."
+	["gmhl2e1_c17_03"] = "Final push towards the outlands...",
+	["gmhl2e2_outland_01"] = "The Calm before the Storm...",
+	["gmhl2e2_outland_02"] = "Welcome to the underground, give us your Nectar!",
+	["gmhl2e2_outland_03"] = "Alyx doesn't look good :(",
+	["gmhl2e2_outland_05"] = "Combine parade and a new ride",
+	["gmhl2e2_outland_06a"] = "Signal's Jammed"
 }
 
 if ( hl2sb.mapTitles[gameMap] ) then
@@ -380,7 +390,12 @@ hl2sb.episodeOneMaps = {
 }
 
 hl2sb.episodeTwoMaps = {
-	["mapname"] = true,
+	["gmhl2e2_outland_01"] = true,
+	["gmhl2e2_outland_02"] = true,
+	["gmhl2e2_outland_03"] = true,
+	["gmhl2e2_outland_05"] = true,
+	["gmhl2e2_outland_06a"] = true,
+	["gmhl2e2_outland_12"] = true,
 }
 
 hl2sb.creditsEpisodes = {
