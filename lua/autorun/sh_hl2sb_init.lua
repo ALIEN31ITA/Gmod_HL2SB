@@ -223,7 +223,7 @@ hl2sb.mapSettings = {
 }
 
 hl2sb.godModeNPCNames = {
-	["npc_alyx"] = {"alyx"},
+	["npc_alyx"] = {"alyx", "alyx_damaged", "alyx_puppet"},
 	["npc_barney"] = {"barney"},
 	["npc_breen"] = {"breen"},
 	["npc_dog"] = {"dog"},

@@ -1,0 +1,35 @@
+// Choreo version 1
+actor "eli"
+{
+  channel "wav"
+  {
+    event speak "a31\jokes\aftermath\eli_survive.wav"
+    {
+      time 0.027778 17.111860
+      param "a31\jokes\aftermath\eli_survive.wav"
+      fixedlength
+      cctype "cc_master"
+      cctoken ""
+    }
+  }
+  channel "Events"
+  {
+    event lookat "look"
+    {
+      time 6.411111 -1.000000
+      param "!player"
+    }
+  }
+}
+
+scalesettings
+{
+  "SceneRampTool" "100"
+  "GestureTool" "100"
+  "ExpressionTool" "100"
+  "RampTool" "100"
+  "CChoreoView" "40"
+}
+fps 60
+snap off
+ignorePhonemes off
