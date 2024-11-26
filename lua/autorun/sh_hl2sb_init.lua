@@ -378,6 +378,10 @@ hl2sb.episodeOneMaps = {
 	["gmhl2e1_c17_03"] = true,
 }
 
+hl2sb.episodeTwoMaps = {
+	["mapname"] = true,
+}
+
 hl2sb.creditsEpisodes = {
     ["gmhl2e1_c17_03"] = "==episode one==",
     ["ep1_c17_06"] = "==episode one==",
@@ -488,6 +492,7 @@ function hl2sb:IsMap(mapName, episode)
 
 		if episode == "ep2" then
 			// TODO: Finish
+			mapTable = hl2sb.episodeTwoMaps
 		end
 
 		return mapTable[mapName]
