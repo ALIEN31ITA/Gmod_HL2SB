@@ -38,5 +38,5 @@ hook.Add("PhysgunPickup", "hl2sb_PhysgunPickup", function(ply, entity)
     if ( !IsValid(ply) or !IsValid(entity) ) then return end
     if ( !hl2sb:IsMap() ) then return end
 
-    if ( entity.bHL2SBNoPickup ) then return false end
+    if ( entity.b_hl2sb_prop_pickup_disabled ) then return false end
 end)

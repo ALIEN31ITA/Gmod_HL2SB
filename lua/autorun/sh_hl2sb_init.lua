@@ -516,3 +516,9 @@ function hl2sb:IsMap(mapName, episode)
 
 	return hl2sb.mapChapters[mapName] != nil // smart ik ik
 end
+
+function hl2sb:DisablePropPickup(entity, bDisabled)
+	if ( !IsValid(entity) ) then return end
+
+	entity.b_hl2sb_prop_pickup_disabled = bDisabled
+end
