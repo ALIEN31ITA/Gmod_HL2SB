@@ -482,7 +482,7 @@ end
 local convar_developer = GetConVar("developer")
 
 function hl2sb:IsMap(mapName, episode)
-	if !mapName then mapName = game.GetMap() end
+	if !mapName then mapName = gameMap end
 	if convar_developer:GetInt() > 0 then return true end
 
 	if episode then
