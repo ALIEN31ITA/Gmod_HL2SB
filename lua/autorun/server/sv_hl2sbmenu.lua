@@ -30,12 +30,18 @@ net.Receive( "hl2sb_MenuCommand", function( len, ply )
         value = value && 1 || 0
     end
 
-    if ( settingData.value ) then
-        if ( !settingData.value:GetBool() ) then
-            if ( settingData.on) then settingData.on() end
-        else
-            if ( settingData.off ) then settingData.off() end
-        end
+    local cvar = settingData.value
+    if ( !cvar ) then return end
+
+    if ( settingData.EffectOnlyOnCleanup ) then
+        RunConsoleCommand( str, value )
+        return
+    end
+
+    if ( !settingData.value:GetBool() ) then
+        if ( settingData.on ) then settingData.on() end
+    else
+        if ( settingData.off ) then settingData.off() end
     end
 
     RunConsoleCommand( str, value )

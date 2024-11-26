@@ -105,6 +105,7 @@ hl2sb.mapSettings = {
     },
 	hl2sb_GmanIntro = {
 		value = CreateConVar( "hl2sb_trainstation_intro", "1", FCVAR_ARCHIVE, "Gman trainstation intro", 0, 1 ),
+		EffectOnlyOnCleanup = true,
 
 		on = function()
 			for k, v in ipairs(ents.FindByName("intro_start")) do
