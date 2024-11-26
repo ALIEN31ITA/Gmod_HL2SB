@@ -64,27 +64,6 @@ local function SetupNPCs(ent)
 			ent:SetPos(ent:GetPos() + ent:GetUp() * -35)
 			ent:SetMoveType(MOVETYPE_NONE)
 		end
-	elseif ent:GetClass() == "npc_poisonzombie" and ent.NPCTable.ListClass == "npc_poisonzombie_crabless" then
-		ent.NPCTable.Name = "Poison Zombie"
-
-		ent:SetSaveValue("m_nCrabCount", 0)
-		ent:SetSaveValue("m_bCrabs", {
-			[0] = false,
-			[1] = false,
-			[2] = false
-		})
-
-		for i = 1, 5 do
-			ent:SetBodygroup(i, 0)
-		end
-	elseif ent:GetClass() == "npc_zombie" and ent.NPCTable.ListClass == "npc_zombie_crabless" then
-		ent.NPCTable.Name = "Zombie"
-
-		ent:SetBodygroup(1, 0)
-	elseif ent:GetClass() == "npc_fastzombie" and ent.NPCTable.ListClass == "npc_fastzombie_crabless" then
-		ent.NPCTable.Name = "Fast Zombie"
-
-		ent:SetBodygroup(1, 0)
 	elseif ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
 		ent:SetNW2Entity("hl2sbSpawnedBy", ply)
 
@@ -574,11 +553,13 @@ local function ZombieHeadless(ent)
 	if !ent.NPCTable or !ent.NPCTable.ListClass then return end
 
 	if ent:GetClass() == "npc_zombie" and ent.NPCTable.ListClass == "npc_zombie_crabless" then
+		print("Hi")
 		local attachment = ent:LookupAttachment("headcrab")
 		local data_attach = ent:GetAttachment(attachment)
 
 		if data_attach then
 			for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 10)) do
+				print(v)
 				if v:GetClass() == "npc_headcrab" then
 					SafeRemoveEntity(v)
 				end
@@ -626,7 +607,9 @@ end
 
 hook.Add("OnNPCKilled", "hl2sb_OnNPCKilled", function(ent, attacker, inflictor)
 	if !IsValid( ent ) then return end
-	ZombieHeadless(ent)
+	timer.Simple(0.1, function()
+		ZombieHeadless(ent)
+	end)
 
 	if hl2sb:IsMap() then
 		ExplodeNPC(ent)
