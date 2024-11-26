@@ -518,6 +518,7 @@ function hl2sb:IsMap(mapName, episode)
 end
 
 function hl2sb:DisablePropPickup(entity, bDisabled)
+	if ( isstring(entity) ) then entity = ents.FindByName(entity)[1] end
 	if ( !IsValid(entity) ) then return end
 
 	entity.b_hl2sb_prop_pickup_disabled = bDisabled
