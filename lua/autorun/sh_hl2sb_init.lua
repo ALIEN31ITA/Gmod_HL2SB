@@ -502,7 +502,7 @@ function hl2sb:IsMap(mapName, episode)
 	if convar_developer:GetInt() > 0 then return true end
 
 	if episode then
-		if episode != "ep1" or episode != "ep2" then return false end
+		if episode != "ep1" or episode != "ep2" then goto move end
 
 		local mapTable = hl2sb.episodeOneMaps
 
@@ -513,6 +513,8 @@ function hl2sb:IsMap(mapName, episode)
 
 		return mapTable[mapName]
 	end
+
+	::move::
 
 	return hl2sb.mapChapters[mapName] != nil // smart ik ik
 end
