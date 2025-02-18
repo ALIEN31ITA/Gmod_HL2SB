@@ -472,7 +472,7 @@ hook.Add( "PostCleanupMap", "hl2sb_PostCleanupMap", function()
 		end
 	end
 	if hl2sb_getmap == "gmhl2e2_outland_01" then
-		for k, v in player.Iterator() do 
+		for k, v in player.Iterator() do
 			v:SetPos(Vector(-668, 48, 796))
 			v:SetEyeAngles(Angle(-15, 0, 0))
 		end

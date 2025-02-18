@@ -21,8 +21,8 @@ if ( IsMounted( "ep2" ) ) then
 end
 
 hl2sb.mapSettings = {
-    hl2sb_Deathpits = {
-        value = CreateConVar( "hl2sb_deathpit_triggers", "0", FCVAR_ARCHIVE, "Toggle death zones", 0, 1 ),
+	hl2sb_Deathpits = {
+		value = CreateConVar( "hl2sb_deathpit_triggers", "0", FCVAR_ARCHIVE, "Toggle death zones", 0, 1 ),
 		on = function()
 			for k, v in ipairs(ents.FindByName("waterdeath")) do
 				v:Fire("Enable")
@@ -31,8 +31,8 @@ hl2sb.mapSettings = {
 			for k, v in ipairs(ents.FindByName("pitdeath")) do
 				v:Fire("Enable")
 			end
-        end,
-        off = function()
+		end,
+		off = function()
 			for k, v in ipairs(ents.FindByName("waterdeath")) do
 				v:Fire("Disable")
 			end
@@ -40,13 +40,13 @@ hl2sb.mapSettings = {
 			for k, v in ipairs(ents.FindByName("pitdeath")) do
 				v:Fire("Disable")
 			end
-        end,
+		end,
 
 		menuText = "Toggle Death Barriers",
 		menuDesc = "Enable/Disable death barriers, pits, leeches",
-    },
-    hl2sb_LevelSwitchTriggers = {
-        value = CreateConVar( "hl2sb_levelswitch_triggers", "1", FCVAR_ARCHIVE, "Toggle Changelevels", 0, 1 ),
+	},
+	hl2sb_LevelSwitchTriggers = {
+		value = CreateConVar( "hl2sb_levelswitch_triggers", "1", FCVAR_ARCHIVE, "Toggle Changelevels", 0, 1 ),
 
 		on = function()
 			for k, v in ipairs(ents.FindByClass("trigger_changelevel")) do
@@ -56,8 +56,8 @@ hl2sb.mapSettings = {
 			for k, v in ipairs(ents.FindByName("changelvl_lua_trigger")) do
 				v:Fire("Enable")
 			end
-        end,
-        off = function()
+		end,
+		off = function()
 			for k, v in ipairs(ents.FindByClass("trigger_changelevel")) do
 				v:Fire("Disable")
 			end
@@ -65,13 +65,13 @@ hl2sb.mapSettings = {
 			for k, v in ipairs(ents.FindByName("changelvl_lua_trigger")) do
 				v:Fire("Disable")
 			end
-        end,
+		end,
 
 		menuText = "Toggle Loading Zones",
 		menuDesc = "Enable/Disable level switch triggers",
-    },
-    hl2sb_Antlions_Spawns = {
-        value = CreateConVar( "hl2sb_antlionspawn_triggers", "1", FCVAR_ARCHIVE, "Toggle Antlion Spawns", 0, 1 ),
+	},
+	hl2sb_Antlions_Spawns = {
+		value = CreateConVar( "hl2sb_antlionspawn_triggers", "1", FCVAR_ARCHIVE, "Toggle Antlion Spawns", 0, 1 ),
 
 		on = function()
 			for k, v in ipairs(ents.FindByName("trigger_expanse_sand_1")) do
@@ -85,8 +85,8 @@ hl2sb.mapSettings = {
 			for k, v in ipairs(ents.FindByName("antlion_spawner")) do
 				v:Fire("Enable")
 			end
-        end,
-        off = function()
+		end,
+		off = function()
 			for k, v in ipairs(ents.FindByName("trigger_expanse_sand_1")) do
 				v:Fire("Disable")
 			end
@@ -98,11 +98,11 @@ hl2sb.mapSettings = {
 			for k, v in ipairs(ents.FindByName("antlion_spawner")) do
 				v:Fire("Disable")
 			end
-        end,
+		end,
 
 		menuText = "Toggle Antlion spawns",
 		menuDesc = "Enable/Disable antlions burrowing from the ground",
-    },
+	},
 	hl2sb_GmanIntro = {
 		value = CreateConVar( "hl2sb_trainstation_intro", "1", FCVAR_ARCHIVE, "Gman trainstation intro", 0, 1 ),
 		EffectOnlyOnCleanup = true,
@@ -111,16 +111,16 @@ hl2sb.mapSettings = {
 			for k, v in ipairs(ents.FindByName("intro_start")) do
 				v:Fire("Trigger")
 			end
-        end,
-        off = function()
+		end,
+		off = function()
 			for k, v in ipairs(ents.FindByName("intro_skip_start")) do
 				v:Fire("Trigger")
 			end
-        end,
+		end,
 
 		menuText = "Toggle G-Man Trainstation Intro",
 		menuDesc = "Enable/Disable G-Man trainstation intro",
-    },
+	},
 	hl2sb_NPCGodmode = {
 		value = CreateConVar( "hl2sb_npcgodmode", "0", FCVAR_ARCHIVE, "Toggle NPC Godmode", 0, 1 ),
 
@@ -367,12 +367,12 @@ if ( hl2sb.mapTitles[gameMap] ) then
 end
 
 hl2sb.creditsMap = {
-    ["gmhl2e1_citadel_00"] = "HALF-LIFE'\n== episode one==",
-    ["ep1_citadel_00"] = "HALF-LIFE'\n== episode one==",
-    ["gmhl2e1_c17_03"] = "HALF-LIFE'\n== episode one==",
-    ["ep1_c17_06"] = "HALF-LIFE'\n== episode one==",
-    ["gmhl2e2_outland_01"] = "HALF-LIFE'\n== episode two==",
-    ["ep2_outland_01"] = "HALF-LIFE'\n== episode two=="
+	["gmhl2e1_citadel_00"] = "HALF-LIFE'\n== episode one==",
+	["ep1_citadel_00"] = "HALF-LIFE'\n== episode one==",
+	["gmhl2e1_c17_03"] = "HALF-LIFE'\n== episode one==",
+	["ep1_c17_06"] = "HALF-LIFE'\n== episode one==",
+	["gmhl2e2_outland_01"] = "HALF-LIFE'\n== episode two==",
+	["ep2_outland_01"] = "HALF-LIFE'\n== episode two=="
 }
 
 hl2sb.episodeOneMaps = {
@@ -399,10 +399,10 @@ hl2sb.episodeTwoMaps = {
 }
 
 hl2sb.creditsEpisodes = {
-    ["gmhl2e1_c17_03"] = "==episode one==",
-    ["ep1_c17_06"] = "==episode one==",
-    ["gmhl2e2_outland_12"] = "==episode two==",
-    ["ep2_outland_12"] = "==episode two=="
+	["gmhl2e1_c17_03"] = "==episode one==",
+	["ep1_c17_06"] = "==episode one==",
+	["gmhl2e2_outland_12"] = "==episode two==",
+	["ep2_outland_12"] = "==episode two=="
 }
 
 hl2sb.soundtracks = {
