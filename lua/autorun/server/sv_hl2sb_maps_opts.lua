@@ -1,6 +1,6 @@
 local hl2sb_getmap = game.GetMap()
 
-local function SetupNPCs(ent)
+local function SetupNPCs(ent, ply)
 	if ent:GetClass() == "npc_eli" && ent.NPCTable.ListClass == "npc_eli_episodic" then
 		ent.NPCTable.Name = "Eli Vance"
 		ent:SetSubMaterial( 0, "models/hl2sb/characters/eli_sheet_ep2" )
@@ -65,7 +65,7 @@ local function SetupNPCs(ent)
 			ent:SetPos(ent:GetPos() + ent:GetUp() * -35)
 			ent:SetMoveType(MOVETYPE_NONE)
 		end
-	elseif ent:GetClass() == "npc_vortigaunt" && ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
+	elseif ent:GetClass() == "npc_vortigaunt" and ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
 		ent:SetNW2Entity("hl2sbSpawnedBy", ply)
 
 		ent:SetSubMaterial( 0, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
@@ -85,10 +85,8 @@ local MAP_HELINPC = {
 }
 
 local function SetHeliPath(ent)
-	if ( hl2sb_getmap == "gmhl2_coast_03" ) then
-		if MAP_HELINPC[ent:GetClass()] then
-			ent:Fire("SetTrack", "helipathstart", 0)
-		end
+	if ( hl2sb_getmap == "gmhl2_coast_03" and MAP_HELINPC[ent:GetClass()] ) then
+		ent:Fire("SetTrack", "helipathstart", 0)
 	end
 end
 
@@ -96,7 +94,7 @@ end
 hook.Add("PlayerSpawnedNPC", "hl2sb_NPC_SUBMATERIALS", function(ply, ent)
 	if ( !IsValid(ent) or !IsValid(ply) ) then return end
 
-	SetupNPCs(ent)
+	SetupNPCs(ent, ply)
 
 	if hl2sb:IsMap() then
 		SetHeliPath(ent)
