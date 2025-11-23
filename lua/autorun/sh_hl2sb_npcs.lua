@@ -1,38 +1,36 @@
 local Category = "Humans + Resistance"
 
-if ( IsMounted( "episodic" ) ) then
-	local hl2sb_NPC_MOSSMAN = {
-		Name = "Mossman (Arctic)",
-		Class = "npc_mossman",
-		Model = "models/hl2sb/characters/Mossman_ep1.mdl",
-		Category = Category,
-		ListClass = "npc_mossman_episodic",
-	}
+local hl2sb_NPC_MOSSMAN = {
+	Name = "Mossman (Arctic)",
+	Class = "npc_mossman",
+	Model = "models/hl2sb/characters/Mossman_ep1.mdl",
+	Category = Category,
+	ListClass = "npc_mossman_episodic",
+}
 
-	list.Set( "NPC", "npc_mossman_episodic", hl2sb_NPC_MOSSMAN )
+list.Set( "NPC", "npc_mossman_episodic", hl2sb_NPC_MOSSMAN )
 
-	local hl2sb_NPC_BVORTI = {
-		Name = "Vortigaunt (Blue)",
-		Class = "npc_vortigaunt",
-		Model = "models/vortigaunt_blue.mdl",
-		Category = Category,
-		KeyValues = { SquadName = "resistance", ArmorRechargeEnabled = 1 },
-		ListClass = "npc_bluevorti_episodic",
-	}
+local hl2sb_NPC_BVORTI = {
+	Name = "Vortigaunt (Blue)",
+	Class = "npc_vortigaunt",
+	Model = "models/vortigaunt_blue.mdl",
+	Category = Category,
+	KeyValues = { SquadName = "resistance", ArmorRechargeEnabled = 1 },
+	ListClass = "npc_bluevorti_episodic",
+}
 
-	list.Set( "NPC", "npc_bluevorti_episodic", hl2sb_NPC_BVORTI )
+list.Set( "NPC", "npc_bluevorti_episodic", hl2sb_NPC_BVORTI )
 
-	local hl2sb_NPC_BARNEYBLOOD = {
-		Name = "Barney Calhoun (Ep1)",
-		Class = "npc_barney",
-		Category = Category,
-		Weapons = { "weapon_smg1", "weapon_shotgun", "weapon_ar2" },
-		KeyValues = { SquadName = "resistance" },
-		ListClass = "npc_barney_episodic",
-	}
+local hl2sb_NPC_BARNEYBLOOD = {
+	Name = "Barney Calhoun (Ep1)",
+	Class = "npc_barney",
+	Category = Category,
+	Weapons = { "weapon_smg1", "weapon_shotgun", "weapon_ar2" },
+	KeyValues = { SquadName = "resistance" },
+	ListClass = "npc_barney_episodic",
+}
 
-	list.Set( "NPC", "npc_barney_episodic", hl2sb_NPC_BARNEYBLOOD )
-end
+list.Set( "NPC", "npc_barney_episodic", hl2sb_NPC_BARNEYBLOOD )
 
 local hl2sb_NPC_BARNEY_CP = {
 	Name = "Barney Calhoun (CP)",
