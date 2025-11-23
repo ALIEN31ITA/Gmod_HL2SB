@@ -72,32 +72,6 @@ local hl2sb_NPC_ELI = {
 
 list.Set( "NPC", "npc_eli_episodic", hl2sb_NPC_ELI )
 
-local hl2sb_NPC_ROLLER_ALYX = {
-	Name = "Rollermine (Hacked)",
-	Class = "npc_rollermine",
-	Category = Category,
-	Offset = 20,
-	KeyValues = { SquadName = "resistance" },
-	NoDrop = true,
-	ListClass = "npc_rollermine_alyxhack",
-
-}
-
-list.Set( "NPC", "npc_rollermine_alyxhack", hl2sb_NPC_ROLLER_ALYX )
-
-if ( IsMounted( "ep2" ) ) then
-	local hl2sb_NPC_COMBINEMINE_FRIENDLY = {
-		Name = "Combine Mine (Modified)",
-		Class = "combine_mine",
-		Category = Category,
-		KeyValues = { SquadName = "resistance", Modification = 1 },
-		ListClass = "npc_combinemine_resistance",
-	}
-
-	list.Set( "NPC", "npc_combinemine_resistance", hl2sb_NPC_COMBINEMINE_FRIENDLY )
-
-end
-
 local Category = "Combine"
 
 local hl2sb_NPC_ROLLER_BURIED = {
