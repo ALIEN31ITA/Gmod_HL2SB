@@ -1,22 +1,24 @@
 local hl2sb_getmap = game.GetMap()
 
 local function SetupNPCs(ent, ply)
-	if ent:GetClass() == "npc_eli" && ent.NPCTable.ListClass == "npc_eli_episodic" then
-		ent.NPCTable.Name = "Eli Vance"
-		ent:SetSubMaterial( 0, "models/hl2sb/characters/eli_sheet_ep2" )
-	elseif ent:GetClass() == "npc_kleiner" && ent.NPCTable.ListClass == "npc_kleiner_episodic" then
-		ent.NPCTable.Name = "Dr. Isaac Kleiner"
-		ent:SetSubMaterial( 0, "models/hl2sb/characters/kleiner_sheet_ep2" )
-	elseif ent:GetClass() == "npc_mossman" && ent.NPCTable.ListClass == "npc_mossman_episodic" then
-		ent.NPCTable.Name = "Dr. Judith Mossman"
-	elseif ent:GetClass() == "npc_barney" then
-		if ent.NPCTable.ListClass == "npc_barney_episodic" then
-			ent.NPCTable.Name = "Barney Calhoun"
-			ent:SetSubMaterial( 2, "models/hl2sb/characters/barneyface_ep1" )
-		elseif ent.NPCTable.ListClass == "npc_barney_cp" then
-			ent:SetName("hl2sb_barney_cp" .. ent:EntIndex())
-			ent.NPCTable.Name = "Barney Calhoun (CP)"
+	local listClass = list.GetEntry( "NPC", ent.NPCName )
+	if ( !istable( listClass ) ) then return end
 
+	if ent:GetClass() == "npc_eli" && listClass.ListClass == "npc_eli_episodic" then
+		listClass.Name = "Eli Vance"
+		ent:SetSubMaterial( 0, "models/hl2sb/characters/eli_sheet_ep2" )
+	elseif ent:GetClass() == "npc_kleiner" && listClass.ListClass == "npc_kleiner_episodic" then
+		listClass.Name = "Dr. Isaac Kleiner"
+		ent:SetSubMaterial( 0, "models/hl2sb/characters/kleiner_sheet_ep2" )
+	elseif ent:GetClass() == "npc_mossman" && listClass.ListClass == "npc_mossman_episodic" then
+		listClass.Name = "Dr. Judith Mossman"
+	elseif ent:GetClass() == "npc_barney" then
+		if listClass.ListClass == "npc_barney_episodic" then
+			listClass.Name = "Barney Calhoun"
+			ent:SetSubMaterial( 2, "models/hl2sb/characters/barneyface_ep1" )
+		elseif listClass.ListClass == "npc_barney_cp" then
+			ent:SetName("hl2sb_barney_cp" .. ent:EntIndex())
+			listClass.Name = "Barney Calhoun (CP)"
 			local maskPlateBack = ents.Create("prop_dynamic")
 			maskPlateBack:SetModel("models/barneyhelmet.mdl")
 			maskPlateBack:Fire("SetParent", "hl2sb_barney_cp" .. ent:EntIndex())
@@ -30,13 +32,13 @@ local function SetupNPCs(ent, ply)
 			maskPlateFront:Spawn()
 		end
 	elseif ent:GetClass() == "npc_metropolice" then
-		if ent.NPCTable.ListClass == "npc_barney_cp_hostile" then
-			ent.NPCTable.Name = "Barney Calhoun (CP)"
+		if listClass.ListClass == "npc_barney_cp_hostile" then
+			listClass.Name = "Barney Calhoun (CP)"
 		end
 	elseif ( ent:GetClass() == "npc_helicopter" ) then
-		if ( ent.NPCTable.ListClass == "npc_helicopter_nightlights" ) or ( ent:GetClass() == "npc_combinegunship" && ent.NPCTable.ListClass == "npc_gunship_chopper" ) then
-			ent.NPCTable.Name = "Hunter-Chopper"
-		elseif ( ent.NPCTable.ListClass == "npc_helicopter_nightlightsplusspot" ) then
+		if ( listClass.ListClass == "npc_helicopter_nightlights" ) or ( ent:GetClass() == "npc_combinegunship" && listClass.ListClass == "npc_gunship_chopper" ) then
+			listClass.Name = "Hunter-Chopper"
+		elseif ( listClass.ListClass == "npc_helicopter_nightlightsplusspot" ) then
 			local attachment = ent:LookupAttachment("Spotlight")
 			local data_attach = ent:GetAttachment(attachment)
 
@@ -53,19 +55,19 @@ local function SetupNPCs(ent, ply)
 			ent.spotLight:Activate()
 		end
 	elseif ent:GetClass() == "npc_rollermine" then
-		if ent.NPCTable.ListClass == "npc_rollermine_alyxhack" then
-			ent.NPCTable.Name = "Rollermine"
+		if listClass.ListClass == "npc_rollermine_alyxhack" then
+			listClass.Name = "Rollermine"
 			ent:SetSaveValue( "m_bHackedByAlyx", true )
 			ent:SetSkin(1)
-			ent:SetKeyValue("spawnflags", bit.bor(ent:GetSpawnFlags(), SF_ROLLERMINE_FRIENDLY))
-		elseif ent.NPCTable.ListClass == "npc_rollermine_buried" then
-			ent.NPCTable.Name = "Rollermine"
+			ent:AddSpawnFlags( SF_ROLLERMINE_FRIENDLY )
+		elseif listClass.ListClass == "npc_rollermine_buried" then
+			listClass.Name = "Rollermine"
 			ent:SetKeyValue("startburied", "1")
 			ent:SetSaveValue( "m_bBuried", true )
 			ent:SetPos(ent:GetPos() + ent:GetUp() * -35)
 			ent:SetMoveType(MOVETYPE_NONE)
 		end
-	elseif ent:GetClass() == "npc_vortigaunt" and ent.NPCTable.ListClass == "npc_bluevorti_episodic" then
+	elseif ent:GetClass() == "npc_vortigaunt" && listClass.ListClass == "npc_bluevorti_episodic" then
 		ent:SetNW2Entity("hl2sbSpawnedBy", ply)
 
 		ent:SetSubMaterial( 0, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
@@ -74,7 +76,7 @@ local function SetupNPCs(ent, ply)
 		ent:SetSubMaterial( 3, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
 		ent:SetSubMaterial( 4, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
 		ent:SetSubMaterial( 5, "models/hl2sb/characters/vortigaunt_blueeye_patch" )
-		ent.NPCTable.Name = "Vortigaunt"
+		listClass.Name = "Vortigaunt"
 	end
 end
 
@@ -554,23 +556,23 @@ end)
 
 local function ZombieHeadless(ent)
 	if !IsValid(ent) then return end
-	if ent:GetClass() != ( "npc_zombie" || "npc_fastzombie" || "npc_poisonzombie" ) then return end
-	if !ent.NPCTable or !ent.NPCTable.ListClass then return end
+	if ent:GetClass() != "npc_zombie" || ent:GetClass() != "npc_fastzombie" || ent:GetClass() != "npc_poisonzombie" then return end
 
-	if ent:GetClass() == "npc_zombie" and ent.NPCTable.ListClass == "npc_zombie_crabless" then
-		print("Hi")
+	local npcTable = list.GetEntry( "NPC", ent.NPCName )
+	if !istable( npcTable ) || !npcTable.ListClass then return end
+
+	if ent:GetClass() == "npc_zombie" and npcTable.ListClass == "npc_zombie_crabless" then
 		local attachment = ent:LookupAttachment("headcrab")
 		local data_attach = ent:GetAttachment(attachment)
 
 		if data_attach then
 			for k, v in ipairs(ents.FindInSphere(data_attach.Pos, 10)) do
-				print(v)
 				if v:GetClass() == "npc_headcrab" then
 					SafeRemoveEntity(v)
 				end
 			end
 		end
-	elseif ent:GetClass() == "npc_poisonzombie" and ent.NPCTable.ListClass == "npc_poisonzombie_crabless" then
+	elseif ent:GetClass() == "npc_poisonzombie" and npcTable.ListClass == "npc_poisonzombie_crabless" then
 		for i = 1, 5 do
 			local attachment = ent:LookupAttachment("headcrab" .. i)
 			local data_attach = ent:GetAttachment(attachment)
@@ -583,7 +585,7 @@ local function ZombieHeadless(ent)
 				end
 			end
 		end
-	elseif ent:GetClass() == "npc_fastzombie" and ent.NPCTable.ListClass == "npc_fastzombie_crabless" then
+	elseif ent:GetClass() == "npc_fastzombie" and npcTable.ListClass == "npc_fastzombie_crabless" then
 		local attachment = ent:LookupAttachment("headcrab")
 		local data_attach = ent:GetAttachment(attachment)
 
