@@ -7,14 +7,14 @@ net.Receive( "hl2sb_MenuCommand", function( len, ply )
     if ( !IsValid(ply) ) then return end
 
     local bHasAccess = false
-    if ( game.SinglePlayer() or ply:IsAdmin() ) then
+    if ( game.SinglePlayer() || ply:IsAdmin() ) then
         bHasAccess = true
     end
 
-    if ( !bHasAccess ) then return end
-
     local str, value = net.ReadString(), net.ReadType()
     if ( !str ) then return end
+
+    if ( hook.Run( "HL2SB_CanEditOptions", ply, str, value ) == false || !bHasAccess ) then return end
 
     local settingData = nil
     for k, v in pairs(hl2sb.cvars) do
@@ -27,7 +27,7 @@ net.Receive( "hl2sb_MenuCommand", function( len, ply )
     if ( !settingData ) then return end
 
     if isbool(value) then
-        value = value && 1 || 0
+        value = value == true && 1 || 0
     end
 
     local cvar = settingData.value
